@@ -7,9 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XTI_App.Api" Version="1.8.25" />
-		<PackageReference Include="XTI_WebAppClient" Version="1.8.25" />
-		<PackageReference Include="XTI_TempLog.Abstractions" Version="1.2.27" />
+		<PackageReference Include="XTI_App.Api" Version="1.8.31" />
+		<PackageReference Include="XTI_WebAppClient" Version="1.8.31" />
+		<PackageReference Include="XTI_TempLog.Abstractions" Version="1.2.28" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\XTI_Copia.Abstractions\XTI_Copia.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

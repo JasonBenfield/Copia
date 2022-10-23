@@ -1,7 +1,9 @@
 // Generated code
 
-interface ILogoutRequest {
-	ReturnUrl: string;
+interface IAddPortfolioRequest {
+	PortfolioName: string;
 }
-interface IEmptyActionResult {
+interface IPortfolioModel {
+	ID: number;
+	PortfolioName: string;
 }
