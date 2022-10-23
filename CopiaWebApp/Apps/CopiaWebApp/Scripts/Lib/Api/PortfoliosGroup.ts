@@ -6,15 +6,15 @@ import { AppApiView } from "@jasonbenfield/sharedwebapp/Api/AppApiView";
 import { AppApiEvents } from "@jasonbenfield/sharedwebapp/Api/AppApiEvents";
 import { AppResourceUrl } from "@jasonbenfield/sharedwebapp/Api/AppResourceUrl";
 
-export class UserCacheGroup extends AppApiGroup {
+export class PortfoliosGroup extends AppApiGroup {
 	constructor(events: AppApiEvents, resourceUrl: AppResourceUrl) {
-		super(events, resourceUrl, 'UserCache');
-		this.ClearCacheAction = this.createAction<string,IEmptyActionResult>('ClearCache', 'Clear Cache');
+		super(events, resourceUrl, 'Portfolios');
+		this.AddPortfolioAction = this.createAction<IAddPortfolioRequest,IPortfolioModel>('AddPortfolio', 'Add Portfolio');
 	}
 	
-	readonly ClearCacheAction: AppApiAction<string,IEmptyActionResult>;
+	readonly AddPortfolioAction: AppApiAction<IAddPortfolioRequest,IPortfolioModel>;
 	
-	ClearCache(model: string, errorOptions?: IActionErrorOptions) {
-		return this.ClearCacheAction.execute(model, errorOptions || {});
+	AddPortfolio(model: IAddPortfolioRequest, errorOptions?: IActionErrorOptions) {
+		return this.AddPortfolioAction.execute(model, errorOptions || {});
 	}
 }

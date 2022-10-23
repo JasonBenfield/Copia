@@ -7,8 +7,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="XTI_App.Extensions" Version="1.8.25" />
-		<PackageReference Include="XTI_WebApp.Api" Version="1.8.25" />
+		<PackageReference Include="XTI_App.Extensions" Version="1.8.31" />
+		<PackageReference Include="XTI_WebApp.Api" Version="1.8.31" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Lib\XTI_Copia.Abstractions\XTI_Copia.Abstractions.csproj" />
+	  <ProjectReference Include="..\XTI_CopiaDB\XTI_CopiaDB.csproj" />
 	</ItemGroup>
 
 </Project>

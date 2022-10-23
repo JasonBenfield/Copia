@@ -13,32 +13,40 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CopiaWebApp", "CopiaWebApp"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{7FE1C3BA-1DA8-4506-BBE4-8014A474FE88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopiaWebApp", "CopiaWebApp\Apps\CopiaWebApp\CopiaWebApp.csproj", "{88D77066-8579-48BE-B9E4-0369D1053612}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopiaWebApp", "CopiaWebApp\Apps\CopiaWebApp\CopiaWebApp.csproj", "{88D77066-8579-48BE-B9E4-0369D1053612}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Internal", "Internal", "{7A6F6569-0FAD-47B6-94A5-7BF131A8C319}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaWebAppApi", "CopiaWebApp\Internal\XTI_CopiaWebAppApi\XTI_CopiaWebAppApi.csproj", "{BE6892A6-6E36-4283-822D-651213315629}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaWebAppApi", "CopiaWebApp\Internal\XTI_CopiaWebAppApi\XTI_CopiaWebAppApi.csproj", "{BE6892A6-6E36-4283-822D-651213315629}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopiaWebApp.ApiControllers", "CopiaWebApp\Internal\CopiaWebApp.ApiControllers\CopiaWebApp.ApiControllers.csproj", "{28326DD4-ECBD-49D8-BEFA-13BFDFF6532D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopiaWebApp.ApiControllers", "CopiaWebApp\Internal\CopiaWebApp.ApiControllers\CopiaWebApp.ApiControllers.csproj", "{28326DD4-ECBD-49D8-BEFA-13BFDFF6532D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{6B1E8F98-0004-4701-9C88-9B646A7EBB73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaAppClient", "CopiaWebApp\Lib\XTI_CopiaAppClient\XTI_CopiaAppClient.csproj", "{8F3ADE40-8E4F-42E9-888D-0404C1766B09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaAppClient", "CopiaWebApp\Lib\XTI_CopiaAppClient\XTI_CopiaAppClient.csproj", "{8F3ADE40-8E4F-42E9-888D-0404C1766B09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopiaApiGeneratorApp", "CopiaWebApp\Apps\CopiaApiGeneratorApp\CopiaApiGeneratorApp.csproj", "{EF3202BE-C5AC-4506-965A-FE94E4D57968}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopiaApiGeneratorApp", "CopiaWebApp\Apps\CopiaApiGeneratorApp\CopiaApiGeneratorApp.csproj", "{EF3202BE-C5AC-4506-965A-FE94E4D57968}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopiaSetupApp", "CopiaWebApp\Apps\CopiaSetupApp\CopiaSetupApp.csproj", "{D1A84C5E-F262-47FC-B4C0-5E549D12917F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopiaSetupApp", "CopiaWebApp\Apps\CopiaSetupApp\CopiaSetupApp.csproj", "{D1A84C5E-F262-47FC-B4C0-5E549D12917F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{54A0CF8D-27B7-4B79-AF38-45D3248A1267}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopiaWebAppTests", "CopiaWebApp\Tests\CopiaWebAppTests\CopiaWebAppTests.csproj", "{FF56DE2E-C943-45B1-8DD4-0B9263569D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_Copia.Abstractions", "CopiaWebApp\Lib\XTI_Copia.Abstractions\XTI_Copia.Abstractions.csproj", "{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDB", "CopiaWebApp\Internal\XTI_CopiaDB\XTI_CopiaDB.csproj", "{F6C30C09-497B-4C89-9DE8-BEC46984EF18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDB.InMemory", "CopiaWebApp\Internal\XTI_CopiaDB.InMemory\XTI_CopiaDB.InMemory.csproj", "{B6B0C527-C582-4FF9-8E12-A03D615AC596}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDB.SqlServer", "CopiaWebApp\Internal\XTI_CopiaDB.SqlServer\XTI_CopiaDB.SqlServer.csproj", "{6FD28140-C9DB-4A40-BD8E-4C004E582D62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDbTool", "CopiaWebApp\Internal\XTI_CopiaDbTool\XTI_CopiaDbTool.csproj", "{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {930AB467-FFD2-4966-A5C7-A3043B5E6E48}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{88D77066-8579-48BE-B9E4-0369D1053612}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -65,6 +73,33 @@ Global
 		{D1A84C5E-F262-47FC-B4C0-5E549D12917F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1A84C5E-F262-47FC-B4C0-5E549D12917F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1A84C5E-F262-47FC-B4C0-5E549D12917F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF56DE2E-C943-45B1-8DD4-0B9263569D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF56DE2E-C943-45B1-8DD4-0B9263569D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF56DE2E-C943-45B1-8DD4-0B9263569D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF56DE2E-C943-45B1-8DD4-0B9263569D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6C30C09-497B-4C89-9DE8-BEC46984EF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6C30C09-497B-4C89-9DE8-BEC46984EF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6C30C09-497B-4C89-9DE8-BEC46984EF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6C30C09-497B-4C89-9DE8-BEC46984EF18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6B0C527-C582-4FF9-8E12-A03D615AC596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6B0C527-C582-4FF9-8E12-A03D615AC596}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6B0C527-C582-4FF9-8E12-A03D615AC596}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6B0C527-C582-4FF9-8E12-A03D615AC596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FD28140-C9DB-4A40-BD8E-4C004E582D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD28140-C9DB-4A40-BD8E-4C004E582D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD28140-C9DB-4A40-BD8E-4C004E582D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD28140-C9DB-4A40-BD8E-4C004E582D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7FE1C3BA-1DA8-4506-BBE4-8014A474FE88} = {3E56E847-0338-4DB6-9B43-8A7CA21BD6D6}
@@ -76,5 +111,15 @@ Global
 		{8F3ADE40-8E4F-42E9-888D-0404C1766B09} = {6B1E8F98-0004-4701-9C88-9B646A7EBB73}
 		{EF3202BE-C5AC-4506-965A-FE94E4D57968} = {7FE1C3BA-1DA8-4506-BBE4-8014A474FE88}
 		{D1A84C5E-F262-47FC-B4C0-5E549D12917F} = {7FE1C3BA-1DA8-4506-BBE4-8014A474FE88}
+		{54A0CF8D-27B7-4B79-AF38-45D3248A1267} = {3E56E847-0338-4DB6-9B43-8A7CA21BD6D6}
+		{FF56DE2E-C943-45B1-8DD4-0B9263569D99} = {54A0CF8D-27B7-4B79-AF38-45D3248A1267}
+		{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7} = {6B1E8F98-0004-4701-9C88-9B646A7EBB73}
+		{F6C30C09-497B-4C89-9DE8-BEC46984EF18} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
+		{B6B0C527-C582-4FF9-8E12-A03D615AC596} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
+		{6FD28140-C9DB-4A40-BD8E-4C004E582D62} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
+		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {930AB467-FFD2-4966-A5C7-A3043B5E6E48}
 	EndGlobalSection
 EndGlobal
