@@ -1,6 +1,7 @@
 ﻿using XTI_App.Abstractions;
 using XTI_CopiaDB;
 using XTI_DB;
+using XTI_HubAppClient;
 
 namespace CopiaSetupApp;
 

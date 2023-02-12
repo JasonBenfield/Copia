@@ -33,6 +33,8 @@ internal sealed class CopiaTestHost
         builder.Services.AddScoped(sp => sp.GetRequiredService<AppApiFactory>().CreateForSuperUser());
         builder.Services.AddScoped(sp => (CopiaAppApi)sp.GetRequiredService<IAppApi>());
         builder.Services.AddCopiaDbContextForInMemory();
+        builder.Services.AddScoped<FakeHubService>();
+        builder.Services.AddScoped<IHubService>(sp => sp.GetRequiredService<FakeHubService>());
         if (configure != null)
         {
             configure(builder.Services);

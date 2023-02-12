@@ -20,10 +20,13 @@ public sealed partial class CopiaAppApi : WebAppApiWrapper
         )
     {
         createHomeGroup(sp);
+        createPortfolioGroup(sp);
         createPortfoliosGroup(sp);
     }
 
     partial void createHomeGroup(IServiceProvider sp);
+
+    partial void createPortfolioGroup(IServiceProvider sp);
 
     partial void createPortfoliosGroup(IServiceProvider sp);
 
