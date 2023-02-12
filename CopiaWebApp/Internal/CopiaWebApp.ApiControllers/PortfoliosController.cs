@@ -14,4 +14,10 @@ public sealed partial class PortfoliosController : Controller
     {
         return api.Group("Portfolios").Action<AddPortfolioRequest, PortfolioModel>("AddPortfolio").Execute(model, ct);
     }
+
+    [HttpPost]
+    public Task<ResultContainer<PortfolioModel[]>> GetPortfolios(CancellationToken ct)
+    {
+        return api.Group("Portfolios").Action<EmptyRequest, PortfolioModel[]>("GetPortfolios").Execute(new EmptyRequest(), ct);
+    }
 }

@@ -1,9 +1,11 @@
-﻿namespace XTI_Copia.Abstractions;
+﻿using XTI_App.Abstractions;
 
-public sealed record PortfolioModel(int ID, string PortfolioName)
+namespace XTI_Copia.Abstractions;
+
+public sealed record PortfolioModel(int ID, string PortfolioName, ModifierKey PublicKey)
 {
     public PortfolioModel()
-        : this(0, "")
+        : this(0, "", ModifierKey.Default)
     {
     }
 }
