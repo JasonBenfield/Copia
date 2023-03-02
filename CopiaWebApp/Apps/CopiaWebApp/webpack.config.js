@@ -4,7 +4,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const entry = {
     accessDenied: './Scripts/Internal/User/AccessDenied/MainPage.ts',
     error: './Scripts/Internal/User/Error/MainPage.ts',
-    home: './Scripts/Internal/Home/MainPage.ts'
+    home: './Scripts/Internal/Home/MainPage.ts',
+    portfolio: './Scripts/Internal/Portfolio/MainPage.ts'
 };
 const exportModule = {
     rules: [

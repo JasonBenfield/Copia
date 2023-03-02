@@ -1,12 +1,12 @@
 ﻿import { CssLengthUnit } from "@jasonbenfield/sharedwebapp/CssLengthUnit";
 import { BasicComponentView } from "@jasonbenfield/sharedwebapp/Views/BasicComponentView";
-import { BasicContainerView } from "@jasonbenfield/sharedwebapp/Views/BasicContainerView";
+import { BlockView } from "@jasonbenfield/sharedwebapp/Views/BlockView";
 import { GridView } from "@jasonbenfield/sharedwebapp/Views/Grid";
 import { ToolbarView } from "@jasonbenfield/sharedwebapp/Views/ToolbarView";
 import { CopiaTheme } from "./CopiaTheme";
 
 export class PanelView extends GridView {
-    readonly body: BasicContainerView;
+    readonly body: BlockView;
     readonly toolbar: ToolbarView;
 
     constructor(container: BasicComponentView) {

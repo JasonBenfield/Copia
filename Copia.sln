@@ -33,15 +33,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{54A0CF8D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopiaWebAppTests", "CopiaWebApp\Tests\CopiaWebAppTests\CopiaWebAppTests.csproj", "{FF56DE2E-C943-45B1-8DD4-0B9263569D99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_Copia.Abstractions", "CopiaWebApp\Lib\XTI_Copia.Abstractions\XTI_Copia.Abstractions.csproj", "{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_Copia.Abstractions", "CopiaWebApp\Lib\XTI_Copia.Abstractions\XTI_Copia.Abstractions.csproj", "{70E6C0ED-B84B-4174-A476-BFD13F4B6CD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDB", "CopiaWebApp\Internal\XTI_CopiaDB\XTI_CopiaDB.csproj", "{F6C30C09-497B-4C89-9DE8-BEC46984EF18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaDB", "CopiaWebApp\Internal\XTI_CopiaDB\XTI_CopiaDB.csproj", "{F6C30C09-497B-4C89-9DE8-BEC46984EF18}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDB.InMemory", "CopiaWebApp\Internal\XTI_CopiaDB.InMemory\XTI_CopiaDB.InMemory.csproj", "{B6B0C527-C582-4FF9-8E12-A03D615AC596}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaDB.InMemory", "CopiaWebApp\Internal\XTI_CopiaDB.InMemory\XTI_CopiaDB.InMemory.csproj", "{B6B0C527-C582-4FF9-8E12-A03D615AC596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDB.SqlServer", "CopiaWebApp\Internal\XTI_CopiaDB.SqlServer\XTI_CopiaDB.SqlServer.csproj", "{6FD28140-C9DB-4A40-BD8E-4C004E582D62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaDB.SqlServer", "CopiaWebApp\Internal\XTI_CopiaDB.SqlServer\XTI_CopiaDB.SqlServer.csproj", "{6FD28140-C9DB-4A40-BD8E-4C004E582D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDbTool", "CopiaWebApp\Internal\XTI_CopiaDbTool\XTI_CopiaDbTool.csproj", "{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaDbTool", "CopiaWebApp\Internal\XTI_CopiaDbTool\XTI_CopiaDbTool.csproj", "{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaImplementations", "CopiaWebApp\Internal\XTI_CopiaImplementations\XTI_CopiaImplementations.csproj", "{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,10 @@ Global
 		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -118,6 +124,7 @@ Global
 		{B6B0C527-C582-4FF9-8E12-A03D615AC596} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
 		{6FD28140-C9DB-4A40-BD8E-4C004E582D62} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
 		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
+		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {930AB467-FFD2-4966-A5C7-A3043B5E6E48}

@@ -9,4 +9,5 @@ public sealed partial class CopiaRoleNames
 
     public string Admin { get; } = "Admin";
     public string ManageUserCache { get; } = "Manage User Cache";
+    public string PortfolioOwner { get; } = "Portfolio Owner";
 }

@@ -73,7 +73,16 @@ export class CopiaTheme {
                     b.icon.solidStyle('caret-left');
                     b.setText('Back');
                     b.setTitle('Back');
-                    b.useOutlineStyle(ContextualClass.light);
+                    b.useOutlineStyle(ContextualClass.secondary);
+                });
+        },
+        addButton(button: ButtonCommandView) {
+            return button
+                .configure(b => {
+                    b.icon.solidStyle('plus');
+                    b.setText('Add');
+                    b.setTitle('Add');
+                    b.useOutlineStyle(ContextualClass.secondary);
                 });
         },
         cancelButton(button: ButtonCommandView) {

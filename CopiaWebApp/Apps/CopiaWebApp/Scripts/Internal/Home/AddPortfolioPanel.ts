@@ -47,10 +47,11 @@ export class AddPortfolioPanel implements IPanel {
 
     private cancel() {
         this.awaitable.resolve(Result.cancelled());
+        this.reset();
     }
 
     private async save() {
-        return this.alert.infoAction(
+        await this.alert.infoAction(
             'Saving...',
             async () => {
                 const addRequest: IAddPortfolioRequest = {
@@ -60,9 +61,10 @@ export class AddPortfolioPanel implements IPanel {
                 this.awaitable.resolve(Result.saved(portfolio));
             }
         );
+        this.reset();
     }
 
-    reset() {
+    private reset() {
         this.portfolioName.setValue('');
     }
 
