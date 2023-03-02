@@ -1,10 +1,8 @@
-﻿using XTI_Copia.Abstractions;
-
-namespace XTI_CopiaWebAppApi;
+﻿namespace XTI_CopiaWebAppApi;
 
 public interface IHubService
 {
-    public Task AddPortfolioModifier(PortfolioModel portfolio);
+    public Task AddModifier(ModifierCategoryName categoryName, ModifierKey modKey, string targetKey, string displayText, CancellationToken ct);
 
-    public Task AssignPortfolioRoleToUser(AppUserName userName, PortfolioModel portfolio, AppRoleName roleName);
+    public Task AssignRoleToUser(AppUserName userName, ModifierCategoryName categoryName, ModifierKey modKey, AppRoleName roleName, CancellationToken ct);
 }

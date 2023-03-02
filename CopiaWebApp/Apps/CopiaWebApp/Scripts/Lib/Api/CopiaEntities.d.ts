@@ -11,4 +11,9 @@ interface IAddPortfolioRequest {
 interface IPortfolioModel {
 	ID: number;
 	PortfolioName: string;
+	PublicKey: IModifierKey;
+}
+interface IModifierKey {
+	Value: string;
+	DisplayText: string;
 }

@@ -23,12 +23,12 @@ internal sealed class AddPortfolioAction : AppAction<AddPortfolioRequest, Portfo
     {
         var addedPortfolio = await db.Transaction
         (
-            () => AddPortfolio(addRequest)
+            () => AddPortfolio(addRequest, ct)
         );
         return addedPortfolio;
     }
 
-    private async Task<PortfolioModel> AddPortfolio(AddPortfolioRequest addRequest)
+    private async Task<PortfolioModel> AddPortfolio(AddPortfolioRequest addRequest, CancellationToken ct)
     {
         var portfolio = new PortfolioEntity
         {
@@ -37,13 +37,22 @@ internal sealed class AddPortfolioAction : AppAction<AddPortfolioRequest, Portfo
         };
         await db.Portfolios.Create(portfolio);
         var portfolioModel = portfolio.ToPortfolioModel();
-        await hubService.AddPortfolioModifier(portfolioModel);
-        var userName = await currentUserName.Value();
-        await hubService.AssignPortfolioRoleToUser
+        await hubService.AddModifier
         (
-            userName, 
-            portfolioModel, 
-            CopiaInfo.Roles.PortfolioOwner
+            CopiaInfo.ModCategories.Portfolio, 
+            portfolioModel.PublicKey, 
+            portfolioModel.ID.ToString(),
+            portfolioModel.PortfolioName,
+            ct
+        );
+        var userName = await currentUserName.Value();
+        await hubService.AssignRoleToUser
+        (
+            userName,
+            CopiaInfo.ModCategories.Portfolio,
+            portfolioModel.PublicKey,
+            CopiaInfo.Roles.PortfolioOwner,
+            ct
         );
         return portfolioModel;
     }

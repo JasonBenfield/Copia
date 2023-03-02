@@ -5,6 +5,7 @@ using XTI_Core;
 using XTI_CopiaWebAppApi;
 using XTI_App.Api;
 using XTI_CopiaDB.Extensions;
+using XTI_CopiaImplementations;
 
 var builder = XtiWebAppHost.CreateDefault(CopiaInfo.AppKey, args);
 var xtiEnv = XtiEnvironment.Parse(builder.Environment.EnvironmentName);
@@ -13,6 +14,7 @@ builder.Services.AddScoped<AppApiFactory, CopiaAppApiFactory>();
 builder.Services.AddScoped(sp => (CopiaAppApi)sp.GetRequiredService<IAppApi>());
 builder.Services.AddCopiaAppApiServices();
 builder.Services.AddCopiaDbContextForSqlServer();
+builder.Services.AddScoped<IHubService, HcHubService>();
 builder.Services
     .AddMvc()
     .AddJsonOptions(options =>

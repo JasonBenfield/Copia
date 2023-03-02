@@ -28,7 +28,7 @@ internal sealed class GetPortfoliosTest
         tester.Login(new AppUserName("user1"));
         const string portfolioName1 = "My Portfolio 1";
         await AddPortfolio(tester, portfolioName1);
-        tester.Login(new AppUserName("user1"));
+        tester.Login(new AppUserName("user2"));
         const string portfolioName2 = "My Portfolio 2";
         await AddPortfolio(tester, portfolioName2);
         var portfolios = await tester.Execute(new EmptyRequest());

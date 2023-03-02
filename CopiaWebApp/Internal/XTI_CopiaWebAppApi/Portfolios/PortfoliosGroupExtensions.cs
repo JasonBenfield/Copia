@@ -6,6 +6,7 @@ internal static class PortfoliosGroupExtensions
 {
     public static void AddPortfoliosGroupServices(this IServiceCollection services)
     {
+        services.AddScoped<PortfolioPermissions>();
         services.AddScoped<AddPortfolioAction>();
         services.AddScoped<GetPortfoliosAction>();
     }

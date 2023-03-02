@@ -57,16 +57,16 @@ internal sealed class CopiaActionTester<TModel, TResult> : ICopiaActionTester
 
     public void Login(params AppRoleName[]? roleNames) => Login(new AppUserName("loggedInUser"), roleNames);
 
-    public void Login(AppUserName userName, params AppRoleName[]? roleNames) => Login(userName, ModifierKey.Default, roleNames);
+    public void Login(AppUserName userName, params AppRoleName[]? roleNames) => Login(userName, ModifierCategoryName.Default, ModifierKey.Default, roleNames);
 
-    public void Login(ModifierKey modifier, params AppRoleName[]? roleNames) => Login(new AppUserName("loggedInUser"), modifier, roleNames);
+    public void Login(ModifierCategoryName categoryName, ModifierKey modifier, params AppRoleName[]? roleNames) => Login(new AppUserName("loggedInUser"), categoryName, modifier, roleNames);
 
-    public void Login(AppUserName userName, ModifierKey modifier, params AppRoleName[]? roleNames)
+    public void Login(AppUserName userName, ModifierCategoryName categoryName, ModifierKey modifier, params AppRoleName[]? roleNames)
     {
         var userContext = Services.GetRequiredService<FakeUserContext>();
         userContext.AddUser(userName);
         userContext.SetCurrentUser(userName);
-        userContext.SetUserRoles(modifier, roleNames ?? new AppRoleName[0]);
+        userContext.SetUserRoles(categoryName, modifier, roleNames ?? new AppRoleName[0]);
     }
 
     public Task<TResult> Execute(TModel model) =>

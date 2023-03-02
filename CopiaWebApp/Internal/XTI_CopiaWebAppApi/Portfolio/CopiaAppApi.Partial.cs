@@ -1,4 +1,5 @@
-﻿using XTI_CopiaWebAppApi.Portfolio;
+﻿using System.Reflection;
+using XTI_CopiaWebAppApi.Portfolio;
 
 namespace XTI_CopiaWebAppApi;
 
@@ -12,7 +13,12 @@ partial class CopiaAppApi
     {
         _Portfolio = new PortfolioGroup
         (
-            source.AddGroup(nameof(Portfolio)),
+            source.AddGroup
+            (
+                nameof(Portfolio),
+                CopiaInfo.ModCategories.Portfolio,
+                Access.WithAllowed(CopiaInfo.Roles.PortfolioOwner)
+            ),
             sp
         );
     }

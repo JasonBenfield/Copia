@@ -1,6 +1,5 @@
 ﻿using XTI_App.Abstractions;
 using XTI_App.Fakes;
-using XTI_Copia.Abstractions;
 using XTI_CopiaWebAppApi;
 
 namespace CopiaWebAppTests;
@@ -16,49 +15,22 @@ internal sealed class FakeHubService : IHubService
         this.userContext = userContext;
     }
 
-    public Task AddPortfolioModifier(PortfolioModel portfolio)
+    public Task AddModifier(ModifierCategoryName categoryName, ModifierKey modKey, string targetKey, string displayText, CancellationToken ct)
     {
         var app = appContext.GetCurrentApp();
         appContext.AddModifier
         (
-            app, 
-            CopiaInfo.ModCategories.Portfolio, 
-            portfolio.PublicKey,
-            portfolio.ID.ToString()
+            app,
+            CopiaInfo.ModCategories.Portfolio,
+            modKey,
+            targetKey
         );
         return Task.CompletedTask;
     }
 
-    public Task AssignPortfolioRoleToUser(AppUserName userName, PortfolioModel portfolio, AppRoleName roleName)
+    public Task AssignRoleToUser(AppUserName userName, ModifierCategoryName categoryName, ModifierKey modKey, AppRoleName roleName, CancellationToken ct)
     {
-        var user = userContext.GetUser(userName);
-        var modCategory = appContext.GetCurrentApp().ModifierCategory(CopiaInfo.ModCategories.Portfolio);
-        var modifier = modCategory.Modifier(portfolio.PublicKey);
-        var modifiedRole = user.ModifiedRoles
-            .Where(mr => mr.Modifier.ModKey.Equals(portfolio.PublicKey))
-            .FirstOrDefault()
-            ?? new UserContextRoleModel(modCategory.ModifierCategory, modifier, new AppRoleModel[0]);
-        modifiedRole = modifiedRole with
-        {
-            Roles = modifiedRole.Roles
-                .Union
-                (
-                    new[] { appContext.GetCurrentApp().Role(roleName) }
-                )
-                .Distinct()
-                .ToArray()
-        };
-        userContext.Update
-        (
-            user,
-            u => u with
-            {
-                ModifiedRoles = u.ModifiedRoles
-                    .Where(mr => !mr.Modifier.ModKey.Equals(portfolio.PublicKey))
-                    .Union(new[] { modifiedRole })
-                    .ToArray()
-            }
-        );
+        userContext.AddRolesToUser(categoryName, modKey, roleName);
         return Task.CompletedTask;
     }
 }
