@@ -11,15 +11,19 @@ public sealed class CopiaDbContext : DbContext
     {
         unitOfWork = new UnitOfWork(this);
         Portfolios = new EfDataRepository<PortfolioEntity>(this);
+        Accounts = new EfDataRepository<AccountEntity>(this);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new PortfolioEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new AccountEntityTypeConfiguration());
     }
 
     public DataRepository<PortfolioEntity> Portfolios { get; }
+
+    public DataRepository<AccountEntity> Accounts { get; }
 
     public Task Transaction(Func<Task> action) => unitOfWork.Execute(action);
 

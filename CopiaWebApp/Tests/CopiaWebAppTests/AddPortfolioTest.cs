@@ -1,12 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using XTI_App.Abstractions;
 using XTI_Copia.Abstractions;
 using XTI_CopiaDB;
+using XTI_CopiaWebAppApi;
 
 namespace CopiaWebAppTests;
 
 internal sealed class AddPortfolioTest
 {
+    [Test]
+    public async Task ShouldRequiredPortfolioName()
+    {
+        var tester = await Setup();
+        tester.Login();
+        var addRequest = new AddPortfolioRequest { PortfolioName = "" };
+        var ex = Assert.ThrowsAsync<ValidationFailedException>(() => tester.Execute(addRequest));
+        Assert.That
+        (
+            ex.Errors.Select(e => e.Message).ToArray(),
+            Is.EqualTo(new[] { ValidationErrors.PortfolioNameIsRequired })
+        );
+    }
+
     [Test]
     public async Task ShouldAddPortfolio()
     {

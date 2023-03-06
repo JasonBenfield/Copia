@@ -30,17 +30,16 @@ internal sealed class AddPortfolioAction : AppAction<AddPortfolioRequest, Portfo
 
     private async Task<PortfolioModel> AddPortfolio(AddPortfolioRequest addRequest, CancellationToken ct)
     {
-        var portfolio = new PortfolioEntity
-        {
-            PortfolioName = addRequest.PortfolioName.Trim(),
-            TimeAdded = clock.Now()
-        };
-        await db.Portfolios.Create(portfolio);
-        var portfolioModel = portfolio.ToPortfolioModel();
+        var portfolio = await new EfPortfolios(db).AddPortfolio
+        (
+            addRequest.PortfolioName,
+            clock.Now()
+        );
+        var portfolioModel = portfolio.ToModel();
         await hubService.AddModifier
         (
-            CopiaInfo.ModCategories.Portfolio, 
-            portfolioModel.PublicKey, 
+            CopiaInfo.ModCategories.Portfolio,
+            portfolioModel.PublicKey,
             portfolioModel.ID.ToString(),
             portfolioModel.PortfolioName,
             ct

@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using XTI_Copia.Abstractions;
+﻿using XTI_Copia.Abstractions;
 using XTI_CopiaDB;
 
 namespace XTI_CopiaWebAppApi.Portfolios;
@@ -17,10 +16,9 @@ internal sealed class GetPortfoliosAction : AppAction<EmptyRequest, PortfolioMod
 
     public async Task<PortfolioModel[]> Execute(EmptyRequest model, CancellationToken stoppingToken)
     {
-        var portfolios = await db.Portfolios.Retrieve()
-            .Select(p => p.ToPortfolioModel())
-            .ToArrayAsync();
-        var permissions = await portfolioPermissions.GetPermissions(portfolios);
+        var portfolios = await new EfPortfolios(db).Portfolios();
+        var portfolioModels = portfolios.Select(p => p.ToModel()).ToArray();
+        var permissions = await portfolioPermissions.GetPermissions(portfolioModels);
         return permissions
             .Where(p => p.CanView)
             .Select(p => p.Portfolio)
