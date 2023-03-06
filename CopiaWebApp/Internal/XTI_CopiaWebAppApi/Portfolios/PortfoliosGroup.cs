@@ -9,12 +9,13 @@ public sealed class PortfoliosGroup : AppApiGroupWrapper
     {
         AddPortfolio = source.AddAction
         (
-            nameof(AddPortfolio), 
-            () => sp.GetRequiredService<AddPortfolioAction>()
+            nameof(AddPortfolio),
+            () => sp.GetRequiredService<AddPortfolioAction>(),
+            () => sp.GetRequiredService<AddPortfolioValidation>()
         );
         GetPortfolios = source.AddAction
         (
-            nameof(GetPortfolios), 
+            nameof(GetPortfolios),
             () => sp.GetRequiredService<GetPortfoliosAction>()
         );
     }
