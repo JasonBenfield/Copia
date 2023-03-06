@@ -20,12 +20,12 @@ internal sealed class EfPortfolios
             TimeAdded = timeAdded
         };
         await db.Portfolios.Create(portfolio);
-        return new EfPortfolio(portfolio);
+        return new EfPortfolio(db, portfolio);
     }
 
     public Task<EfPortfolio[]> Portfolios() =>
         db.Portfolios.Retrieve()
-            .Select(p => new EfPortfolio(p))
+            .Select(p => new EfPortfolio(db, p))
             .ToArrayAsync();
 
     public Task<EfPortfolio> Portfolio(ModifierKey publicKey)
@@ -42,6 +42,6 @@ internal sealed class EfPortfolios
         var entity = await db.Portfolios.Retrieve()
             .Where(p => p.ID == portfolioID)
             .FirstOrDefaultAsync();
-        return new EfPortfolio(entity ?? throw new ArgumentException($"Unable to find portfolio {portfolioID}"));
+        return new EfPortfolio(db, entity ?? throw new ArgumentException($"Unable to find portfolio {portfolioID}"));
     }
 }
