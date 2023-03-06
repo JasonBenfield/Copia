@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using XTI_App.Abstractions;
-using XTI_App.Fakes;
 using XTI_Copia.Abstractions;
 using XTI_CopiaDB;
 using XTI_CopiaWebAppApi;
@@ -30,7 +29,7 @@ internal sealed class AddAccountTest
             },
             CopiaInfo.ModCategories.Portfolio,
             portfolio.PublicKey,
-            CopiaInfo.Roles.Admin, 
+            CopiaInfo.Roles.Admin,
             CopiaInfo.Roles.PortfolioOwner
         );
     }
@@ -89,10 +88,34 @@ internal sealed class AddAccountTest
         );
     }
 
-    private Task<PortfolioModel> AddPortfolio(ICopiaActionTester tester)
+    [Test]
+    public async Task ShouldReturnAccount()
     {
-        var addTester = tester.Create(api => api.Portfolios.AddPortfolio);
-        return addTester.Execute(new AddPortfolioRequest { PortfolioName = "My Portfolio" });
+        var tester = await Setup();
+        tester.Login();
+        var portfolio = await AddPortfolio(tester);
+        var addForm = new AddAccountForm();
+        addForm.AccountName.SetValue("Test Account");
+        addForm.AccountType.SetValue(AccountType.Values.Checking);
+        var addedAccount = await tester.Execute(addForm, portfolio.PublicKey);
+        var db = tester.Services.GetRequiredService<CopiaDbContext>();
+        var accountEntity = await db.Accounts.Retrieve()
+            .Where(a => a.AccountName == addForm.AccountName.Value())
+            .FirstAsync();
+        Assert.That
+        (
+            addedAccount,
+            Is.EqualTo
+            (
+                new AccountModel
+                (
+                    accountEntity.ID, 
+                    accountEntity.AccountName, 
+                    AccountType.Values.Value(accountEntity.AccountType)
+                )
+            ),
+            "Should return account"
+        );
     }
 
     private async Task<CopiaActionTester<AddAccountForm, AccountModel>> Setup()
@@ -101,4 +124,11 @@ internal sealed class AddAccountTest
         var services = await host.Setup();
         return CopiaActionTester.Create(services, api => api.Portfolio.AddAccount);
     }
+
+    private Task<PortfolioModel> AddPortfolio(ICopiaActionTester tester)
+    {
+        var addTester = tester.Create(api => api.Portfolios.AddPortfolio);
+        return addTester.Execute(new AddPortfolioRequest { PortfolioName = "My Portfolio" });
+    }
+
 }

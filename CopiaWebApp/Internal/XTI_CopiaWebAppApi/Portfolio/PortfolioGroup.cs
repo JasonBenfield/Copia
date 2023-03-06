@@ -14,8 +14,10 @@ public sealed class PortfolioGroup : AppApiGroupWrapper
             () => sp.GetRequiredService<AddAccountAction>(),
             () => sp.GetRequiredService<AddAccountValidation>()
         );
+        GetAccounts = source.AddAction(nameof(GetAccounts), () => sp.GetRequiredService<GetAccountsAction>());
     }
 
     public AppApiAction<EmptyRequest, WebViewResult> Index { get; }
     public AppApiAction<AddAccountForm, AccountModel> AddAccount { get; }
+    public AppApiAction<EmptyRequest, AccountModel[]> GetAccounts { get; }
 }
