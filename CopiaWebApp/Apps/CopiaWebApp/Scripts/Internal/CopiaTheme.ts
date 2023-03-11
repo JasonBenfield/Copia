@@ -73,7 +73,16 @@ export class CopiaTheme {
                     b.icon.solidStyle('caret-left');
                     b.setText('Back');
                     b.setTitle('Back');
-                    b.useOutlineStyle(ContextualClass.secondary);
+                    b.setContext(ContextualClass.secondary);
+                });
+        },
+        menuButton(button: ButtonCommandView) {
+            return button
+                .configure(b => {
+                    b.icon.solidStyle('bars');
+                    b.setText('');
+                    b.setTitle('Menu');
+                    b.setContext(ContextualClass.secondary);
                 });
         },
         addButton(button: ButtonCommandView) {
@@ -82,7 +91,7 @@ export class CopiaTheme {
                     b.icon.solidStyle('plus');
                     b.setText('Add');
                     b.setTitle('Add');
-                    b.useOutlineStyle(ContextualClass.secondary);
+                    b.setContext(ContextualClass.secondary);
                 });
         },
         cancelButton(button: ButtonCommandView) {

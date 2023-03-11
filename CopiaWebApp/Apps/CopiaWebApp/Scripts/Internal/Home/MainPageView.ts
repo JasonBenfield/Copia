@@ -1,6 +1,6 @@
 ﻿import { CopiaPageView } from '../CopiaPageView';
-import { AddPortfolioPanelView } from './AddPortfolioPanelView';
-import { PortfolioListPanelView } from './PortfolioListPanelView';
+import { AddPortfolioPanelView } from '../Portfolios/AddPortfolioPanelView';
+import { PortfolioListPanelView } from '../Portfolios/PortfolioListPanelView';
 
 export class MainPageView extends CopiaPageView {
     readonly addPortfolioPanel: AddPortfolioPanelView;

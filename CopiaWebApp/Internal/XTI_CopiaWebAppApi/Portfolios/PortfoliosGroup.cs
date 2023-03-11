@@ -18,9 +18,16 @@ public sealed class PortfoliosGroup : AppApiGroupWrapper
             nameof(GetPortfolios),
             () => sp.GetRequiredService<GetPortfoliosAction>()
         );
+        Index = source.AddAction
+        (
+            nameof(Index),
+            () => sp.GetRequiredService<IndexAction>()
+        );
     }
 
     public AppApiAction<AddPortfolioRequest, PortfolioModel> AddPortfolio { get; }
 
     public AppApiAction<EmptyRequest, PortfolioModel[]> GetPortfolios { get; }
+
+    public AppApiAction<EmptyRequest, WebViewResult> Index { get; }
 }

@@ -8,7 +8,7 @@ using XTI_CopiaDB;
 
 #nullable disable
 
-namespace XTI_CopiaDB.SqlServer.Migrations
+namespace XTICopiaDB.SqlServer.Migrations
 {
     [DbContext(typeof(CopiaDbContext))]
     partial class CopiaDbContextModelSnapshot : ModelSnapshot
@@ -17,10 +17,36 @@ namespace XTI_CopiaDB.SqlServer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "7.0.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("XTI_CopiaDB.AccountEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("AccountType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PortfolioID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PortfolioID");
+
+                    b.ToTable("Accounts", (string)null);
+                });
 
             modelBuilder.Entity("XTI_CopiaDB.PortfolioEntity", b =>
                 {
@@ -28,7 +54,7 @@ namespace XTI_CopiaDB.SqlServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("PortfolioName")
                         .IsRequired()
@@ -41,6 +67,15 @@ namespace XTI_CopiaDB.SqlServer.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Portfolios", (string)null);
+                });
+
+            modelBuilder.Entity("XTI_CopiaDB.AccountEntity", b =>
+                {
+                    b.HasOne("XTI_CopiaDB.PortfolioEntity", null)
+                        .WithMany()
+                        .HasForeignKey("PortfolioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

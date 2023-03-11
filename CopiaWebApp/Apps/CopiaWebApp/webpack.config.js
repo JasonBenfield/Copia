@@ -5,7 +5,9 @@ const entry = {
     accessDenied: './Scripts/Internal/User/AccessDenied/MainPage.ts',
     error: './Scripts/Internal/User/Error/MainPage.ts',
     home: './Scripts/Internal/Home/MainPage.ts',
-    portfolio: './Scripts/Internal/Portfolio/MainPage.ts'
+    account: './Scripts/Internal/Account/MainPage.ts',
+    portfolio: './Scripts/Internal/Portfolio/MainPage.ts',
+    portfolios: './Scripts/Internal/Portfolios/MainPage.ts'
 };
 const exportModule = {
     rules: [
