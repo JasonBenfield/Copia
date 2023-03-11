@@ -11,10 +11,12 @@ export class PortfoliosGroup extends AppApiGroup {
 		super(events, resourceUrl, 'Portfolios');
 		this.AddPortfolioAction = this.createAction<IAddPortfolioRequest,IPortfolioModel>('AddPortfolio', 'Add Portfolio');
 		this.GetPortfoliosAction = this.createAction<IEmptyRequest,IPortfolioModel[]>('GetPortfolios', 'Get Portfolios');
+		this.Index = this.createView<IEmptyRequest>('Index');
 	}
 	
 	readonly AddPortfolioAction: AppApiAction<IAddPortfolioRequest,IPortfolioModel>;
 	readonly GetPortfoliosAction: AppApiAction<IEmptyRequest,IPortfolioModel[]>;
+	readonly Index: AppApiView<IEmptyRequest>;
 	
 	AddPortfolio(model: IAddPortfolioRequest, errorOptions?: IActionErrorOptions) {
 		return this.AddPortfolioAction.execute(model, errorOptions || {});

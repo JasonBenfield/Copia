@@ -1,8 +1,8 @@
 ﻿import { SingleActivePanel } from '@jasonbenfield/sharedwebapp/Panel/SingleActivePanel';
 import { CopiaPage } from '../CopiaPage';
-import { AddPortfolioPanel } from './AddPortfolioPanel';
+import { AddPortfolioPanel } from '../Portfolios/AddPortfolioPanel';
 import { MainPageView } from './MainPageView';
-import { PortfolioListPanel } from './PortfolioListPanel';
+import { PortfolioListPanel } from '../Portfolios/PortfolioListPanel';
 
 class MainPage extends CopiaPage {
     private readonly panels: SingleActivePanel;
@@ -16,7 +16,7 @@ class MainPage extends CopiaPage {
             new AddPortfolioPanel(this.defaultApi, view.addPortfolioPanel)
         );
         this.portfolioListPanel = this.panels.add(
-            new PortfolioListPanel(this.defaultApi, view.portfolioListPanel)
+            new PortfolioListPanel(this.defaultApi, view.portfolioListPanel, true)
         );
         this.portfolioListPanel.refresh();
         this.activatePortfolioListPanel();

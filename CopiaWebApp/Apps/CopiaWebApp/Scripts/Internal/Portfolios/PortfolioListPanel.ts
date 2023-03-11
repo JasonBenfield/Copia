@@ -1,12 +1,9 @@
 ﻿import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
-import { AsyncCommand, Command } from "@jasonbenfield/sharedwebapp/Components/Command";
+import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { ListGroup } from "@jasonbenfield/sharedwebapp/Components/ListGroup";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
-import { DelayedAction } from "@jasonbenfield/sharedwebapp/DelayedAction";
-import { TextInputFormGroup } from "@jasonbenfield/sharedwebapp/Forms/TextInputFormGroup";
 import { TextLinkListGroupItemView } from "@jasonbenfield/sharedwebapp/Views/ListGroup";
 import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
-import { AddPortfolioPanelView } from "./AddPortfolioPanelView";
 import { PortfolioListItem } from "./PortfolioListItem";
 import { PortfolioListPanelView } from "./PortfolioListPanelView";
 
@@ -27,7 +24,11 @@ export class PortfolioListPanel implements IPanel {
     private readonly alert: MessageAlert;
     private readonly portfolioListGroup: ListGroup<PortfolioListItem, TextLinkListGroupItemView>;
 
-    constructor(private readonly copiaApi: CopiaAppApi, private readonly view: PortfolioListPanelView) {
+    constructor(
+        private readonly copiaApi: CopiaAppApi,
+        private readonly view: PortfolioListPanelView,
+        private readonly autoOpenSinglePortfolio: boolean
+    ) {
         this.alert = new MessageAlert(view.alert);
         this.portfolioListGroup = new ListGroup(view.portfolioListGroup);
         new Command(this.add.bind(this)).add(view.addButton);
@@ -46,6 +47,9 @@ export class PortfolioListPanel implements IPanel {
             portfolios,
             (p, v) => new PortfolioListItem(this.copiaApi, p, v)
         );
+        if (this.autoOpenSinglePortfolio && portfolios.length === 1) {
+            this.copiaApi.Portfolio.Index.open({}, portfolios[0].PublicKey.Value);
+        }
     }
 
     start() { return this.awaitable.start(); }

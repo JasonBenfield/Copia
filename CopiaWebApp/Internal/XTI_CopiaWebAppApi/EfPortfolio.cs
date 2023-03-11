@@ -35,6 +35,22 @@ internal sealed class EfPortfolio
         return accounts.Select(a => new EfAccount(a)).ToArray();
     }
 
+    public async Task<EfAccount> Account(int accountID)
+    {
+        var account = await db.Accounts.Retrieve()
+            .Where(a => a.ID == accountID)
+            .FirstOrDefaultAsync();
+        if(account == null)
+        {
+            throw new Exception($"Account {accountID} was not found.");
+        }
+        if(account.PortfolioID != entity.ID)
+        {
+            throw new Exception(string.Format(CopiaErrors.AccountDoesNotBelongToPortfolio, accountID, entity.ID));
+        }
+        return new EfAccount(account);
+    }
+
     public PortfolioModel ToModel() =>
         new PortfolioModel
         (

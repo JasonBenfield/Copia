@@ -11,5 +11,6 @@ internal static class PortfolioGroupExtensions
         services.AddScoped<AddAccountAction>();
         services.AddScoped<AddAccountValidation>();
         services.AddScoped<GetAccountsAction>();
+        services.AddScoped<GetPortfolioAction>();
     }
 }

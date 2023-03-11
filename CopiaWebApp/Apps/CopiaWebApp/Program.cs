@@ -1,11 +1,13 @@
-using XTI_HubAppClient.WebApp.Extensions;
-using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using CopiaWebApp;
 using CopiaWebApp.ApiControllers;
-using XTI_Core;
-using XTI_CopiaWebAppApi;
+using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using XTI_App.Api;
 using XTI_CopiaDB.Extensions;
 using XTI_CopiaImplementations;
+using XTI_CopiaWebAppApi;
+using XTI_Core;
+using XTI_HubAppClient.WebApp.Extensions;
+using XTI_WebApp.Api;
 
 var builder = XtiWebAppHost.CreateDefault(CopiaInfo.AppKey, args);
 var xtiEnv = XtiEnvironment.Parse(builder.Environment.EnvironmentName);
@@ -15,6 +17,7 @@ builder.Services.AddScoped(sp => (CopiaAppApi)sp.GetRequiredService<IAppApi>());
 builder.Services.AddCopiaAppApiServices();
 builder.Services.AddCopiaDbContextForSqlServer();
 builder.Services.AddScoped<IHubService, HcHubService>();
+builder.Services.AddScoped<IMenuDefinitionBuilder, CopiaMenuDefinitionBuilder>();
 builder.Services
     .AddMvc()
     .AddJsonOptions(options =>
