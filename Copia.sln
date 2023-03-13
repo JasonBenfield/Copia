@@ -43,7 +43,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaDB.SqlServer", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaDbTool", "CopiaWebApp\Internal\XTI_CopiaDbTool\XTI_CopiaDbTool.csproj", "{152BB6F1-84A9-4E2A-A095-7FC22A18D53D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaImplementations", "CopiaWebApp\Internal\XTI_CopiaImplementations\XTI_CopiaImplementations.csproj", "{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XTI_CopiaImplementations", "CopiaWebApp\Internal\XTI_CopiaImplementations\XTI_CopiaImplementations.csproj", "{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTI_CopiaDB.EF", "CopiaWebApp\Internal\XTI_CopiaDB.EF\XTI_CopiaDB.EF.csproj", "{8C16EB33-D462-45E7-B202-E6E4D983899D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,6 +105,10 @@ Global
 		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C16EB33-D462-45E7-B202-E6E4D983899D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C16EB33-D462-45E7-B202-E6E4D983899D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C16EB33-D462-45E7-B202-E6E4D983899D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C16EB33-D462-45E7-B202-E6E4D983899D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +131,7 @@ Global
 		{6FD28140-C9DB-4A40-BD8E-4C004E582D62} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
 		{152BB6F1-84A9-4E2A-A095-7FC22A18D53D} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
 		{C65C9F6A-E038-41DB-90A9-CBA23522CF4A} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
+		{8C16EB33-D462-45E7-B202-E6E4D983899D} = {7A6F6569-0FAD-47B6-94A5-7BF131A8C319}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {930AB467-FFD2-4966-A5C7-A3043B5E6E48}

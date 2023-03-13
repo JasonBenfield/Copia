@@ -2,6 +2,7 @@
 import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { LinkComponent } from "@jasonbenfield/sharedwebapp/Components/LinkComponent";
 import { CopiaAppApi } from "../Lib/Api/CopiaAppApi";
+import { PortfolioMenuComponent } from "./PortfolioMenuComponent";
 import { PortfolioMenuPanelView } from "./PortfolioMenuPanelView";
 
 interface IResult {
@@ -18,10 +19,10 @@ class Result {
 
 export class PortfolioMenuPanel implements IPanel {
     private readonly awaitable = new Awaitable<Result>();
-    private readonly portfolioLink: LinkComponent;
+    private readonly portfolioMenuComponent: PortfolioMenuComponent;
             
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: PortfolioMenuPanelView) {
-        this.portfolioLink = new LinkComponent(view.portfolioLinkView);
+    constructor(copiaClient: CopiaAppApi, private readonly view: PortfolioMenuPanelView) {
+        this.portfolioMenuComponent = new PortfolioMenuComponent(copiaClient, view.portfolioMenuView);
         new Command(this.back.bind(this)).add(view.backButton);
     }
 
@@ -31,7 +32,7 @@ export class PortfolioMenuPanel implements IPanel {
 
     activate() {
         this.view.show();
-        this.portfolioLink.setHref(this.copiaClient.Portfolio.Index.getUrl({}));
+        this.portfolioMenuComponent.load();
     }
 
     deactivate() { this.view.hide(); }

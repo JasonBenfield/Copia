@@ -7,9 +7,11 @@ import { GridView } from "@jasonbenfield/sharedwebapp/Views/Grid";
 import { NavView } from "@jasonbenfield/sharedwebapp/Views/NavView";
 import { ToolbarView } from "@jasonbenfield/sharedwebapp/Views/ToolbarView";
 import { CopiaTheme } from "./CopiaTheme";
+import { PortfolioMenuComponentView } from "./PortfolioMenuComponentView";
 
 export class MainMenuPanelView extends GridView {
     readonly menu: NavView;
+    readonly portfolioMenu: PortfolioMenuComponentView;
     private readonly toolbar: ToolbarView;
     readonly backButton: ButtonCommandView;
 
@@ -25,6 +27,8 @@ export class MainMenuPanelView extends GridView {
         menu.setFlexCss(new FlexCss().column());
         menu.configListItem(li => li.setMargin(MarginCss.bottom(3)));
         this.menu = menu;
+        this.portfolioMenu = mainContent.addView(PortfolioMenuComponentView);
+        this.portfolioMenu.setMargin(MarginCss.bottom(3));
         this.toolbar = CopiaTheme.instance.commandToolbar.toolbar(
             this.addCell().addView(ToolbarView)
         );

@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using XTI_CopiaDB;
 
-namespace XTI_CopiaWebAppApi;
+namespace XTI_CopiaDB.EF;
 
-internal sealed class EfPortfolios
+public sealed class EfPortfolios
 {
     private readonly CopiaDbContext db;
 
@@ -42,6 +41,6 @@ internal sealed class EfPortfolios
         var entity = await db.Portfolios.Retrieve()
             .Where(p => p.ID == portfolioID)
             .FirstOrDefaultAsync();
-        return new EfPortfolio(db, entity ?? throw new ArgumentException($"Unable to find portfolio {portfolioID}"));
+        return new EfPortfolio(db, entity ?? throw new ArgumentException(string.Format(CopiaDBErrors.PortfolioIDNotFound, portfolioID)));
     }
 }

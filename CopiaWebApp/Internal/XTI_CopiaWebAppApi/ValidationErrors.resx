@@ -120,6 +120,9 @@
   <data name="AccountTypeIsRequired" xml:space="preserve">
     <value>Account Type is required.</value>
   </data>
+  <data name="ActivityTemplateNameIsRequired" xml:space="preserve">
+    <value>Activity Template Name is required.</value>
+  </data>
   <data name="PortfolioModifierIsRequired" xml:space="preserve">
     <value>Portfolio Modifier is required.</value>
   </data>

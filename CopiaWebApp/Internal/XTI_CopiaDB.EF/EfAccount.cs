@@ -1,13 +1,12 @@
 ﻿using XTI_Copia.Abstractions;
-using XTI_CopiaDB;
 
-namespace XTI_CopiaWebAppApi;
+namespace XTI_CopiaDB.EF;
 
-internal sealed class EfAccount
+public sealed class EfAccount
 {
     private readonly AccountEntity entity;
 
-    public EfAccount(AccountEntity entity)
+    internal EfAccount(AccountEntity entity)
     {
         this.entity = entity;
     }

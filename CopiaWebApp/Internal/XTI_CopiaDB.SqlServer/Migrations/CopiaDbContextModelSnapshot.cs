@@ -48,6 +48,61 @@ namespace XTICopiaDB.SqlServer.Migrations
                     b.ToTable("Accounts", (string)null);
                 });
 
+            modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("ActivityNameTemplateStringID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PortfolioID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TemplateName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PortfolioID");
+
+                    b.ToTable("ActivityTemplates", (string)null);
+                });
+
+            modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateFieldEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Accessibility")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FieldCaption")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("FieldType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TemplateID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TemplateID");
+
+                    b.ToTable("ActivityTemplateFields", (string)null);
+                });
+
             modelBuilder.Entity("XTI_CopiaDB.PortfolioEntity", b =>
                 {
                     b.Property<int>("ID")
@@ -69,11 +124,110 @@ namespace XTICopiaDB.SqlServer.Migrations
                     b.ToTable("Portfolios", (string)null);
                 });
 
+            modelBuilder.Entity("XTI_CopiaDB.TemplateStringEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("CanEdit")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("DataType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PortfolioID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PortfolioID");
+
+                    b.ToTable("TemplateStrings", (string)null);
+                });
+
+            modelBuilder.Entity("XTI_CopiaDB.TemplateStringPartEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("ArrayIndex")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArrayType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FieldType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FixedText")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("PartType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sequence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TemplateStringID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TemplateStringID", "Sequence")
+                        .IsUnique();
+
+                    b.ToTable("TemplateStringParts", (string)null);
+                });
+
             modelBuilder.Entity("XTI_CopiaDB.AccountEntity", b =>
                 {
                     b.HasOne("XTI_CopiaDB.PortfolioEntity", null)
                         .WithMany()
                         .HasForeignKey("PortfolioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateEntity", b =>
+                {
+                    b.HasOne("XTI_CopiaDB.PortfolioEntity", null)
+                        .WithMany()
+                        .HasForeignKey("PortfolioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateFieldEntity", b =>
+                {
+                    b.HasOne("XTI_CopiaDB.ActivityTemplateEntity", null)
+                        .WithMany()
+                        .HasForeignKey("TemplateID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("XTI_CopiaDB.TemplateStringEntity", b =>
+                {
+                    b.HasOne("XTI_CopiaDB.PortfolioEntity", null)
+                        .WithMany()
+                        .HasForeignKey("PortfolioID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("XTI_CopiaDB.TemplateStringPartEntity", b =>
+                {
+                    b.HasOne("XTI_CopiaDB.TemplateStringEntity", null)
+                        .WithMany()
+                        .HasForeignKey("TemplateStringID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
