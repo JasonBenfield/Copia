@@ -3,17 +3,19 @@ using Microsoft.Extensions.Hosting;
 using XTI_App.Abstractions;
 using XTI_App.Extensions;
 using XTI_App.Fakes;
+using XTI_CopiaDB;
 using XTI_CopiaDB.Extensions;
 using XTI_CopiaWebAppApi;
 using XTI_Core;
 using XTI_Core.Extensions;
 using XTI_Core.Fakes;
+using XTI_DB;
 
 namespace CopiaWebAppTests;
 
 internal sealed class CopiaTestHost
 {
-    public Task<IServiceProvider> Setup(string envName = "Development", Action<IServiceCollection>? configure = null)
+    public async Task<IServiceProvider> Setup(string envName = "Test", Action<IServiceCollection>? configure = null)
     {
         Environment.SetEnvironmentVariable("DOTNET_ENVIRONMENT", envName);
         var xtiEnv = XtiEnvironment.Parse(envName);
@@ -32,7 +34,8 @@ internal sealed class CopiaTestHost
         builder.Services.AddScoped<AppApiFactory>(sp => sp.GetRequiredService<CopiaAppApiFactory>());
         builder.Services.AddScoped(sp => sp.GetRequiredService<AppApiFactory>().CreateForSuperUser());
         builder.Services.AddScoped(sp => (CopiaAppApi)sp.GetRequiredService<IAppApi>());
-        builder.Services.AddCopiaDbContextForInMemory();
+        builder.Services.AddCopiaDbContextForSqlServer();
+        builder.Services.AddScoped<DbAdmin<CopiaDbContext>>();
         builder.Services.AddScoped<FakeHubService>();
         builder.Services.AddScoped<IHubService>(sp => sp.GetRequiredService<FakeHubService>());
         if (configure != null)
@@ -45,6 +48,12 @@ internal sealed class CopiaTestHost
         var template = apiFactory.CreateTemplate();
         var copiaApp = appContext.AddApp(template.ToModel());
         appContext.SetCurrentApp(copiaApp);
-        return Task.FromResult(sp);
+        var dbAdmin = sp.GetRequiredService<DbAdmin<CopiaDbContext>>();
+        if (xtiEnv.IsTest())
+        {
+            await dbAdmin.Reset();
+        }
+        await dbAdmin.Update();
+        return sp;
     }
 }

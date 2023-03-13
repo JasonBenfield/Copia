@@ -70,6 +70,15 @@ namespace XTI_CopiaWebAppApi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activity Template Name is required..
+        /// </summary>
+        public static string ActivityTemplateNameIsRequired {
+            get {
+                return ResourceManager.GetString("ActivityTemplateNameIsRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Portfolio Modifier is required..
         /// </summary>
         public static string PortfolioModifierIsRequired {

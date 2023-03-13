@@ -130,5 +130,4 @@ internal sealed class AddAccountTest
         var addTester = tester.Create(api => api.Portfolios.AddPortfolio);
         return addTester.Execute(new AddPortfolioRequest { PortfolioName = "My Portfolio" });
     }
-
 }

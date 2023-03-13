@@ -1,5 +1,6 @@
 ﻿using XTI_App.Abstractions;
 using XTI_Copia.Abstractions;
+using XTI_CopiaDB.EF;
 using XTI_CopiaWebAppApi;
 
 namespace CopiaWebAppTests;
@@ -73,7 +74,7 @@ internal sealed class GetAccountTest
         Assert.That
         (
             ex.Message,
-            Is.EqualTo(string.Format(CopiaErrors.AccountDoesNotBelongToPortfolio, addedAccount.ID, portfolio1.ID)),
+            Is.EqualTo(string.Format(CopiaDBErrors.AccountDoesNotBelongToPortfolio, addedAccount.ID, portfolio1.ID)),
             "Should throw error when account does not belong to portfolio"
         );
     }

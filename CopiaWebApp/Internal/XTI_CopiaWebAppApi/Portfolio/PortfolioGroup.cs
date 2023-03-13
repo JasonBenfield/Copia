@@ -1,4 +1,5 @@
 ﻿using XTI_Copia.Abstractions;
+using XTI_CopiaWebAppApi.ActivityTemplates;
 
 namespace XTI_CopiaWebAppApi.Portfolio;
 

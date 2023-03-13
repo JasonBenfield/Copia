@@ -7,7 +7,8 @@ const entry = {
     home: './Scripts/Internal/Home/MainPage.ts',
     account: './Scripts/Internal/Account/MainPage.ts',
     portfolio: './Scripts/Internal/Portfolio/MainPage.ts',
-    portfolios: './Scripts/Internal/Portfolios/MainPage.ts'
+    portfolios: './Scripts/Internal/Portfolios/MainPage.ts',
+    activityTemplates: './Scripts/Internal/ActivityTemplates/MainPage.ts'
 };
 const exportModule = {
     rules: [

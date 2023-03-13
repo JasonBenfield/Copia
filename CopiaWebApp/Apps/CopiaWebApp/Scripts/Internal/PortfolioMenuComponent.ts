@@ -1,17 +1,28 @@
-﻿import { MenuComponent } from "@jasonbenfield/sharedwebapp/Components/MenuComponent";
-import { MenuItemComponent } from "@jasonbenfield/sharedwebapp/Components/MenuItemComponent";
-import { LinkCommandView } from "@jasonbenfield/sharedwebapp/Views/Command";
-import { NavView } from "@jasonbenfield/sharedwebapp/Views/NavView";
+﻿import { BasicComponent } from "@jasonbenfield/sharedwebapp/Components/BasicComponent";
+import { LinkComponent } from "@jasonbenfield/sharedwebapp/Components/LinkComponent";
 import { CopiaAppApi } from "../Lib/Api/CopiaAppApi";
+import { PortfolioMenuComponentView } from "./PortfolioMenuComponentView";
 
-export class PortfolioMenuComponent extends MenuComponent {
-    constructor(private readonly copiaClient: CopiaAppApi, view: NavView) {
-        super(copiaClient, 'portfolio', view);
+export class PortfolioMenuComponent extends BasicComponent {
+    private readonly portfolioLink: LinkComponent;
+    private readonly activityTemplatesLink: LinkComponent;
+
+    constructor(private readonly copiaClient: CopiaAppApi, view: PortfolioMenuComponentView) {
+        super(view);
+        this.portfolioLink = new LinkComponent(view.portfolioLinkView);
+        this.activityTemplatesLink = new LinkComponent(view.activityTemplatesLinkView);
     }
 
-    protected configureMenuItem(menuItem: MenuItemComponent, itemView: LinkCommandView) {
-        if (menuItem.isNamed('portfolio')) {
-            itemView.setHref(this.copiaClient.Portfolio.Index.getUrl({}).value());
-        }
+    load() {
+        this.portfolioLink.setHref(this.copiaClient.Portfolio.Index.getUrl({}));
+        this.activityTemplatesLink.setHref(this.copiaClient.ActivityTemplates.Index.getUrl({}));
+    }
+
+    show() {
+        this.view.show();
+    }
+
+    hide() {
+        this.view.hide();
     }
 }
