@@ -1,4 +1,4 @@
-﻿namespace XTI_CopiaDB;
+﻿namespace XTI_CopiaDB.Configuration;
 
 internal sealed class AccountEntityTypeConfiguration : IEntityTypeConfiguration<AccountEntity>
 {

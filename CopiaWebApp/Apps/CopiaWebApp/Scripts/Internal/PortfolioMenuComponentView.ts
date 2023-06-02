@@ -7,6 +7,7 @@ import { NavView } from "@jasonbenfield/sharedwebapp/Views/NavView";
 export class PortfolioMenuComponentView extends NavView {
     readonly portfolioLinkView: LinkCommandView;
     readonly activityTemplatesLinkView: LinkCommandView;
+    readonly counterpartiesLinkView: LinkCommandView;
 
     constructor(container: BasicComponentView) {
         super(container);
@@ -17,5 +18,7 @@ export class PortfolioMenuComponentView extends NavView {
         this.portfolioLinkView.setText('Portfolio');
         this.activityTemplatesLinkView = this.addMenuItem();
         this.activityTemplatesLinkView.setText('Activity Templates');
+        this.counterpartiesLinkView = this.addMenuItem();
+        this.counterpartiesLinkView.setText('Counterparties');
     }
 }

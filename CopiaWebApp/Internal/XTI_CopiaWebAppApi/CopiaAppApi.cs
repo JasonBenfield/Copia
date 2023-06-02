@@ -22,6 +22,7 @@ public sealed partial class CopiaAppApi : WebAppApiWrapper
         createAccountGroup(sp);
         createActivityTemplateGroup(sp);
         createActivityTemplatesGroup(sp);
+        createCounterpartiesGroup(sp);
         createHomeGroup(sp);
         createPortfolioGroup(sp);
         createPortfoliosGroup(sp);
@@ -32,6 +33,8 @@ public sealed partial class CopiaAppApi : WebAppApiWrapper
     partial void createActivityTemplateGroup(IServiceProvider sp);
 
     partial void createActivityTemplatesGroup(IServiceProvider sp);
+
+    partial void createCounterpartiesGroup(IServiceProvider sp);
 
     partial void createHomeGroup(IServiceProvider sp);
 

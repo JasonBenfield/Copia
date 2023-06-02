@@ -8,6 +8,7 @@ public sealed class AddAccountForm : Form
     public AddAccountForm() : base(nameof(AddAccountForm))
     {
         AccountName = AddTextInput(nameof(AccountName));
+        AccountName.MaxLength = 500;
         AccountName.MustNotBeNull();
         AccountName.MustNotBeWhiteSpace();
         AccountType = AddInt32DropDown(nameof(AccountType));

@@ -34,7 +34,7 @@ export class AddPortfolioPanelView extends PanelView {
         );
     }
 
-    handleFormSubmit(action: (el: HTMLElement, evt: JQueryEventObject) => void) {
+    handleFormSubmit(action: (el: HTMLElement, evt: JQuery.Event) => void) {
         this.form.onSubmit()
             .execute(action)
             .subscribe();
