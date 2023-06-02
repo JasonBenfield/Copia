@@ -11,13 +11,15 @@ import { TemplateString } from "./TemplateString";
 
 interface IResults {
     readonly back?: boolean;
-    readonly editTemplateStringRequested?: ITemplateStringModel;
+    readonly editTemplateStringRequested?: { templateString: ITemplateStringModel };
 }
 
 class Result {
     static back() { return new Result({ back: true }); }
 
-    static editTemplateStringRequested(templateString: ITemplateStringModel) { return new Result({ editTemplateStringRequested: templateString }); }
+    static editTemplateStringRequested(templateString: ITemplateStringModel) {
+        return new Result({ editTemplateStringRequested: { templateString: templateString } });
+    }
 
     private constructor(private readonly results: IResults) { }
 
@@ -33,6 +35,7 @@ export class ActivityTemplatePanel implements IPanel {
     private readonly activityNameText: TextComponent;
     private readonly fieldListGroup: ListGroup<ActivityTemplateFieldListItem, ActivityTemplateFieldListItemView>;
     private activityName: ITemplateStringModel;
+    private templateID: number;
 
     constructor(private readonly copiaClient: CopiaAppApi, private readonly view: ActivityTemplatePanelView) {
         this.alert = new MessageAlert(view.alert);
@@ -52,11 +55,20 @@ export class ActivityTemplatePanel implements IPanel {
     }
 
     async setActivityTemplateID(templateID: number) {
-        const activityTemplateDetail = await this.alert.infoAction(
+        this.templateID = templateID;
+        const activityTemplateDetail = await this.getActivityTemplateDetail(templateID);
+        this.setActivityTemplateDetail(activityTemplateDetail);
+    }
+
+    refresh() {
+        return this.setActivityTemplateID(this.templateID);
+    }
+
+    private getActivityTemplateDetail(templateID: number) {
+        return this.alert.infoAction(
             'Loading...',
             () => this.copiaClient.ActivityTemplate.GetActivityTemplateDetail({ TemplateID: templateID })
         );
-        this.setActivityTemplateDetail(activityTemplateDetail);
     }
 
     setActivityTemplateDetail(activityTemplateDetail: IActivityTemplateDetailModel) {
