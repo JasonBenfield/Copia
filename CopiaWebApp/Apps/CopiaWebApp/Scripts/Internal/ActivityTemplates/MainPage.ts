@@ -4,6 +4,7 @@ import { PortfolioMenuPanel } from '../PortfolioMenuPanel';
 import { ActivityTemplateListPanel } from './ActivityTemplateListPanel';
 import { ActivityTemplatePanel } from './ActivityTemplatePanel';
 import { AddActivityTemplatePanel } from './AddActivityTemplatePanel';
+import { EditTemplateStringPanel } from './EditTemplateStringPanel';
 import { MainPageView } from './MainPageView';
 
 class MainPage extends CopiaPage {
@@ -11,6 +12,7 @@ class MainPage extends CopiaPage {
     private readonly activityTemplateListPanel: ActivityTemplateListPanel;
     private readonly addActivityTemplatePanel: AddActivityTemplatePanel;
     private readonly activityTemplatePanel: ActivityTemplatePanel;
+    private readonly editTemplateStringPanel: EditTemplateStringPanel;
     private readonly menuPanel: PortfolioMenuPanel;
 
     constructor(protected readonly view: MainPageView) {
@@ -24,6 +26,9 @@ class MainPage extends CopiaPage {
         );
         this.activityTemplatePanel = this.panels.add(
             new ActivityTemplatePanel(this.defaultApi, view.activityTemplatePanelView)
+        );
+        this.editTemplateStringPanel = this.panels.add(
+            new EditTemplateStringPanel(this.defaultApi, view.editTemplateStringPanelView)
         );
         this.menuPanel = this.panels.add(
             new PortfolioMenuPanel(this.defaultApi, view.menuPanelView)
@@ -67,8 +72,18 @@ class MainPage extends CopiaPage {
             this.activateActivityTemplateListPanel();
         }
         else if (result.editTemplateStringRequested) {
-
+            this.editTemplateStringPanel.setTemplateString(result.editTemplateStringRequested.templateString);
+            this.activateEditTemplateStringPanel();
         }
+    }
+
+    private async activateEditTemplateStringPanel() {
+        this.panels.activate(this.editTemplateStringPanel);
+        const result = await this.editTemplateStringPanel.start();
+        if (result.saved) {
+            this.activityTemplatePanel.refresh();
+        }
+        this.activateActivityTemplatePanel();
     }
 
     private async activateMenuPanel() {
