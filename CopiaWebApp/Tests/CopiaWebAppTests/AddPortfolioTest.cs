@@ -55,6 +55,25 @@ internal sealed class AddPortfolioTest
         );
     }
 
+    [Test]
+    public async Task ShouldAddBlankCounterparty()
+    {
+        var tester = await Setup();
+        tester.Login();
+        var addRequest = new AddPortfolioRequest { PortfolioName = "My Portfolio" };
+        var portfolio = await tester.Execute(addRequest);
+        var db = tester.Services.GetRequiredService<CopiaDbContext>();
+        var defaultCounterparty = await db.CounterParties.Retrieve()
+            .Where(c => c.PortfolioID == portfolio.ID && c.DisplayText == "")
+            .FirstOrDefaultAsync();
+        Assert.That
+        (
+            defaultCounterparty,
+            Is.Not.Null,
+            "Should add blank counterparty to Portfolio"
+        );
+    }
+
     private async Task<CopiaActionTester<AddPortfolioRequest, PortfolioModel>> Setup()
     {
         var host = new CopiaTestHost();

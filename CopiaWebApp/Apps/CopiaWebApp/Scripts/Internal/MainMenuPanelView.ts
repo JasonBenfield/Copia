@@ -17,7 +17,6 @@ export class MainMenuPanelView extends GridView {
 
     constructor(container: BasicComponentView) {
         super(container);
-        this.setViewName(MainMenuPanelView.name);
         this.height100();
         this.layout();
         this.setTemplateRows(CssLengthUnit.flex(1), CssLengthUnit.auto());

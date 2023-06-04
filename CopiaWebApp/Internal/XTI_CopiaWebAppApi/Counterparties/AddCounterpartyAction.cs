@@ -1,14 +1,22 @@
 ﻿using XTI_Copia.Abstractions;
-using XTI_CopiaDB;
 
 namespace XTI_CopiaWebAppApi.Counterparties;
 
 internal sealed class AddCounterpartyAction : AppAction<AddCounterpartyForm, CounterpartyModel>
 {
-    private readonly CopiaDbContext db;
+    private readonly PortfolioFromModifier portfolioFromModifier;
+
+    public AddCounterpartyAction(PortfolioFromModifier portfolioFromModifier)
+    {
+        this.portfolioFromModifier = portfolioFromModifier;
+    }
 
     public async Task<CounterpartyModel> Execute(AddCounterpartyForm model, CancellationToken stoppingToken)
     {
-        return new CounterpartyModel();
+        var efPortfolio = await portfolioFromModifier.Value();
+        var displayText = model.DisplayText.Value()?.Trim() ?? "";
+        var url = model.Url.Value()?.Trim() ?? "";
+        var efCounterparty = await efPortfolio.AddCounterparty(displayText, url);
+        return efCounterparty.ToModel();
     }
 }
