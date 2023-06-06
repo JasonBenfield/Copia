@@ -11,6 +11,7 @@ export class AddAccountForm extends BaseForm {
 		this.AccountName.setCaption('Account Name');
 		this.AccountName.constraints.mustNotBeNull();
 		this.AccountName.constraints.mustNotBeWhitespace('Must not be blank');
+		this.AccountName.setMaxLength(500);
 		this.AccountType.setCaption('Account Type');
 		this.AccountType.constraints.mustNotBeNull();
 		this.AccountType.setItems(

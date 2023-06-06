@@ -24,8 +24,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="XTI_Core.Fakes" Version="1.10.19" />
-		<PackageReference Include="XTI_App.Fakes" Version="1.8.37" />
-		<PackageReference Include="XTI_App.Extensions" Version="1.8.37" />
+		<PackageReference Include="XTI_App.Fakes" Version="1.8.38" />
+		<PackageReference Include="XTI_App.Extensions" Version="1.8.38" />
 	</ItemGroup>
 
   <ItemGroup>

@@ -60,6 +60,15 @@ interface IActivityTemplateFieldModel {
 interface IAddActivityTemplateRequest {
 	TemplateName: string;
 }
+interface ICounterpartyModel {
+	ID: number;
+	DisplayText: string;
+	Url: string;
+}
+interface ICounterpartySearchResult {
+	Counterparties: ICounterpartyModel[];
+	Total: number;
+}
 interface IPortfolioModel {
 	ID: number;
 	PortfolioName: string;

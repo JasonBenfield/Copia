@@ -7,6 +7,7 @@ public static class CopiaAppApiExtensions
         services.AddAccountGroupServices();
         services.AddActivityTemplateGroupServices();
         services.AddActivityTemplatesGroupServices();
+        services.AddCounterpartiesGroupServices();
         services.AddHomeGroupServices();
         services.AddPortfolioGroupServices();
         services.AddPortfoliosGroupServices();

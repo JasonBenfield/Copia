@@ -6,6 +6,7 @@ import { AppApiQuery } from "@jasonbenfield/sharedwebapp/Api/AppApiQuery";
 import { AccountGroup } from "./AccountGroup";
 import { ActivityTemplateGroup } from "./ActivityTemplateGroup";
 import { ActivityTemplatesGroup } from "./ActivityTemplatesGroup";
+import { CounterpartiesGroup } from "./CounterpartiesGroup";
 import { HomeGroup } from "./HomeGroup";
 import { PortfolioGroup } from "./PortfolioGroup";
 import { PortfoliosGroup } from "./PortfoliosGroup";
@@ -17,6 +18,7 @@ export class CopiaAppApi extends AppApi {
 		this.Account = this.addGroup((evts, resourceUrl) => new AccountGroup(evts, resourceUrl));
 		this.ActivityTemplate = this.addGroup((evts, resourceUrl) => new ActivityTemplateGroup(evts, resourceUrl));
 		this.ActivityTemplates = this.addGroup((evts, resourceUrl) => new ActivityTemplatesGroup(evts, resourceUrl));
+		this.Counterparties = this.addGroup((evts, resourceUrl) => new CounterpartiesGroup(evts, resourceUrl));
 		this.Home = this.addGroup((evts, resourceUrl) => new HomeGroup(evts, resourceUrl));
 		this.Portfolio = this.addGroup((evts, resourceUrl) => new PortfolioGroup(evts, resourceUrl));
 		this.Portfolios = this.addGroup((evts, resourceUrl) => new PortfoliosGroup(evts, resourceUrl));
@@ -25,6 +27,7 @@ export class CopiaAppApi extends AppApi {
 	readonly Account: AccountGroup;
 	readonly ActivityTemplate: ActivityTemplateGroup;
 	readonly ActivityTemplates: ActivityTemplatesGroup;
+	readonly Counterparties: CounterpartiesGroup;
 	readonly Home: HomeGroup;
 	readonly Portfolio: PortfolioGroup;
 	readonly Portfolios: PortfoliosGroup;

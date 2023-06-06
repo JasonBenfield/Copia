@@ -107,6 +107,15 @@ public sealed class EfPortfolio
         return new EfActivityTemplate(db, this, activityTemplate ?? throw new Exception($"Activity Template {activityTemplateID} was not found."));
     }
 
+    public Task<EfCounterparty> AddCounterparty(string displayText, string url) =>
+        new EfCounterparties(db).Add(entity, displayText, url);
+
+    public Task<EfCounterparty[]> CounterpartySearch(string searchText, int max) =>
+        new EfCounterparties(db).Search(entity, searchText, max);
+
+    public Task<int> CounterpartySearchTotal(string searchText) =>
+        new EfCounterparties(db).SearchTotal(entity, searchText);
+
     public PortfolioModel ToModel() =>
         new PortfolioModel
         (

@@ -30,12 +30,13 @@ internal sealed class AddPortfolioAction : AppAction<AddPortfolioRequest, Portfo
 
     private async Task<PortfolioModel> AddPortfolio(AddPortfolioRequest addRequest, CancellationToken ct)
     {
-        var portfolio = await new EfPortfolios(db).AddPortfolio
+        var efPortfolio = await new EfPortfolios(db).AddPortfolio
         (
             addRequest.PortfolioName,
             clock.Now()
         );
-        var portfolioModel = portfolio.ToModel();
+        await efPortfolio.AddCounterparty("", "");
+        var portfolioModel = efPortfolio.ToModel();
         await hubService.AddModifier
         (
             CopiaInfo.ModCategories.Portfolio,

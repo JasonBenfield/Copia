@@ -31,7 +31,7 @@ export class AddActivityTemplatePanelView extends PanelView {
         );
     }
 
-    handleSubmit(action: (el: HTMLElement, evt: JQueryEventObject) => void) {
+    handleSubmit(action: (el: HTMLElement, evt: JQuery.Event) => void) {
         this.form.onSubmit()
             .preventDefault()
             .execute(action)
