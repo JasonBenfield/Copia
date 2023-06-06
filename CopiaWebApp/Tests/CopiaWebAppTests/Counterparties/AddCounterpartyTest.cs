@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using XTI_App.Abstractions;
 using XTI_Copia.Abstractions;
 using XTI_CopiaDB;
 using XTI_CopiaWebAppApi;
 using XTI_Forms;
 
-namespace CopiaWebAppTests;
+namespace CopiaWebAppTests.Counterparties;
 
 internal sealed class AddCounterpartyTest
 {
@@ -21,7 +22,7 @@ internal sealed class AddCounterpartyTest
             () =>
             {
                 var addForm = new AddCounterpartyForm();
-                addForm.DisplayText.SetValue("Counterparty 1");
+                addForm.DisplayText.SetValue($"Counterparty {attemptIndex}");
                 addForm.Url.SetValue("");
                 attemptIndex++;
                 return addForm;
@@ -41,12 +42,12 @@ internal sealed class AddCounterpartyTest
         var portfolio = await AddPortfolio(tester);
         var addForm = new AddCounterpartyForm();
         addForm.DisplayText.SetValue("");
-        addForm.Url.SetValue("example.com");
+        addForm.Url.SetValue("https://example.com");
         var ex = Assert.ThrowsAsync<ValidationFailedException>
         (
             () => tester.Execute
             (
-                addForm, 
+                addForm,
                 portfolio.PublicKey
             )
         );
@@ -58,6 +59,31 @@ internal sealed class AddCounterpartyTest
     }
 
     [Test]
+    public async Task ShouldNotAllowDuplicateDisplayText()
+    {
+        var tester = await Setup();
+        tester.Login();
+        var portfolio = await AddPortfolio(tester);
+        var addForm = new AddCounterpartyForm();
+        addForm.DisplayText.SetValue("Counterparty 1");
+        addForm.Url.SetValue("https://example.com");
+        await tester.Execute(addForm, portfolio.PublicKey);
+        var ex = Assert.ThrowsAsync<AppException>
+        (
+            () => tester.Execute
+            (
+                addForm,
+                portfolio.PublicKey
+            )
+        );
+        Assert.That
+        (
+            ex.DisplayMessage,
+            Is.EqualTo(ValidationErrors.CounterpartyAlreadyExists)
+        );
+    }
+
+    [Test]
     public async Task ShouldAddCounterparty()
     {
         var tester = await Setup();
@@ -65,14 +91,16 @@ internal sealed class AddCounterpartyTest
         var portfolio = await AddPortfolio(tester);
         var addForm = new AddCounterpartyForm();
         addForm.DisplayText.SetValue("Counterparty 1");
-        addForm.Url.SetValue("example.com");
+        addForm.Url.SetValue("https://example.com");
         await tester.Execute(addForm, portfolio.PublicKey);
         var db = tester.Services.GetRequiredService<CopiaDbContext>();
-        var counterparties = db.CounterParties.Retrieve();
+        var counterparties = await db.Counterparties.Retrieve()
+            .Where(c => !string.IsNullOrWhiteSpace(c.DisplayText))
+            .ToArrayAsync();
         Assert.That
         (
             counterparties.Select(c => new { c.DisplayText, c.Url }).ToArray(),
-            Is.EqualTo(new[] { new { DisplayText = "Counterparty 1", Url = "example.com" } }),
+            Is.EqualTo(new[] { new { DisplayText = "Counterparty 1", Url = "https://example.com" } }),
             "Should add counterparty"
         );
     }
@@ -85,12 +113,12 @@ internal sealed class AddCounterpartyTest
         var portfolio = await AddPortfolio(tester);
         var addForm = new AddCounterpartyForm();
         addForm.DisplayText.SetValue("Counterparty 1");
-        addForm.Url.SetValue("example.com");
+        addForm.Url.SetValue("https://example.com");
         var counterparty = await tester.Execute(addForm, portfolio.PublicKey);
         Assert.That
         (
             new { counterparty.DisplayText, counterparty.Url },
-            Is.EqualTo(new { DisplayText = "Counterparty 1", Url = "example.com" }), 
+            Is.EqualTo(new { DisplayText = "Counterparty 1", Url = "https://example.com" }),
             "Should return new counterparty"
         );
     }

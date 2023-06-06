@@ -79,6 +79,15 @@ namespace XTI_CopiaWebAppApi {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Counterparty already exists..
+        /// </summary>
+        public static string CounterpartyAlreadyExists {
+            get {
+                return ResourceManager.GetString("CounterpartyAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Portfolio Modifier is required..
         /// </summary>
         public static string PortfolioModifierIsRequired {

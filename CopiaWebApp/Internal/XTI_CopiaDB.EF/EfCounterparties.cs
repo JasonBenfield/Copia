@@ -19,8 +19,8 @@ public sealed class EfCounterparties
             DisplayText = displayText,
             Url = url
         };
-        await db.CounterParties.Create(counterparty);
-        return new EfCounterparty(counterparty);
+        await db.Counterparties.Create(counterparty);
+        return new EfCounterparty(db, counterparty);
     }
 
     internal Task<int> SearchTotal(PortfolioEntity portfolio, string searchText) =>
@@ -33,19 +33,36 @@ public sealed class EfCounterparties
             .OrderBy(c => c.DisplayText)
             .Take(max)
             .ToArrayAsync();
-        return counterparties.Select(c => new EfCounterparty(c)).ToArray();
+        return counterparties.Select(c => new EfCounterparty(db, c)).ToArray();
     }
 
     private IQueryable<CounterpartyEntity> SearchQuery(PortfolioEntity portfolio, string searchText)
     {
         searchText = searchText.ToLower().Trim();
-        return db.CounterParties.Retrieve()
+        return db.Counterparties.Retrieve()
             .Where
             (
-                c => 
-                    c.PortfolioID == portfolio.ID && 
+                c =>
+                    c.PortfolioID == portfolio.ID &&
                     c.DisplayText != "" &&
                     c.DisplayText.ToLower().StartsWith(searchText)
             );
+    }
+
+    internal async Task<EfCounterparty> Counterparty(PortfolioEntity portfolio, int id)
+    {
+        var counterparty = await db.Counterparties.Retrieve()
+            .Where(c => c.PortfolioID == portfolio.ID && c.ID == id)
+            .FirstOrDefaultAsync();
+        return new EfCounterparty(db, counterparty ?? throw new Exception($"Counterparty {id} not found for portfolio {portfolio.ID}"));
+    }
+
+    internal async Task<EfCounterparty> CounterpartyByDisplayText(PortfolioEntity portfolio, string displayText)
+    {
+        displayText = displayText.Trim().ToLower();
+        var counterparty = await db.Counterparties.Retrieve()
+            .Where(c => c.PortfolioID == portfolio.ID && c.DisplayText.ToLower() == displayText)
+            .FirstOrDefaultAsync();
+        return new EfCounterparty(db, counterparty ?? new CounterpartyEntity());
     }
 }

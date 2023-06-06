@@ -63,7 +63,7 @@ internal sealed class AddPortfolioTest
         var addRequest = new AddPortfolioRequest { PortfolioName = "My Portfolio" };
         var portfolio = await tester.Execute(addRequest);
         var db = tester.Services.GetRequiredService<CopiaDbContext>();
-        var defaultCounterparty = await db.CounterParties.Retrieve()
+        var defaultCounterparty = await db.Counterparties.Retrieve()
             .Where(c => c.PortfolioID == portfolio.ID && c.DisplayText == "")
             .FirstOrDefaultAsync();
         Assert.That

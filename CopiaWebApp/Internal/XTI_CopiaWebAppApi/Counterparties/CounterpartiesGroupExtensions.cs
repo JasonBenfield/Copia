@@ -8,6 +8,7 @@ internal static class CounterpartiesGroupExtensions
     {
         services.AddScoped<AddCounterpartyAction>();
         services.AddScoped<CounterpartySearchAction>();
+        services.AddScoped<EditCounterpartyAction>();
         services.AddScoped<IndexAction>();
     }
 }
