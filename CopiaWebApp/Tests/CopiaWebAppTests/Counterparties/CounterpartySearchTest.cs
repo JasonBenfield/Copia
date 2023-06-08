@@ -1,7 +1,7 @@
 ﻿using XTI_Copia.Abstractions;
 using XTI_CopiaWebAppApi;
 
-namespace CopiaWebAppTests;
+namespace CopiaWebAppTests.Counterparties;
 
 internal sealed class CounterpartySearchTest
 {

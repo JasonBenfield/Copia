@@ -6,12 +6,12 @@ namespace XTI_CopiaDB.EF;
 public sealed class EfPortfolio
 {
     private readonly CopiaDbContext db;
-    private readonly PortfolioEntity entity;
+    private readonly PortfolioEntity portfolio;
 
     internal EfPortfolio(CopiaDbContext db, PortfolioEntity entity)
     {
         this.db = db;
-        this.entity = entity;
+        this.portfolio = entity;
     }
 
     public async Task<EfAccount> AddAccount(string accountName, AccountType accountType)
@@ -20,7 +20,7 @@ public sealed class EfPortfolio
         {
             AccountName = accountName,
             AccountType = accountType,
-            PortfolioID = entity.ID
+            PortfolioID = portfolio.ID
         };
         await db.Accounts.Create(account);
         return new EfAccount(account);
@@ -29,7 +29,7 @@ public sealed class EfPortfolio
     public async Task<EfAccount[]> Accounts()
     {
         var accounts = await db.Accounts.Retrieve()
-            .Where(a => a.PortfolioID == entity.ID)
+            .Where(a => a.PortfolioID == portfolio.ID)
             .ToArrayAsync();
         return accounts.Select(a => new EfAccount(a)).ToArray();
     }
@@ -43,9 +43,9 @@ public sealed class EfPortfolio
         {
             throw new Exception(string.Format(CopiaDBErrors.AccountIDNotFound, accountID));
         }
-        if (account.PortfolioID != entity.ID)
+        if (account.PortfolioID != portfolio.ID)
         {
-            throw new Exception(string.Format(CopiaDBErrors.AccountDoesNotBelongToPortfolio, accountID, entity.ID));
+            throw new Exception(string.Format(CopiaDBErrors.AccountDoesNotBelongToPortfolio, accountID, portfolio.ID));
         }
         return new EfAccount(account);
     }
@@ -56,7 +56,7 @@ public sealed class EfPortfolio
         var template = new ActivityTemplateEntity
         {
             TemplateName = templateName,
-            PortfolioID = entity.ID,
+            PortfolioID = portfolio.ID,
             ActivityNameTemplateStringID = efActivityName.ID
         };
         await db.ActivityTemplates.Create(template);
@@ -75,7 +75,7 @@ public sealed class EfPortfolio
     {
         var templateString = new TemplateStringEntity
         {
-            PortfolioID = entity.ID,
+            PortfolioID = portfolio.ID,
             CanEdit = canEdit,
             DataType = dataType
         };
@@ -86,7 +86,7 @@ public sealed class EfPortfolio
     public async Task<EfTemplateString> TemplateString(int templateStringID)
     {
         var templateString = await db.TemplateStrings.Retrieve()
-            .Where(ts => ts.ID == templateStringID && ts.PortfolioID == entity.ID)
+            .Where(ts => ts.ID == templateStringID && ts.PortfolioID == portfolio.ID)
             .FirstOrDefaultAsync();
         return new EfTemplateString(db, templateString ?? throw new Exception($"Template String {templateStringID} was not found."));
     }
@@ -94,7 +94,7 @@ public sealed class EfPortfolio
     public async Task<EfActivityTemplate[]> ActivityTemplates()
     {
         var activityTemplates = await db.ActivityTemplates.Retrieve()
-            .Where(at => at.PortfolioID == entity.ID)
+            .Where(at => at.PortfolioID == portfolio.ID)
             .ToArrayAsync();
         return activityTemplates.Select(at => new EfActivityTemplate(db, this, at)).ToArray();
     }
@@ -102,25 +102,36 @@ public sealed class EfPortfolio
     public async Task<EfActivityTemplate> ActivityTemplate(int activityTemplateID)
     {
         var activityTemplate = await db.ActivityTemplates.Retrieve()
-            .Where(at => at.ID == activityTemplateID && at.PortfolioID == entity.ID)
+            .Where(at => at.ID == activityTemplateID && at.PortfolioID == portfolio.ID)
             .FirstOrDefaultAsync();
-        return new EfActivityTemplate(db, this, activityTemplate ?? throw new Exception($"Activity Template {activityTemplateID} was not found."));
+        return new EfActivityTemplate
+        (
+            db,
+            this,
+            activityTemplate ?? throw new Exception($"Activity Template {activityTemplateID} was not found.")
+        );
     }
 
     public Task<EfCounterparty> AddCounterparty(string displayText, string url) =>
-        new EfCounterparties(db).Add(entity, displayText, url);
+        new EfCounterparties(db).Add(portfolio, displayText, url);
 
     public Task<EfCounterparty[]> CounterpartySearch(string searchText, int max) =>
-        new EfCounterparties(db).Search(entity, searchText, max);
+        new EfCounterparties(db).Search(portfolio, searchText, max);
 
     public Task<int> CounterpartySearchTotal(string searchText) =>
-        new EfCounterparties(db).SearchTotal(entity, searchText);
+        new EfCounterparties(db).SearchTotal(portfolio, searchText);
+
+    public Task<EfCounterparty> Counterparty(int id) =>
+        new EfCounterparties(db).Counterparty(portfolio, id);
+
+    public Task<EfCounterparty> CounterpartyByDisplayText(string displayText) =>
+        new EfCounterparties(db).CounterpartyByDisplayText(portfolio, displayText);
 
     public PortfolioModel ToModel() =>
         new PortfolioModel
         (
-            entity.ID,
-            entity.PortfolioName,
-            new ModifierKey(entity.ID.ToString())
+            portfolio.ID,
+            portfolio.PortfolioName,
+            new ModifierKey(portfolio.ID.ToString())
         );
 }

@@ -15,6 +15,11 @@ internal sealed class AddCounterpartyAction : AppAction<AddCounterpartyForm, Cou
     {
         var efPortfolio = await portfolioFromModifier.Value();
         var displayText = model.DisplayText.Value()?.Trim() ?? "";
+        var existingCounterparty = await efPortfolio.CounterpartyByDisplayText(displayText);
+        if (existingCounterparty.IsFound())
+        {
+            throw new AppException(ValidationErrors.CounterpartyAlreadyExists);
+        }
         var url = model.Url.Value()?.Trim() ?? "";
         var efCounterparty = await efPortfolio.AddCounterparty(displayText, url);
         return efCounterparty.ToModel();

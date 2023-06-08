@@ -13,6 +13,7 @@ import { CounterpartyListPanelView } from "./CounterpartyListPanelView";
 interface IResults {
     menu?: boolean;
     addRequested?: boolean;
+    editRequested?: { counterparty: ICounterpartyModel };
 }
 
 class Result {
@@ -20,11 +21,17 @@ class Result {
 
     static addRequested() { return new Result({ addRequested: true }); }
 
+    static editRequested(counterparty: ICounterpartyModel) {
+        return new Result({ editRequested: { counterparty: counterparty } });
+    }
+
     private constructor(private readonly results: IResults) { }
 
     get menu() { return this.results.menu; }
 
     get addRequested() { return this.results.addRequested; }
+
+    get editRequested() { return this.results.editRequested; }
 }
 
 export class CounterpartyListPanel implements IPanel {
@@ -39,6 +46,8 @@ export class CounterpartyListPanel implements IPanel {
         this.searchInputControl.when.valueChanged.then(this.onSearchInputChanged.bind(this));
         this.alert = new MessageAlert(view.alertView);
         this.counterpartyListGroup = new ListGroup(view.counterpartyListView);
+        view.handleEditButton(this.onEditCounterpartyClicked.bind(this));
+        view.handleDeleteButton(this.onDeleteCounterpartyClicked.bind(this));
         new Command(this.menu.bind(this)).add(view.menuButton);
         new Command(this.add.bind(this)).add(view.addButton);
     }
@@ -48,6 +57,15 @@ export class CounterpartyListPanel implements IPanel {
     private add() { this.awaitable.resolve(Result.addRequested()); }
 
     private menu() { this.awaitable.resolve(Result.menu()); }
+
+    private onEditCounterpartyClicked(el: HTMLElement, evt: JQuery.Event) {
+        const counterpartyItem = this.counterpartyListGroup.getItemByElement(el);
+        this.awaitable.resolve(Result.editRequested(counterpartyItem.counterparty));
+    }
+
+    private async onDeleteCounterpartyClicked(el: HTMLElement, evt: JQuery.Event) {
+        const counterpartyItem = this.counterpartyListGroup.getItemByElement(el);
+    }
 
     start() {
         return this.awaitable.start();

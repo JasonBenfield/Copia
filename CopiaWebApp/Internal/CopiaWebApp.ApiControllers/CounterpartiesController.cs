@@ -26,4 +26,10 @@ public sealed partial class CounterpartiesController : Controller
     {
         return api.Group("Counterparties").Action<string, CounterpartySearchResult>("CounterpartySearch").Execute(model, ct);
     }
+
+    [HttpPost]
+    public Task<ResultContainer<CounterpartyModel>> EditCounterparty([FromBody] EditCounterpartyForm model, CancellationToken ct)
+    {
+        return api.Group("Counterparties").Action<EditCounterpartyForm, CounterpartyModel>("EditCounterparty").Execute(model, ct);
+    }
 }
