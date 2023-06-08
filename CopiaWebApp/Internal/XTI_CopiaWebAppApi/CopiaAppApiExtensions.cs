@@ -5,6 +5,7 @@ public static class CopiaAppApiExtensions
     public static void AddCopiaAppApiServices(this IServiceCollection services)
     {
         services.AddAccountGroupServices();
+        services.AddActivitiesGroupServices();
         services.AddActivityTemplateGroupServices();
         services.AddActivityTemplatesGroupServices();
         services.AddCounterpartiesGroupServices();
