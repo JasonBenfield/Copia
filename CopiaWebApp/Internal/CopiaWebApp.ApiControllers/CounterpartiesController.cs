@@ -28,6 +28,12 @@ public sealed partial class CounterpartiesController : Controller
     }
 
     [HttpPost]
+    public Task<ResultContainer<EmptyActionResult>> DeleteCounterparty([FromBody] int model, CancellationToken ct)
+    {
+        return api.Group("Counterparties").Action<int, EmptyActionResult>("DeleteCounterparty").Execute(model, ct);
+    }
+
+    [HttpPost]
     public Task<ResultContainer<CounterpartyModel>> EditCounterparty([FromBody] EditCounterpartyForm model, CancellationToken ct)
     {
         return api.Group("Counterparties").Action<EditCounterpartyForm, CounterpartyModel>("EditCounterparty").Execute(model, ct);

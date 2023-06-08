@@ -14,12 +14,14 @@ export class CounterpartiesGroup extends AppApiGroup {
 		this.Index = this.createView<IEmptyRequest>('Index');
 		this.AddCounterpartyAction = this.createAction<AddCounterpartyForm,ICounterpartyModel>('AddCounterparty', 'Add Counterparty');
 		this.CounterpartySearchAction = this.createAction<string,ICounterpartySearchResult>('CounterpartySearch', 'Counterparty Search');
+		this.DeleteCounterpartyAction = this.createAction<number,IEmptyActionResult>('DeleteCounterparty', 'Delete Counterparty');
 		this.EditCounterpartyAction = this.createAction<EditCounterpartyForm,ICounterpartyModel>('EditCounterparty', 'Edit Counterparty');
 	}
 	
 	readonly Index: AppApiView<IEmptyRequest>;
 	readonly AddCounterpartyAction: AppApiAction<AddCounterpartyForm,ICounterpartyModel>;
 	readonly CounterpartySearchAction: AppApiAction<string,ICounterpartySearchResult>;
+	readonly DeleteCounterpartyAction: AppApiAction<number,IEmptyActionResult>;
 	readonly EditCounterpartyAction: AppApiAction<EditCounterpartyForm,ICounterpartyModel>;
 	
 	AddCounterparty(model: AddCounterpartyForm, errorOptions?: IActionErrorOptions) {
@@ -27,6 +29,9 @@ export class CounterpartiesGroup extends AppApiGroup {
 	}
 	CounterpartySearch(model: string, errorOptions?: IActionErrorOptions) {
 		return this.CounterpartySearchAction.execute(model, errorOptions || {});
+	}
+	DeleteCounterparty(model: number, errorOptions?: IActionErrorOptions) {
+		return this.DeleteCounterpartyAction.execute(model, errorOptions || {});
 	}
 	EditCounterparty(model: EditCounterpartyForm, errorOptions?: IActionErrorOptions) {
 		return this.EditCounterpartyAction.execute(model, errorOptions || {});

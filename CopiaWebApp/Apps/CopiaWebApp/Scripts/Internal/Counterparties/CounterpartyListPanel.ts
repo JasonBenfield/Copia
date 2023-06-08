@@ -3,6 +3,7 @@ import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { InputControl } from "@jasonbenfield/sharedwebapp/Components/InputControl";
 import { ListGroup } from "@jasonbenfield/sharedwebapp/Components/ListGroup";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
+import { ModalConfirm } from "@jasonbenfield/sharedwebapp/Components/ModalConfirm";
 import { DebouncedAction } from "@jasonbenfield/sharedwebapp/DebouncedAction";
 import { TextToTextViewValue } from "@jasonbenfield/sharedwebapp/Forms/TextToTextViewValue";
 import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
@@ -39,6 +40,7 @@ export class CounterpartyListPanel implements IPanel {
     private readonly searchInputControl: InputControl<string>;
     private readonly alert: MessageAlert;
     private readonly counterpartyListGroup: ListGroup<CounterpartyListItem, CounterpartyListItemView>;
+    private readonly modalConfirm: ModalConfirm;
 
     constructor(private readonly copiaClient: CopiaAppApi, private readonly view: CounterpartyListPanelView) {
         view.hideMoreAlert();
@@ -46,6 +48,7 @@ export class CounterpartyListPanel implements IPanel {
         this.searchInputControl.when.valueChanged.then(this.onSearchInputChanged.bind(this));
         this.alert = new MessageAlert(view.alertView);
         this.counterpartyListGroup = new ListGroup(view.counterpartyListView);
+        this.modalConfirm = new ModalConfirm(view.modalConfirmView);
         view.handleEditButton(this.onEditCounterpartyClicked.bind(this));
         view.handleDeleteButton(this.onDeleteCounterpartyClicked.bind(this));
         new Command(this.menu.bind(this)).add(view.menuButton);
@@ -59,12 +62,25 @@ export class CounterpartyListPanel implements IPanel {
     private menu() { this.awaitable.resolve(Result.menu()); }
 
     private onEditCounterpartyClicked(el: HTMLElement, evt: JQuery.Event) {
+        evt.stopPropagation();
         const counterpartyItem = this.counterpartyListGroup.getItemByElement(el);
         this.awaitable.resolve(Result.editRequested(counterpartyItem.counterparty));
     }
 
     private async onDeleteCounterpartyClicked(el: HTMLElement, evt: JQuery.Event) {
+        evt.stopPropagation();
         const counterpartyItem = this.counterpartyListGroup.getItemByElement(el);
+        const isConfirmed = await this.modalConfirm.confirm(
+            `Delete '${counterpartyItem.counterparty.DisplayText}'?`,
+            'Confirm Delete'
+        );
+        if (isConfirmed) {
+            await this.alert.infoAction(
+                'Deleting...',
+                () => this.copiaClient.Counterparties.DeleteCounterparty(counterpartyItem.counterparty.ID)
+            );
+            this.debouncedRefresh.execute();
+        }
     }
 
     start() {

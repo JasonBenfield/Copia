@@ -8,6 +8,7 @@ import { InputGroupView } from "@jasonbenfield/sharedwebapp/Views/InputGroupView
 import { InputView } from "@jasonbenfield/sharedwebapp/Views/InputView";
 import { GridListGroupView } from "@jasonbenfield/sharedwebapp/Views/ListGroup";
 import { MessageAlertView } from "@jasonbenfield/sharedwebapp/Views/MessageAlertView";
+import { ModalConfirmView } from "@jasonbenfield/sharedwebapp/Views/Modal";
 import { SpanView } from "@jasonbenfield/sharedwebapp/Views/SpanView";
 import { TextBlockView } from "@jasonbenfield/sharedwebapp/Views/TextBlockView";
 import { CopiaTheme } from "../CopiaTheme";
@@ -19,6 +20,7 @@ export class CounterpartyListPanelView extends PanelView {
     readonly alertView: MessageAlertView;
     readonly counterpartyListView: GridListGroupView<CounterpartyListItemView>;
     private readonly moreAlert: AlertView;
+    readonly modalConfirmView: ModalConfirmView;
     readonly menuButton: ButtonCommandView;
     readonly addButton: ButtonCommandView;
 
@@ -37,6 +39,7 @@ export class CounterpartyListPanelView extends PanelView {
         this.moreAlert.setContext(ContextualClass.info);
         const moreAlertText = this.moreAlert.addView(TextBlockView);
         moreAlertText.setText('More counterparties were found. Try to narrow your search.');
+        this.modalConfirmView = this.body.addView(ModalConfirmView);
         this.menuButton = CopiaTheme.instance.commandToolbar.menuButton(
             this.toolbar.addButtonCommandToStart()
         );

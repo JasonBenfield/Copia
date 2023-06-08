@@ -10,11 +10,13 @@ public sealed class CounterpartiesGroup : AppApiGroupWrapper
         Index = source.AddAction(nameof(Index), () => sp.GetRequiredService<IndexAction>());
         AddCounterparty = source.AddAction(nameof(AddCounterparty), () => sp.GetRequiredService<AddCounterpartyAction>());
         CounterpartySearch = source.AddAction(nameof(CounterpartySearch), () => sp.GetRequiredService<CounterpartySearchAction>());
+        DeleteCounterparty = source.AddAction(nameof(DeleteCounterparty), () => sp.GetRequiredService<DeleteCounterpartyAction>());
         EditCounterparty = source.AddAction(nameof(EditCounterparty), () => sp.GetRequiredService<EditCounterpartyAction>());
     }
 
     public AppApiAction<EmptyRequest, WebViewResult> Index { get; }
     public AppApiAction<AddCounterpartyForm, CounterpartyModel> AddCounterparty { get; }
     public AppApiAction<string, CounterpartySearchResult> CounterpartySearch { get; }
+    public AppApiAction<int, EmptyActionResult> DeleteCounterparty { get; }
     public AppApiAction<EditCounterpartyForm, CounterpartyModel> EditCounterparty { get; }
 }

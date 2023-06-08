@@ -1,4 +1,5 @@
-﻿using XTI_Copia.Abstractions;
+﻿using XTI_App.Abstractions;
+using XTI_Copia.Abstractions;
 using XTI_CopiaWebAppApi;
 
 namespace CopiaWebAppTests.Counterparties;
@@ -116,6 +117,30 @@ internal sealed class CounterpartySearchTest
         (
             searchResult.Total,
             Is.EqualTo(60)
+        );
+    }
+
+    [Test]
+    public async Task ShouldGetCounterpartiesForThePortfolioToWhichTheyWereAdded()
+    {
+        var tester = await Setup();
+        tester.Login(new AppUserName("user1"));
+        var portfolio1 = await AddPortfolio(tester);
+        foreach (var i in Enumerable.Range(1, 10))
+        {
+            await AddCounterparty(tester, portfolio1, $"Portfolio 1 {i:00}");
+        }
+        tester.Login(new AppUserName("user2"));
+        var portfolio2 = await AddPortfolio(tester);
+        foreach (var i in Enumerable.Range(1, 10))
+        {
+            await AddCounterparty(tester, portfolio2, $"Portfolio 2 {i:00}");
+        }
+        var searchResult = await tester.Execute("", portfolio2.PublicKey);
+        Assert.That
+        (
+            searchResult.Counterparties.Select(c => c.DisplayText),
+            Is.EqualTo(Enumerable.Range(1, 10).Select(i => $"Portfolio 2 {i:00}"))
         );
     }
 
