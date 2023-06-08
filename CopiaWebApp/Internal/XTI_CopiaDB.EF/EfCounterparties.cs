@@ -45,7 +45,8 @@ public sealed class EfCounterparties
                 c =>
                     c.PortfolioID == portfolio.ID &&
                     c.DisplayText != "" &&
-                    c.DisplayText.ToLower().StartsWith(searchText)
+                    c.DisplayText.ToLower().StartsWith(searchText) &&
+                    c.TimeDeleted.Year == 9999
             );
     }
 

@@ -32,6 +32,13 @@ public sealed class EfCounterparty
         );
     }
 
+    public Task Delete(DateTimeOffset timeDeleted) =>
+        db.Counterparties.Update
+        (
+            counterparty,
+            c => c.TimeDeleted = timeDeleted
+        );
+
     public CounterpartyModel ToModel() =>
         new CounterpartyModel
         (
@@ -39,4 +46,5 @@ public sealed class EfCounterparty
             DisplayText: counterparty.DisplayText,
             Url: counterparty.Url
         );
+
 }
