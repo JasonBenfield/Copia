@@ -3,12 +3,14 @@ import { CopiaPage } from '../CopiaPage';
 import { PortfolioMenuPanel } from '../PortfolioMenuPanel';
 import { AddCounterpartyPanel } from './AddCounterpartyPanel';
 import { CounterpartyListPanel } from './CounterpartyListPanel';
+import { EditCounterpartyPanel } from './EditCounterpartyPanel';
 import { MainPageView } from './MainPageView';
 
 class MainPage extends CopiaPage {
     private readonly panels: SingleActivePanel;
     private readonly counterpartyListPanel: CounterpartyListPanel;
     private readonly addCounterpartyPanel: AddCounterpartyPanel;
+    private readonly editCounterpartyPanel: EditCounterpartyPanel;
     private readonly menuPanel: PortfolioMenuPanel;
 
     constructor(protected readonly view: MainPageView) {
@@ -19,6 +21,9 @@ class MainPage extends CopiaPage {
         );
         this.addCounterpartyPanel = this.panels.add(
             new AddCounterpartyPanel(this.defaultApi, view.addCounterpartyPanelView)
+        );
+        this.editCounterpartyPanel = this.panels.add(
+            new EditCounterpartyPanel(this.defaultApi, view.editCounterpartyPanelView)
         );
         this.menuPanel = this.panels.add(
             new PortfolioMenuPanel(this.defaultApi, view.menuPanelView)
@@ -36,6 +41,10 @@ class MainPage extends CopiaPage {
             this.addCounterpartyPanel.reset();
             this.activateAddCounterpartyPanel();
         }
+        else if (result.editRequested) {
+            this.editCounterpartyPanel.setCounterparty(result.editRequested.counterparty);
+            this.activateEditCounterpartyPanel();
+        }
     }
 
     private async activateAddCounterpartyPanel() {
@@ -45,6 +54,17 @@ class MainPage extends CopiaPage {
             this.activateCounterpartyListPanel();
         }
         else if (result.added) {
+            this.activateCounterpartyListPanel();
+        }
+    }
+
+    private async activateEditCounterpartyPanel() {
+        this.panels.activate(this.editCounterpartyPanel);
+        const result = await this.editCounterpartyPanel.start();
+        if (result.cancelled) {
+            this.activateCounterpartyListPanel();
+        }
+        else if (result.saved) {
             this.activateCounterpartyListPanel();
         }
     }

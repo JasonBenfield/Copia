@@ -1,4 +1,5 @@
 import { ContextualClass } from "@jasonbenfield/sharedwebapp/ContextualClass";
+import { CssLengthUnit } from "@jasonbenfield/sharedwebapp/CssLengthUnit";
 import { MarginCss } from "@jasonbenfield/sharedwebapp/MarginCss";
 import { AlertView } from "@jasonbenfield/sharedwebapp/Views/AlertView";
 import { ButtonCommandView } from "@jasonbenfield/sharedwebapp/Views/Command";
@@ -30,6 +31,7 @@ export class CounterpartyListPanelView extends PanelView {
         searchIcon.solidStyle('magnifying-glass');
         this.alertView = this.body.addView(MessageAlertView);
         this.counterpartyListView = this.body.addGridListGroup(CounterpartyListItemView);
+        this.counterpartyListView.setTemplateColumns(CssLengthUnit.flex(1), CssLengthUnit.auto());
         this.counterpartyListView.setMargin(MarginCss.bottom(3));
         this.moreAlert = this.body.addView(AlertView);
         this.moreAlert.setContext(ContextualClass.info);
@@ -47,4 +49,20 @@ export class CounterpartyListPanelView extends PanelView {
     showMoreAlert() { this.moreAlert.show(); }
 
     hideMoreAlert() { this.moreAlert.hide(); }
+
+    handleEditButton(action: (el: HTMLElement, evt: JQuery.Event) => void) {
+        this.counterpartyListView.on('click')
+            .preventDefault()
+            .execute(action)
+            .select('.editCounterpartyButton')
+            .subscribe();
+    }
+
+    handleDeleteButton(action: (el: HTMLElement, evt: JQuery.Event) => void) {
+        this.counterpartyListView.on('click')
+            .preventDefault()
+            .execute(action)
+            .select('.deleteCounterpartyButton')
+            .subscribe();
+    }
 }
