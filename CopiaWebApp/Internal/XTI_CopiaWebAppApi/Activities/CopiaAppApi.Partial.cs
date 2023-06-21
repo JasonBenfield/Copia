@@ -12,7 +12,12 @@ partial class CopiaAppApi
     {
         _Activities = new ActivitiesGroup
         (
-            source.AddGroup(nameof(Activities)),
+            source.AddGroup
+            (
+                nameof(Activities),
+                CopiaInfo.ModCategories.Portfolio,
+                Access.WithAllowed(CopiaInfo.Roles.PortfolioOwner)
+            ),
             sp
         );
     }

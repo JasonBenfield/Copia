@@ -18,6 +18,7 @@ public sealed class CopiaDbContext : DbContext
         TemplateStrings = new EfDataRepository<TemplateStringEntity>(this);
         TemplateStringParts = new EfDataRepository<TemplateStringPartEntity>(this);
         Counterparties = new EfDataRepository<CounterpartyEntity>(this);
+        Activities = new EfDataRepository<ActivityEntity>(this);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,6 +31,8 @@ public sealed class CopiaDbContext : DbContext
         modelBuilder.ApplyConfiguration(new TemplateStringEntityConfiguration());
         modelBuilder.ApplyConfiguration(new TemplateStringPartEntityConfiguration());
         modelBuilder.ApplyConfiguration(new CounterpartyEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new AccountEntityTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new ActivityEntityConfiguration());
     }
 
     public DataRepository<PortfolioEntity> Portfolios { get; }
@@ -45,6 +48,8 @@ public sealed class CopiaDbContext : DbContext
     public DataRepository<TemplateStringPartEntity> TemplateStringParts { get; }
 
     public DataRepository<CounterpartyEntity> Counterparties { get; }
+
+    public DataRepository<ActivityEntity> Activities { get; }
 
     public Task Transaction(Func<Task> action) => unitOfWork.Execute(action);
 

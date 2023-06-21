@@ -1,7 +1,7 @@
 using XTI_App.Abstractions;
 using XTI_Copia.Abstractions;
 
-namespace CopiaWebAppTests;
+namespace CopiaWebAppTests.Portfolios;
 
 internal sealed class GetPortfoliosTest
 {

@@ -6,21 +6,23 @@ namespace XTI_CopiaDB.EF;
 public sealed class EfActivityTemplate
 {
     private readonly CopiaDbContext db;
-    private readonly EfPortfolio portfolio;
-    private readonly ActivityTemplateEntity entity;
+    private readonly EfPortfolio efPortfolio;
+    private readonly ActivityTemplateEntity template;
 
-    internal EfActivityTemplate(CopiaDbContext db, EfPortfolio portfolio, ActivityTemplateEntity entity)
+    internal EfActivityTemplate(CopiaDbContext db, EfPortfolio efPortfolio, ActivityTemplateEntity template)
     {
         this.db = db;
-        this.portfolio = portfolio;
-        this.entity = entity;
+        this.efPortfolio = efPortfolio;
+        this.template = template;
     }
 
+    internal int ID { get => template.ID; }
+
     public ActivityTemplateModel ToModel() =>
-        new ActivityTemplateModel
+        new
         (
-            entity.ID,
-            entity.TemplateName
+            template.ID,
+            template.TemplateName
         );
 
     public async Task<EfActivityTemplateField> AddTemplateField(int templateID, ActivityFieldType fieldType)
@@ -38,19 +40,19 @@ public sealed class EfActivityTemplate
 
     public Task<EfActivityTemplateField[]> TemplateFields() =>
         db.ActivityTemplateFields.Retrieve()
-            .Where(tf => tf.TemplateID == entity.ID)
+            .Where(tf => tf.TemplateID == template.ID)
             .Select(tf => new EfActivityTemplateField(tf))
             .ToArrayAsync();
 
     public Task<EfTemplateString> ActivityName() =>
-        portfolio.TemplateString(entity.ActivityNameTemplateStringID);
+        efPortfolio.TemplateString(template.ActivityNameTemplateStringID);
 
     public async Task<ActivityTemplateDetailModel> ToDetailModel()
     {
         var efActivityTemplateFields = await TemplateFields();
         var efActivityName = await ActivityName();
         var activityNameModel = await efActivityName.ToModel();
-        return new ActivityTemplateDetailModel
+        return new
         (
             ToModel(),
             activityNameModel,

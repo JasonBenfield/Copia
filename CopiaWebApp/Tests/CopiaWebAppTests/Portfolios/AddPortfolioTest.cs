@@ -5,7 +5,7 @@ using XTI_Copia.Abstractions;
 using XTI_CopiaDB;
 using XTI_CopiaWebAppApi;
 
-namespace CopiaWebAppTests;
+namespace CopiaWebAppTests.Portfolios;
 
 internal sealed class AddPortfolioTest
 {

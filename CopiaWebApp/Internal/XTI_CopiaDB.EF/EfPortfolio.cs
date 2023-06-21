@@ -127,6 +127,25 @@ public sealed class EfPortfolio
     public Task<EfCounterparty> CounterpartyByDisplayText(string displayText) =>
         new EfCounterparties(db).CounterpartyByDisplayText(portfolio, displayText);
 
+    public Task<EfCounterparty> BlankCounterparty() =>
+        CounterpartyByDisplayText("");
+
+    public async Task<EfActivity> CreateActivity(EfActivityTemplate efTemplate, DateTimeOffset timeCreated)
+    {
+        var efCounterparty = await BlankCounterparty();
+        var efActivity = await new EfActivities(db).Create
+        (
+            portfolio,
+            efTemplate,
+            efCounterparty,
+            timeCreated
+        );
+        return efActivity;
+    }
+
+    public Task<EfActivity[]> Activities(int max) => 
+        new EfActivities(db).GetActivities(portfolio, max);
+
     public PortfolioModel ToModel() =>
         new PortfolioModel
         (
