@@ -10,20 +10,20 @@ public sealed partial class ActivityTemplatesController : Controller
     }
 
     [HttpPost]
-    public Task<ResultContainer<ActivityTemplateModel>> AddActivityTemplate([FromBody] AddActivityTemplateRequest model, CancellationToken ct)
+    public Task<ResultContainer<ActivityTemplateModel>> AddActivityTemplate([FromBody] AddActivityTemplateRequest requestData, CancellationToken ct)
     {
-        return api.Group("ActivityTemplates").Action<AddActivityTemplateRequest, ActivityTemplateModel>("AddActivityTemplate").Execute(model, ct);
+        return api.ActivityTemplates.AddActivityTemplate.Execute(requestData, ct);
     }
 
     [HttpPost]
     public Task<ResultContainer<ActivityTemplateModel[]>> GetActivityTemplates(CancellationToken ct)
     {
-        return api.Group("ActivityTemplates").Action<EmptyRequest, ActivityTemplateModel[]>("GetActivityTemplates").Execute(new EmptyRequest(), ct);
+        return api.ActivityTemplates.GetActivityTemplates.Execute(new EmptyRequest(), ct);
     }
 
     public async Task<IActionResult> Index(CancellationToken ct)
     {
-        var result = await api.Group("ActivityTemplates").Action<EmptyRequest, WebViewResult>("Index").Execute(new EmptyRequest(), ct);
+        var result = await api.ActivityTemplates.Index.Execute(new EmptyRequest(), ct);
         return View(result.Data!.ViewName);
     }
 }

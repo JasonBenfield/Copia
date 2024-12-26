@@ -1,14 +1,13 @@
 // Generated code
+import * as xti from "@jasonbenfield/sharedwebapp/Common";
 import { BaseForm } from '@jasonbenfield/sharedwebapp/Forms/BaseForm';
-import { EditCounterpartyFormView } from './EditCounterpartyFormView';
+import { AddCounterpartyFormView } from './AddCounterpartyFormView';
 
-export class EditCounterpartyForm extends BaseForm {
-	protected readonly view: EditCounterpartyFormView;
+export class AddCounterpartyForm extends BaseForm {
+	protected readonly view: AddCounterpartyFormView;
 	
-	constructor(view: EditCounterpartyFormView) {
-		super('EditCounterpartyForm', view);
-		this.CounterpartyID.setCaption('Counterparty ID');
-		this.CounterpartyID.constraints.mustBeAbove(0, 'Must be greater than 0');
+	constructor(view: AddCounterpartyFormView) {
+		super('AddCounterpartyForm', view);
 		this.DisplayText.setCaption('Display Text');
 		this.DisplayText.constraints.mustNotBeNull();
 		this.DisplayText.constraints.mustNotBeWhitespace('Must not be blank');
@@ -17,7 +16,6 @@ export class EditCounterpartyForm extends BaseForm {
 		this.Url.constraints.mustNotBeNull();
 		this.Url.setMaxLength(500);
 	}
-	readonly CounterpartyID = this.addHiddenNumberFormGroup('CounterpartyID', this.view.CounterpartyID);
 	readonly DisplayText = this.addTextInputFormGroup('DisplayText', this.view.DisplayText);
 	readonly Url = this.addTextInputFormGroup('Url', this.view.Url);
 }

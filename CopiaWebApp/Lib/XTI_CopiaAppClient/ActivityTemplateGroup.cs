@@ -9,6 +9,6 @@ public sealed partial class ActivityTemplateGroup : AppClientGroup
 
     public ActivityTemplateGroupActions Actions { get; }
 
-    public Task<ActivityTemplateModel> GetActivityTemplate(string modifier, GetActivityTemplateRequest model, CancellationToken ct = default) => Actions.GetActivityTemplate.Post(modifier, model, ct);
+    public Task<ActivityTemplateModel> GetActivityTemplate(string modifier, GetActivityTemplateRequest requestData, CancellationToken ct = default) => Actions.GetActivityTemplate.Post(modifier, requestData, ct);
     public sealed record ActivityTemplateGroupActions(AppClientPostAction<GetActivityTemplateRequest, ActivityTemplateModel> GetActivityTemplate);
 }

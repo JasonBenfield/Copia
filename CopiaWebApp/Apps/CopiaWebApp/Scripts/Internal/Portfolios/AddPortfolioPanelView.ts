@@ -1,7 +1,8 @@
 ﻿import { MarginCss } from "@jasonbenfield/sharedwebapp/MarginCss";
 import { BasicComponentView } from "@jasonbenfield/sharedwebapp/Views/BasicComponentView";
 import { ButtonCommandView } from "@jasonbenfield/sharedwebapp/Views/Command";
-import { FormGroupGridView, SimpleFieldFormGroupInputView } from "@jasonbenfield/sharedwebapp/Views/FormGroup";
+import { SimpleFieldFormGroupInputView } from "@jasonbenfield/sharedwebapp/Views/FormGroup";
+import { FormGroupContainerView } from "@jasonbenfield/sharedwebapp/Views/FormGroupContainerView";
 import { FormView } from "@jasonbenfield/sharedwebapp/Views/FormView";
 import { MessageAlertView } from "@jasonbenfield/sharedwebapp/Views/MessageAlertView";
 import { TextHeading1View } from "@jasonbenfield/sharedwebapp/Views/TextHeadings";
@@ -20,7 +21,7 @@ export class AddPortfolioPanelView extends PanelView {
         this.body.addView(TextHeading1View)
             .configure(h => h.setText('Add Portfolio'));
         this.form = this.body.addView(FormView);
-        const formGroupContainer = this.form.addView(FormGroupGridView);
+        const formGroupContainer = this.form.addView(FormGroupContainerView);
         this.portfolioName = formGroupContainer.addFormGroup(SimpleFieldFormGroupInputView);
         this.portfolioName.caption.setText('Portfolio Name');
         this.form.addOffscreenSubmit();

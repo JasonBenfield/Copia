@@ -3,7 +3,7 @@ import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { ListGroup } from "@jasonbenfield/sharedwebapp/Components/ListGroup";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
 import { TextButtonListGroupItemView } from "@jasonbenfield/sharedwebapp/Views/ListGroup";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { ActivityTemplateListItem } from "./ActivityTemplateListItem";
 import { ActivityTemplateListPanelView } from "./ActivityTemplateListPanelView";
 
@@ -38,10 +38,10 @@ export class ActivityTemplateListPanel implements IPanel {
     private isActive = false;
     private isRefreshRequired = false;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: ActivityTemplateListPanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: ActivityTemplateListPanelView) {
         this.alert = new MessageAlert(view.alert);
         this.activityTemplateListGroup = new ListGroup(view.activityTemplateListGroupView);
-        this.activityTemplateListGroup.registerItemClicked(this.onActivityTemplateSelected.bind(this));
+        this.activityTemplateListGroup.when.itemClicked.then(this.onActivityTemplateSelected.bind(this));
         new Command(this.menu.bind(this)).add(view.menuButton);
         new Command(this.add.bind(this)).add(view.addButton);
     }

@@ -1,6 +1,6 @@
 // Generated Code
 namespace XTI_CopiaAppClient;
-public sealed class CopiaAppClientVersion
+public sealed partial class CopiaAppClientVersion
 {
     public static CopiaAppClientVersion Version(string value) => new CopiaAppClientVersion(value);
     public CopiaAppClientVersion(IHostEnvironment hostEnv) : this(getValue(hostEnv))

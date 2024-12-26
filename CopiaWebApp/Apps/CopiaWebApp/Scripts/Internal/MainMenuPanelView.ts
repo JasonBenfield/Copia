@@ -18,7 +18,7 @@ export class MainMenuPanelView extends GridView {
     constructor(container: BasicComponentView) {
         super(container);
         this.height100();
-        this.layout();
+        this.styleAsLayout();
         this.setTemplateRows(CssLengthUnit.flex(1), CssLengthUnit.auto());
         const mainContent = CopiaTheme.instance.mainContent(this.addCell());
         const menu = mainContent.addView(NavView);

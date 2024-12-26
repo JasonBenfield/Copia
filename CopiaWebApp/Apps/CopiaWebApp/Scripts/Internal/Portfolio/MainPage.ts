@@ -15,13 +15,13 @@ class MainPage extends CopiaPage {
         super(view);
         this.panels = new SingleActivePanel();
         this.portfolioPanel = this.panels.add(
-            new PortfolioPanel(this.defaultApi, view.portfolioPanelView)
+            new PortfolioPanel(this.copiaClient, view.portfolioPanelView)
         );
         this.addAccountPanel = this.panels.add(
-            new AddAccountPanel(this.defaultApi, view.addAccountPanelView)
+            new AddAccountPanel(this.copiaClient, view.addAccountPanelView)
         );
         this.mainMenuPanel = this.panels.add(
-            new MainMenuPanel(this.defaultApi, view.mainMenuPanelView)
+            new MainMenuPanel(this.copiaClient, view.mainMenuPanelView)
         );
         this.portfolioPanel.refresh();
         this.activatePortfolioPanel();
@@ -34,7 +34,7 @@ class MainPage extends CopiaPage {
             this.activateAddAccountPanel();
         }
         else if (result.accountSelected) {
-            this.defaultApi.Account.Index.open({ AccountID: result.accountSelected.account.ID });
+            this.copiaClient.Account.Index.open({ AccountID: result.accountSelected.account.ID });
         }
         else if (result.menuRequested) {
             this.activateMainMenuPanel();

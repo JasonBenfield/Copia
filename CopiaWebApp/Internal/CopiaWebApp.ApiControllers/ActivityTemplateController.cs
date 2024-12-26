@@ -10,8 +10,8 @@ public sealed partial class ActivityTemplateController : Controller
     }
 
     [HttpPost]
-    public Task<ResultContainer<ActivityTemplateModel>> GetActivityTemplate([FromBody] GetActivityTemplateRequest model, CancellationToken ct)
+    public Task<ResultContainer<ActivityTemplateModel>> GetActivityTemplate([FromBody] GetActivityTemplateRequest requestData, CancellationToken ct)
     {
-        return api.Group("ActivityTemplate").Action<GetActivityTemplateRequest, ActivityTemplateModel>("GetActivityTemplate").Execute(model, ct);
+        return api.ActivityTemplate.GetActivityTemplate.Execute(requestData, ct);
     }
 }

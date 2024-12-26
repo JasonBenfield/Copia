@@ -6,7 +6,7 @@ import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAler
 import { ModalConfirm } from "@jasonbenfield/sharedwebapp/Components/ModalConfirm";
 import { DebouncedAction } from "@jasonbenfield/sharedwebapp/DebouncedAction";
 import { TextToTextViewValue } from "@jasonbenfield/sharedwebapp/Forms/TextToTextViewValue";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { CounterpartyListItem } from "./CounterpartyListItem";
 import { CounterpartyListItemView } from "./CounterpartyListItemView";
 import { CounterpartyListPanelView } from "./CounterpartyListPanelView";
@@ -42,7 +42,7 @@ export class CounterpartyListPanel implements IPanel {
     private readonly counterpartyListGroup: ListGroup<CounterpartyListItem, CounterpartyListItemView>;
     private readonly modalConfirm: ModalConfirm;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: CounterpartyListPanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: CounterpartyListPanelView) {
         view.hideMoreAlert();
         this.searchInputControl = new InputControl(view.searchInputView, new TextToTextViewValue());
         this.searchInputControl.when.valueChanged.then(this.onSearchInputChanged.bind(this));

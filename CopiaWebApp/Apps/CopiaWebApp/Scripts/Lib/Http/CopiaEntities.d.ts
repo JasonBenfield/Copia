@@ -4,6 +4,7 @@ interface ILinkModel {
 	LinkName: string;
 	DisplayText: string;
 	Url: string;
+	IsAuthenticationRequired: boolean;
 }
 interface IGetAccountRequest {
 	AccountID: number;
@@ -23,7 +24,7 @@ interface IActivityDetailModel {
 interface IActivityModel {
 	ID: number;
 	ActivityName: string;
-	ActivityDate: IDateOnly;
+	ActivityDate: import('@jasonbenfield/sharedwebapp/Common').DateOnly;
 }
 interface IActivityTemplateModel {
 	ID: number;

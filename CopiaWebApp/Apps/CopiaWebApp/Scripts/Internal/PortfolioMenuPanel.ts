@@ -1,7 +1,6 @@
 ﻿import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
 import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
-import { LinkComponent } from "@jasonbenfield/sharedwebapp/Components/LinkComponent";
-import { CopiaAppApi } from "../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../Lib/Http/CopiaAppClient";
 import { PortfolioMenuComponent } from "./PortfolioMenuComponent";
 import { PortfolioMenuPanelView } from "./PortfolioMenuPanelView";
 
@@ -20,8 +19,8 @@ class Result {
 export class PortfolioMenuPanel implements IPanel {
     private readonly awaitable = new Awaitable<Result>();
     private readonly portfolioMenuComponent: PortfolioMenuComponent;
-            
-    constructor(copiaClient: CopiaAppApi, private readonly view: PortfolioMenuPanelView) {
+
+    constructor(copiaClient: CopiaAppClient, private readonly view: PortfolioMenuPanelView) {
         this.portfolioMenuComponent = new PortfolioMenuComponent(copiaClient, view.portfolioMenuView);
         new Command(this.back.bind(this)).add(view.backButton);
     }

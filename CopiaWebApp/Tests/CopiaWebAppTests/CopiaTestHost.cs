@@ -46,7 +46,7 @@ internal sealed class CopiaTestHost
         var appContext = sp.GetRequiredService<FakeAppContext>();
         var apiFactory = sp.GetRequiredService<CopiaAppApiFactory>();
         var template = apiFactory.CreateTemplate();
-        var copiaApp = appContext.AddApp(template.ToModel());
+        var copiaApp = appContext.RegisterApp(template.ToModel());
         appContext.SetCurrentApp(copiaApp);
         var dbAdmin = sp.GetRequiredService<DbAdmin<CopiaDbContext>>();
         if (xtiEnv.IsTest())

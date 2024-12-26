@@ -26,4 +26,8 @@ export class AccountType extends NumericValue implements IAccountType {
 	private constructor(Value: number, DisplayText: string) {
 		super(Value, DisplayText);
 	}
+	
+	equalsAny: (...other: this[] | IAccountType[] | number[] | string[]) => boolean;
+	
+	equals: (other: this | IAccountType | number | string) => boolean;
 }

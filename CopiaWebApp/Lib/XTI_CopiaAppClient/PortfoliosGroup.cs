@@ -9,7 +9,7 @@ public sealed partial class PortfoliosGroup : AppClientGroup
 
     public PortfoliosGroupActions Actions { get; }
 
-    public Task<PortfolioModel> AddPortfolio(AddPortfolioRequest model, CancellationToken ct = default) => Actions.AddPortfolio.Post("", model, ct);
+    public Task<PortfolioModel> AddPortfolio(AddPortfolioRequest requestData, CancellationToken ct = default) => Actions.AddPortfolio.Post("", requestData, ct);
     public Task<PortfolioModel[]> GetPortfolios(CancellationToken ct = default) => Actions.GetPortfolios.Post("", new EmptyRequest(), ct);
     public sealed record PortfoliosGroupActions(AppClientPostAction<AddPortfolioRequest, PortfolioModel> AddPortfolio, AppClientPostAction<EmptyRequest, PortfolioModel[]> GetPortfolios, AppClientGetAction<EmptyRequest> Index);
 }

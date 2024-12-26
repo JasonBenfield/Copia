@@ -1,9 +1,9 @@
 import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
 import { AsyncCommand, Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
-import { AccountType } from "../../Lib/Api/AccountType";
-import { AddAccountForm } from "../../Lib/Api/AddAccountForm";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { AccountType } from "../../Lib/Http/AccountType";
+import { AddAccountForm } from "../../Lib/Http/AddAccountForm";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { AddAccountPanelView } from "./AddAccountPanelView";
 
 interface IResults {
@@ -29,7 +29,7 @@ export class AddAccountPanel implements IPanel {
     private readonly alert: MessageAlert;
     private readonly saveCommand: AsyncCommand;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: AddAccountPanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: AddAccountPanelView) {
         this.addForm = new AddAccountForm(view.addForm);
         this.addForm.handleSubmit(this.onSubmit.bind(this));
         this.alert = new MessageAlert(view.alert);

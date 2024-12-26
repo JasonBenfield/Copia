@@ -10,14 +10,14 @@ public sealed partial class ActivitiesController : Controller
     }
 
     [HttpPost]
-    public Task<ResultContainer<ActivityDetailModel>> CreateActivity([FromBody] CreateActivityRequest model, CancellationToken ct)
+    public Task<ResultContainer<ActivityDetailModel>> CreateActivity([FromBody] CreateActivityRequest requestData, CancellationToken ct)
     {
-        return api.Group("Activities").Action<CreateActivityRequest, ActivityDetailModel>("CreateActivity").Execute(model, ct);
+        return api.Activities.CreateActivity.Execute(requestData, ct);
     }
 
     public async Task<IActionResult> Index(CancellationToken ct)
     {
-        var result = await api.Group("Activities").Action<EmptyRequest, WebViewResult>("Index").Execute(new EmptyRequest(), ct);
+        var result = await api.Activities.Index.Execute(new EmptyRequest(), ct);
         return View(result.Data!.ViewName);
     }
 }

@@ -1,12 +1,15 @@
 ﻿import { BasicPage } from "@jasonbenfield/sharedwebapp/Components/BasicPage";
-import { CopiaAppApi } from "../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../Lib/Http/CopiaAppClient";
 import { Apis } from "./Apis";
 import { CopiaPageView } from "./CopiaPageView";
 
 export class CopiaPage extends BasicPage {
-    protected readonly defaultApi: CopiaAppApi;
+    protected readonly copiaClient: CopiaAppClient;
 
     constructor(view: CopiaPageView) {
-        super(new Apis(view.modalError).Copia(), view);
+        const apis = new Apis(view.modalError);
+        const copiaClient = apis.Copia();
+        super(copiaClient, view);
+        this.copiaClient = copiaClient;
     }
 }

@@ -17,7 +17,7 @@ export class AccountListCardView extends CardView {
         super(container);
         const header = this.addCardHeader();
         const headerGrid = header.addView(GridView);
-        headerGrid.layout();
+        headerGrid.styleAsLayout();
         headerGrid.setTemplateColumns(
             CssLengthUnit.flex(1),
             CssLengthUnit.auto()

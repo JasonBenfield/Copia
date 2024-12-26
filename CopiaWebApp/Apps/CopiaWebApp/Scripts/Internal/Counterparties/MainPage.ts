@@ -17,16 +17,16 @@ class MainPage extends CopiaPage {
         super(view);
         this.panels = new SingleActivePanel();
         this.counterpartyListPanel = this.panels.add(
-            new CounterpartyListPanel(this.defaultApi, view.counterpartyListPanelView)
+            new CounterpartyListPanel(this.copiaClient, view.counterpartyListPanelView)
         );
         this.addCounterpartyPanel = this.panels.add(
-            new AddCounterpartyPanel(this.defaultApi, view.addCounterpartyPanelView)
+            new AddCounterpartyPanel(this.copiaClient, view.addCounterpartyPanelView)
         );
         this.editCounterpartyPanel = this.panels.add(
-            new EditCounterpartyPanel(this.defaultApi, view.editCounterpartyPanelView)
+            new EditCounterpartyPanel(this.copiaClient, view.editCounterpartyPanelView)
         );
         this.menuPanel = this.panels.add(
-            new PortfolioMenuPanel(this.defaultApi, view.menuPanelView)
+            new PortfolioMenuPanel(this.copiaClient, view.menuPanelView)
         );
         this.activateCounterpartyListPanel();
     }

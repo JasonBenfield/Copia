@@ -1,12 +1,13 @@
 // Generated code
 import { BaseFormView } from '@jasonbenfield/sharedwebapp/Views/BaseFormView';
-import { SimpleFieldFormGroupInputView, SimpleFieldFormGroupSelectView } from '@jasonbenfield/sharedwebapp/Views/FormGroup';
+import * as views from '@jasonbenfield/sharedwebapp/Views/FormGroup';
 import { IFormGroupLayout } from '@jasonbenfield/sharedwebapp/Views/Types';
 import { BasicComponentView } from '@jasonbenfield/sharedwebapp/Views/BasicComponentView';
+import { InputView } from '@jasonbenfield/sharedwebapp/Views/InputView';
 
 export interface IAddAccountFormView {
-	AccountName: SimpleFieldFormGroupInputView;
-	AccountType: SimpleFieldFormGroupSelectView;
+	AccountName: views.SimpleFieldFormGroupInputView;
+	AccountType: views.SimpleFieldFormGroupSelectView;
 }
 
 export class DefaultAddAccountFormViewLayout implements IFormGroupLayout<IAddAccountFormView> {

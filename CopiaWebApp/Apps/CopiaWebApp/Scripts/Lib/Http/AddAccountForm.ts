@@ -1,4 +1,5 @@
 // Generated code
+import * as xti from "@jasonbenfield/sharedwebapp/Common";
 import { BaseForm } from '@jasonbenfield/sharedwebapp/Forms/BaseForm';
 import { AddAccountFormView } from './AddAccountFormView';
 import { DropDownFieldItem } from "@jasonbenfield/sharedwebapp/Forms/DropDownFieldItem";
@@ -15,10 +16,13 @@ export class AddAccountForm extends BaseForm {
 		this.AccountType.setCaption('Account Type');
 		this.AccountType.constraints.mustNotBeNull();
 		this.AccountType.setItems(
-			new DropDownFieldItem(5, 'Checking'),
-			new DropDownFieldItem(10, 'Savings'),
-			new DropDownFieldItem(15, 'Credit Card'),
-			new DropDownFieldItem(20, 'Money Market')
+			'',
+			[
+				new DropDownFieldItem(5, 'Checking'),
+				new DropDownFieldItem(10, 'Savings'),
+				new DropDownFieldItem(15, 'Credit Card'),
+				new DropDownFieldItem(20, 'Money Market')
+			]
 		);
 	}
 	readonly AccountName = this.addTextInputFormGroup('AccountName', this.view.AccountName);

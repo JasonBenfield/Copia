@@ -1,8 +1,8 @@
 // Generated code
 
-import { AppApi } from "@jasonbenfield/sharedwebapp/Api/AppApi";
-import { AppApiEvents } from "@jasonbenfield/sharedwebapp/Api/AppApiEvents";
-import { AppApiQuery } from "@jasonbenfield/sharedwebapp/Api/AppApiQuery";
+import { AppClient } from "@jasonbenfield/sharedwebapp/Http/AppClient";
+import { AppClientEvents } from "@jasonbenfield/sharedwebapp/Http/AppClientEvents";
+import { AppClientQuery } from "@jasonbenfield/sharedwebapp/Http/AppClientQuery";
 import { AccountGroup } from "./AccountGroup";
 import { ActivitiesGroup } from "./ActivitiesGroup";
 import { ActivityTemplateGroup } from "./ActivityTemplateGroup";
@@ -13,9 +13,13 @@ import { PortfolioGroup } from "./PortfolioGroup";
 import { PortfoliosGroup } from "./PortfoliosGroup";
 
 
-export class CopiaAppApi extends AppApi {
-	constructor(events: AppApiEvents) {
-		super(events, 'Copia');
+export class CopiaAppClient extends AppClient {
+	constructor(events: AppClientEvents) {
+		super(
+			events, 
+			'Copia', 
+			pageContext.EnvironmentName === 'Production' || pageContext.EnvironmentName === 'Staging' ? 'Current' : 'Current'
+		);
 		this.Account = this.addGroup((evts, resourceUrl) => new AccountGroup(evts, resourceUrl));
 		this.Activities = this.addGroup((evts, resourceUrl) => new ActivitiesGroup(evts, resourceUrl));
 		this.ActivityTemplate = this.addGroup((evts, resourceUrl) => new ActivityTemplateGroup(evts, resourceUrl));

@@ -1,6 +1,7 @@
 import { BasicComponentView } from "@jasonbenfield/sharedwebapp/Views/BasicComponentView";
 import { ButtonCommandView } from "@jasonbenfield/sharedwebapp/Views/Command";
-import { FormGroupGridView, FormGroupInputView } from "@jasonbenfield/sharedwebapp/Views/FormGroup";
+import { FormGroupInputView } from "@jasonbenfield/sharedwebapp/Views/FormGroup";
+import { FormGroupContainerView } from "@jasonbenfield/sharedwebapp/Views/FormGroupContainerView";
 import { FormView } from "@jasonbenfield/sharedwebapp/Views/FormView";
 import { InputView } from "@jasonbenfield/sharedwebapp/Views/InputView";
 import { MessageAlertView } from "@jasonbenfield/sharedwebapp/Views/MessageAlertView";
@@ -18,10 +19,10 @@ export class AddActivityTemplatePanelView extends PanelView {
         super(container);
         this.form = this.body.addView(FormView);
         this.form.addOffscreenSubmit();
-        const formGroupContainer = this.form.addView(FormGroupGridView);
+        const formGroupContainer = this.form.addView(FormGroupContainerView);
         const templateNameFormGroup = formGroupContainer.addFormGroup(FormGroupInputView);
-        templateNameFormGroup.caption.setText('Template Name');
-        this.templateNameInputView = templateNameFormGroup.input;
+        templateNameFormGroup.caption.setText("Template Name");
+        this.templateNameInputView = templateNameFormGroup.inputView;
         this.alert = this.body.addView(MessageAlertView);
         this.cancelButton = CopiaTheme.instance.commandToolbar.cancelButton(
             this.toolbar.addButtonCommandToEnd()

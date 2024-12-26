@@ -11,31 +11,31 @@ public sealed partial class CounterpartiesController : Controller
 
     public async Task<IActionResult> Index(CancellationToken ct)
     {
-        var result = await api.Group("Counterparties").Action<EmptyRequest, WebViewResult>("Index").Execute(new EmptyRequest(), ct);
+        var result = await api.Counterparties.Index.Execute(new EmptyRequest(), ct);
         return View(result.Data!.ViewName);
     }
 
     [HttpPost]
-    public Task<ResultContainer<CounterpartyModel>> AddCounterparty([FromBody] AddCounterpartyForm model, CancellationToken ct)
+    public Task<ResultContainer<CounterpartyModel>> AddCounterparty([FromBody] AddCounterpartyForm requestData, CancellationToken ct)
     {
-        return api.Group("Counterparties").Action<AddCounterpartyForm, CounterpartyModel>("AddCounterparty").Execute(model, ct);
+        return api.Counterparties.AddCounterparty.Execute(requestData, ct);
     }
 
     [HttpPost]
-    public Task<ResultContainer<CounterpartySearchResult>> CounterpartySearch([FromBody] string model, CancellationToken ct)
+    public Task<ResultContainer<CounterpartySearchResult>> CounterpartySearch([FromBody] string requestData, CancellationToken ct)
     {
-        return api.Group("Counterparties").Action<string, CounterpartySearchResult>("CounterpartySearch").Execute(model, ct);
+        return api.Counterparties.CounterpartySearch.Execute(requestData, ct);
     }
 
     [HttpPost]
-    public Task<ResultContainer<EmptyActionResult>> DeleteCounterparty([FromBody] int model, CancellationToken ct)
+    public Task<ResultContainer<EmptyActionResult>> DeleteCounterparty([FromBody] int requestData, CancellationToken ct)
     {
-        return api.Group("Counterparties").Action<int, EmptyActionResult>("DeleteCounterparty").Execute(model, ct);
+        return api.Counterparties.DeleteCounterparty.Execute(requestData, ct);
     }
 
     [HttpPost]
-    public Task<ResultContainer<CounterpartyModel>> EditCounterparty([FromBody] EditCounterpartyForm model, CancellationToken ct)
+    public Task<ResultContainer<CounterpartyModel>> EditCounterparty([FromBody] EditCounterpartyForm requestData, CancellationToken ct)
     {
-        return api.Group("Counterparties").Action<EditCounterpartyForm, CounterpartyModel>("EditCounterparty").Execute(model, ct);
+        return api.Counterparties.EditCounterparty.Execute(requestData, ct);
     }
 }

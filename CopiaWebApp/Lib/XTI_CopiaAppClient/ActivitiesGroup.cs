@@ -9,6 +9,6 @@ public sealed partial class ActivitiesGroup : AppClientGroup
 
     public ActivitiesGroupActions Actions { get; }
 
-    public Task<ActivityDetailModel> CreateActivity(string modifier, CreateActivityRequest model, CancellationToken ct = default) => Actions.CreateActivity.Post(modifier, model, ct);
+    public Task<ActivityDetailModel> CreateActivity(string modifier, CreateActivityRequest requestData, CancellationToken ct = default) => Actions.CreateActivity.Post(modifier, requestData, ct);
     public sealed record ActivitiesGroupActions(AppClientPostAction<CreateActivityRequest, ActivityDetailModel> CreateActivity, AppClientGetAction<EmptyRequest> Index);
 }

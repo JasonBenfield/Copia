@@ -20,7 +20,6 @@ internal sealed class FakeHubService : IHubService
         var app = appContext.GetCurrentApp();
         appContext.AddModifier
         (
-            app,
             CopiaInfo.ModCategories.Portfolio,
             modKey,
             targetKey

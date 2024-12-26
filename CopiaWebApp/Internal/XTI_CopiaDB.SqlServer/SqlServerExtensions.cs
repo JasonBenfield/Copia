@@ -11,7 +11,7 @@ public static class SqlServerExtensions
     public static void AddCopiaDbContextForSqlServer(this IServiceCollection services)
     {
         services.AddConfigurationOptions<DbOptions>(DbOptions.DB);
-        services.AddDbContext<CopiaDbContext>((sp, options) =>
+        services.AddDbContextFactory<CopiaDbContext>((sp, options) =>
         {
             var xtiEnv = sp.GetRequiredService<XtiEnvironment>();
             var dbOptions = sp.GetRequiredService<DbOptions>();

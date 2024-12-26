@@ -2,7 +2,7 @@
 namespace XTI_CopiaAppClient;
 public sealed partial class CopiaAppClient : AppClient
 {
-    public CopiaAppClient(IHttpClientFactory httpClientFactory, XtiTokenAccessor xtiTokenAccessor, AppClientUrl clientUrl, CopiaAppClientVersion version) : base(httpClientFactory, xtiTokenAccessor, clientUrl, "Copia", version.Value)
+    public CopiaAppClient(IHttpClientFactory httpClientFactory, XtiTokenAccessorFactory xtiTokenAccessorFactory, AppClientUrl clientUrl, AppClientOptions options, CopiaAppClientVersion version) : base(httpClientFactory, xtiTokenAccessorFactory, clientUrl, options, "Copia", version.Value)
     {
         Account = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new AccountGroup(_clientFactory, _tokenAccessor, _url, _options));
         Activities = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new ActivitiesGroup(_clientFactory, _tokenAccessor, _url, _options));
@@ -17,18 +17,11 @@ public sealed partial class CopiaAppClient : AppClient
     public CopiaRoleNames RoleNames { get; } = CopiaRoleNames.Instance;
     public string AppName { get; } = "Copia";
     public AccountGroup Account { get; }
-
     public ActivitiesGroup Activities { get; }
-
     public ActivityTemplateGroup ActivityTemplate { get; }
-
     public ActivityTemplatesGroup ActivityTemplates { get; }
-
     public CounterpartiesGroup Counterparties { get; }
-
     public HomeGroup Home { get; }
-
     public PortfolioGroup Portfolio { get; }
-
     public PortfoliosGroup Portfolios { get; }
 }

@@ -1,15 +1,15 @@
-﻿import { AppApiFactory } from "@jasonbenfield/sharedwebapp/Api/AppApiFactory";
+﻿import { AppClientFactory } from "@jasonbenfield/sharedwebapp/Http/AppClientFactory";
 import { ModalErrorView } from "@jasonbenfield/sharedwebapp/Views/ModalError";
-import { CopiaAppApi } from "../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../Lib/Http/CopiaAppClient";
 
 export class Apis {
-    private readonly apiFactory: AppApiFactory;
+    private readonly apiFactory: AppClientFactory;
 
     constructor(modalError: ModalErrorView) {
-        this.apiFactory = new AppApiFactory(modalError)
+        this.apiFactory = new AppClientFactory(modalError)
     }
 
     Copia() {
-        return this.apiFactory.api(CopiaAppApi);
+        return this.apiFactory.create(CopiaAppClient);
     }
 }

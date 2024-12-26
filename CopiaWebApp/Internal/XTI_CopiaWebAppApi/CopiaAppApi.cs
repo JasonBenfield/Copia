@@ -11,12 +11,11 @@ public sealed partial class CopiaAppApi : WebAppApiWrapper
         (
             new AppApi
             (
+                sp,
                 CopiaInfo.AppKey,
                 user,
-                ResourceAccess.AllowAuthenticated()
-                    .WithAllowed(AppRoleName.Admin)
-            ),
-            sp
+                ""
+            )
         )
     {
         createAccountGroup(sp);

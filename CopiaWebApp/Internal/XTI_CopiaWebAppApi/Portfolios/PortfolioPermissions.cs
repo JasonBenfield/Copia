@@ -5,42 +5,32 @@ namespace XTI_CopiaWebAppApi.Portfolios;
 internal sealed class PortfolioPermissions
 {
     private readonly IUserContext userContext;
+    private readonly IAppContext appContext;
 
-    public PortfolioPermissions(IUserContext userContext)
+    public PortfolioPermissions(IUserContext userContext, IAppContext appContext)
     {
         this.userContext = userContext;
+        this.appContext = appContext;
     }
 
     public async Task<PortfolioPermissionModel[]> GetPermissions(PortfolioModel[] portfolios)
     {
-        var userContextModel = await userContext.User();
-        var modifierIDs = userContextModel.ModifiedRoles
-            .Where(mr => mr.ModifierCategory.Name.Equals(CopiaInfo.ModCategories.Portfolio))
-            .Select(mr => int.Parse(mr.Modifier.ModKey.Value))
-            .ToArray();
-        return portfolios
-            .Select(p =>
-            {
-                var roles = GetRoles(userContextModel, p);
-                return new PortfolioPermissionModel
-                (
-                    p,
-                    CanView: roles.Any(r => r.EqualsAny(CopiaInfo.Roles.PortfolioOwner)),
-                    CanEdit: roles.Any(r => r.EqualsAny(CopiaInfo.Roles.PortfolioOwner))
-                );
-            })
-            .ToArray();
-    }
-
-    private AppRoleName[] GetRoles(UserContextModel userContextModel, PortfolioModel p) =>
-        userContextModel.ModifiedRoles
-            .Where
+        var user = await userContext.User();
+        var app = await appContext.App();
+        var portfolioModCategory = app.ModCategory(CopiaInfo.ModCategories.Portfolio);
+        var permissions = new List<PortfolioPermissionModel>();
+        foreach (var portfolio in portfolios)
+        {
+            var modifier = await appContext.Modifier(portfolioModCategory, portfolio.PublicKey);
+            var roles = await userContext.UserRoles(user, modifier);
+            var permission = new PortfolioPermissionModel
             (
-                mr =>
-                    mr.ModifierCategory.Name.Equals(CopiaInfo.ModCategories.Portfolio) &&
-                mr.Modifier.ModKey.Equals(p.PublicKey)
-            )
-            .FirstOrDefault()?.Roles
-            .Select(r => r.Name).ToArray()
-        ?? new AppRoleName[0];
+                Portfolio: portfolio,
+                CanView: roles.Any(r => r.Name.EqualsAny(CopiaInfo.Roles.PortfolioOwner)),
+                CanEdit: roles.Any(r => r.Name.EqualsAny(CopiaInfo.Roles.PortfolioOwner))
+            );
+            permissions.Add(permission);
+        }
+        return permissions.ToArray();
+    }
 }
