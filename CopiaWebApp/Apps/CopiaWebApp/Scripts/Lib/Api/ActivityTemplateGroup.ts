@@ -9,17 +9,12 @@ import { AppResourceUrl } from "@jasonbenfield/sharedwebapp/Api/AppResourceUrl";
 export class ActivityTemplateGroup extends AppApiGroup {
 	constructor(events: AppApiEvents, resourceUrl: AppResourceUrl) {
 		super(events, resourceUrl, 'ActivityTemplate');
-		this.EditTemplateStringAction = this.createAction<IEditTemplateStringRequest,ITemplateStringModel>('EditTemplateString', 'Edit Template String');
-		this.GetActivityTemplateDetailAction = this.createAction<IGetActivityTemplateRequest,IActivityTemplateDetailModel>('GetActivityTemplateDetail', 'Get Activity Template Detail');
+		this.GetActivityTemplateAction = this.createAction<IGetActivityTemplateRequest,IActivityTemplateModel>('GetActivityTemplate', 'Get Activity Template');
 	}
 	
-	readonly EditTemplateStringAction: AppApiAction<IEditTemplateStringRequest,ITemplateStringModel>;
-	readonly GetActivityTemplateDetailAction: AppApiAction<IGetActivityTemplateRequest,IActivityTemplateDetailModel>;
+	readonly GetActivityTemplateAction: AppApiAction<IGetActivityTemplateRequest,IActivityTemplateModel>;
 	
-	EditTemplateString(model: IEditTemplateStringRequest, errorOptions?: IActionErrorOptions) {
-		return this.EditTemplateStringAction.execute(model, errorOptions || {});
-	}
-	GetActivityTemplateDetail(model: IGetActivityTemplateRequest, errorOptions?: IActionErrorOptions) {
-		return this.GetActivityTemplateDetailAction.execute(model, errorOptions || {});
+	GetActivityTemplate(model: IGetActivityTemplateRequest, errorOptions?: IActionErrorOptions) {
+		return this.GetActivityTemplateAction.execute(model, errorOptions || {});
 	}
 }

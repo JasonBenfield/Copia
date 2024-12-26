@@ -3,7 +3,7 @@ using XTI_CopiaDB;
 
 namespace XTI_CopiaWebAppApi.ActivityTemplates;
 
-internal sealed class AddActivityTemplateAction : AppAction<AddActivityTemplateRequest, ActivityTemplateDetailModel>
+internal sealed class AddActivityTemplateAction : AppAction<AddActivityTemplateRequest, ActivityTemplateModel>
 {
     private readonly CopiaDbContext db;
     private readonly PortfolioFromModifier portfolioFromModifier;
@@ -14,17 +14,17 @@ internal sealed class AddActivityTemplateAction : AppAction<AddActivityTemplateR
         this.portfolioFromModifier = portfolioFromModifier;
     }
 
-    public async Task<ActivityTemplateDetailModel> Execute(AddActivityTemplateRequest model, CancellationToken stoppingToken)
+    public async Task<ActivityTemplateModel> Execute(AddActivityTemplateRequest model, CancellationToken stoppingToken)
     {
         var portfolio = await portfolioFromModifier.Value();
         var efActivityTemplate = await db.Transaction(() => AddActivityTemplate(portfolio, model));
-        var detailModel = await efActivityTemplate.ToDetailModel();
-        return detailModel;
+        var activityTemplate = efActivityTemplate.ToModel();
+        return activityTemplate;
     }
 
-    private async Task<EfActivityTemplate> AddActivityTemplate(EfPortfolio portfolio, AddActivityTemplateRequest model)
+    private async Task<EfActivityTemplate> AddActivityTemplate(EfPortfolio efPortfolio, AddActivityTemplateRequest model)
     {
-        var efActivityTemplate = await portfolio.AddActivityTemplate(model.TemplateName);
+        var efActivityTemplate = await efPortfolio.AddActivityTemplate(model.TemplateName);
         return efActivityTemplate;
     }
 }

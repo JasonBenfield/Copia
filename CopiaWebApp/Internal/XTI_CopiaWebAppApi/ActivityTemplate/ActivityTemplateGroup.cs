@@ -7,10 +7,8 @@ public sealed class ActivityTemplateGroup : AppApiGroupWrapper
     public ActivityTemplateGroup(AppApiGroup source, IServiceProvider sp)
         : base(source)
     {
-        EditTemplateString = source.AddAction(nameof(EditTemplateString), () => sp.GetRequiredService<EditTemplateStringAction>());
-        GetActivityTemplateDetail = source.AddAction(nameof(GetActivityTemplateDetail), () => sp.GetRequiredService<GetActivityTemplateDetailAction>());
+        GetActivityTemplate = source.AddAction(nameof(GetActivityTemplate), () => sp.GetRequiredService<GetActivityTemplateAction>());
     }
 
-    public AppApiAction<EditTemplateStringRequest, TemplateStringModel> EditTemplateString { get; }
-    public AppApiAction<GetActivityTemplateRequest, ActivityTemplateDetailModel> GetActivityTemplateDetail { get; }
+    public AppApiAction<GetActivityTemplateRequest, ActivityTemplateModel> GetActivityTemplate { get; }
 }

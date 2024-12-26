@@ -1,9 +1,13 @@
 ﻿namespace XTI_Copia.Abstractions;
 
-public sealed record ActivityDetailModel(ActivityModel Activity, ActivityTemplateDetailModel TemplateDetail)
+public sealed record ActivityDetailModel
+(
+    ActivityModel Activity, 
+    ActivityTemplateModel Template
+)
 {
     public ActivityDetailModel()
-        : this(new ActivityModel(), new ActivityTemplateDetailModel())
+        : this(new ActivityModel(), new ActivityTemplateModel())
     {
     }
 }

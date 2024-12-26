@@ -5,8 +5,10 @@ internal sealed class ActivityEntityConfiguration : IEntityTypeConfiguration<Act
     public void Configure(EntityTypeBuilder<ActivityEntity> builder)
     {
         builder.HasKey(a => a.ID);
-        builder.Property(a => a.ActivityName).HasMaxLength(1000);
-        builder.Property(a => a.Amount).HasPrecision(20, 2);
+        builder.Property(a => a.TimeCreated).HasDefaultValueSql("getdate()");
+        builder.Property(a => a.ActivityDate).HasDefaultValue(DateTimeOffset.MaxValue);
+        builder.Property(a => a.ActivityName).HasMaxLength(1000).HasDefaultValue("");
+        builder.Property(a => a.Amount).HasPrecision(20, 2).HasDefaultValue(0);
         builder.HasOne<PortfolioEntity>()
             .WithMany()
             .HasForeignKey(a => a.PortfolioID)

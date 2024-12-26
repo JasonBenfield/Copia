@@ -1,6 +1,6 @@
 ﻿Import-Module PowershellForXti -Force
 
-function Add-CopiaDBMigrations {
+function Xti-AddCopiaDBMigrations {
     param ([Parameter(Mandatory)]$Name)
     $env:DOTNET_ENVIRONMENT="Development"
     dotnet ef --startup-project ./CopiaWebApp/Internal/XTI_CopiaDbTool migrations add $Name --project ./CopiaWebApp/Internal/XTI_CopiaDB.SqlServer
@@ -16,4 +16,8 @@ function Xti-UpdateCopiaDb {
     if( $LASTEXITCODE -ne 0 ) {
         Throw "Update failed"
     }
+}
+
+function Xti-UpdateNpm {
+	Start-Process -FilePath "cmd.exe" -WorkingDirectory CopiaWebApp/Apps/CopiaWebApp -ArgumentList "/c", "npm install @jasonbenfield/sharedwebapp@latest"
 }

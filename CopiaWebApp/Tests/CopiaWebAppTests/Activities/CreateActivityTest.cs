@@ -17,7 +17,7 @@ internal sealed class CreateActivityTest
         var activityTemplate = await AddActivityTemplate(tester, portfolio, "Withdrawal");
         tester.ShouldRequireAccess
         (
-            () => new CreateActivityRequest(activityTemplateID: activityTemplate.Template.ID),
+            () => new CreateActivityRequest(activityTemplateID: activityTemplate.ID),
             CopiaInfo.ModCategories.Portfolio,
             portfolio.PublicKey,
             CopiaInfo.Roles.Admin,
@@ -34,12 +34,30 @@ internal sealed class CreateActivityTest
         var activityTemplate = await AddActivityTemplate(tester, portfolio, "Withdrawal");
         await tester.Execute
         (
-            new CreateActivityRequest(activityTemplateID: activityTemplate.Template.ID),
+            new CreateActivityRequest(activityTemplateID: activityTemplate.ID),
             portfolio.PublicKey
         );
         var db = tester.Services.GetRequiredService<CopiaDbContext>();
         var activityEntity = await db.Activities.Retrieve()
-            .FirstOrDefaultAsync(a => a.ActivityTemplateID == activityTemplate.Template.ID);
+            .FirstOrDefaultAsync(a => a.ActivityTemplateID == activityTemplate.ID);
+        Assert.That(activityEntity, Is.Not.Null, "Should create activity");
+    }
+
+    [Test]
+    public async Task ShouldUpdateActivityNameFromTemplate()
+    {
+        var tester = await Setup();
+        tester.Login();
+        var portfolio = await AddPortfolio(tester, "My Portfolio");
+        var activityTemplate = await AddActivityTemplate(tester, portfolio, "Withdrawal");
+        await tester.Execute
+        (
+            new CreateActivityRequest(activityTemplateID: activityTemplate.ID),
+            portfolio.PublicKey
+        );
+        var db = tester.Services.GetRequiredService<CopiaDbContext>();
+        var activityEntity = await db.Activities.Retrieve()
+            .FirstOrDefaultAsync(a => a.ActivityTemplateID == activityTemplate.ID);
         Assert.That(activityEntity, Is.Not.Null, "Should create activity");
     }
 
@@ -56,7 +74,7 @@ internal sealed class CreateActivityTest
         return addTester.Execute(new AddPortfolioRequest { PortfolioName = portfolioName });
     }
 
-    private Task<ActivityTemplateDetailModel> AddActivityTemplate(ICopiaActionTester tester, PortfolioModel portfolio, string templateName)
+    private Task<ActivityTemplateModel> AddActivityTemplate(ICopiaActionTester tester, PortfolioModel portfolio, string templateName)
     {
         var addTester = tester.Create(api => api.ActivityTemplates.AddActivityTemplate);
         return addTester.Execute
