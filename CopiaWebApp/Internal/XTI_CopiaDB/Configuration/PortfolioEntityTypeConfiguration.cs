@@ -5,7 +5,8 @@ internal sealed class PortfolioEntityTypeConfiguration : IEntityTypeConfiguratio
     public void Configure(EntityTypeBuilder<PortfolioEntity> builder)
     {
         builder.HasKey(p => p.ID);
-        builder.Property(p => p.PortfolioName).HasMaxLength(500);
+        builder.Property(p => p.TimeAdded).HasDefaultValueSql("getdate()");
+        builder.Property(p => p.PortfolioName).HasMaxLength(500).HasDefaultValue("");
         builder.ToTable("Portfolios");
     }
 }

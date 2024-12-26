@@ -5,6 +5,7 @@ public sealed partial class CopiaAppClient : AppClient
     public CopiaAppClient(IHttpClientFactory httpClientFactory, XtiTokenAccessor xtiTokenAccessor, AppClientUrl clientUrl, CopiaAppClientVersion version) : base(httpClientFactory, xtiTokenAccessor, clientUrl, "Copia", version.Value)
     {
         Account = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new AccountGroup(_clientFactory, _tokenAccessor, _url, _options));
+        Activities = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new ActivitiesGroup(_clientFactory, _tokenAccessor, _url, _options));
         ActivityTemplate = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new ActivityTemplateGroup(_clientFactory, _tokenAccessor, _url, _options));
         ActivityTemplates = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new ActivityTemplatesGroup(_clientFactory, _tokenAccessor, _url, _options));
         Counterparties = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new CounterpartiesGroup(_clientFactory, _tokenAccessor, _url, _options));
@@ -16,6 +17,8 @@ public sealed partial class CopiaAppClient : AppClient
     public CopiaRoleNames RoleNames { get; } = CopiaRoleNames.Instance;
     public string AppName { get; } = "Copia";
     public AccountGroup Account { get; }
+
+    public ActivitiesGroup Activities { get; }
 
     public ActivityTemplateGroup ActivityTemplate { get; }
 

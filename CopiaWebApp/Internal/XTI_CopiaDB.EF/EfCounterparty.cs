@@ -13,6 +13,8 @@ public sealed class EfCounterparty
         this.counterparty = counterparty;
     }
 
+    internal int ID { get => counterparty.ID; }
+
     public bool IsFound() => counterparty.ID > 0;
 
     public bool HasSameID(EfCounterparty efCounterparty) => counterparty.ID == efCounterparty.counterparty.ID;

@@ -72,7 +72,7 @@ internal sealed class GetActivityTemplatesTest
         return addTester.Execute(new AddPortfolioRequest { PortfolioName = portfolioName });
     }
 
-    private Task<ActivityTemplateDetailModel> AddActivityTemplate(ICopiaActionTester tester, PortfolioModel portfolio, string templateName)
+    private Task<ActivityTemplateModel> AddActivityTemplate(ICopiaActionTester tester, PortfolioModel portfolio, string templateName)
     {
         var addTester = tester.Create(api => api.ActivityTemplates.AddActivityTemplate);
         var addRequest = new AddActivityTemplateRequest(templateName);

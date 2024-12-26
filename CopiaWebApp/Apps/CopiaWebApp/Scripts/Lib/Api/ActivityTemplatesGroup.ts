@@ -9,12 +9,12 @@ import { AppResourceUrl } from "@jasonbenfield/sharedwebapp/Api/AppResourceUrl";
 export class ActivityTemplatesGroup extends AppApiGroup {
 	constructor(events: AppApiEvents, resourceUrl: AppResourceUrl) {
 		super(events, resourceUrl, 'ActivityTemplates');
-		this.AddActivityTemplateAction = this.createAction<IAddActivityTemplateRequest,IActivityTemplateDetailModel>('AddActivityTemplate', 'Add Activity Template');
+		this.AddActivityTemplateAction = this.createAction<IAddActivityTemplateRequest,IActivityTemplateModel>('AddActivityTemplate', 'Add Activity Template');
 		this.GetActivityTemplatesAction = this.createAction<IEmptyRequest,IActivityTemplateModel[]>('GetActivityTemplates', 'Get Activity Templates');
 		this.Index = this.createView<IEmptyRequest>('Index');
 	}
 	
-	readonly AddActivityTemplateAction: AppApiAction<IAddActivityTemplateRequest,IActivityTemplateDetailModel>;
+	readonly AddActivityTemplateAction: AppApiAction<IAddActivityTemplateRequest,IActivityTemplateModel>;
 	readonly GetActivityTemplatesAction: AppApiAction<IEmptyRequest,IActivityTemplateModel[]>;
 	readonly Index: AppApiView<IEmptyRequest>;
 	

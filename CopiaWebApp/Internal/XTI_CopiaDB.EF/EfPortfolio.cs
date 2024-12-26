@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using XTI_Copia.Abstractions;
+using XTI_Forms;
 
 namespace XTI_CopiaDB.EF;
 
@@ -52,43 +53,14 @@ public sealed class EfPortfolio
 
     public async Task<EfActivityTemplate> AddActivityTemplate(string templateName)
     {
-        var efActivityName = await AddTemplateString(true, TemplateStringDataType.Values.String);
         var template = new ActivityTemplateEntity
         {
             TemplateName = templateName,
-            PortfolioID = portfolio.ID,
-            ActivityNameTemplateStringID = efActivityName.ID
+            PortfolioID = portfolio.ID
         };
         await db.ActivityTemplates.Create(template);
-        var efActivityTemplate = new EfActivityTemplate(db, this, template);
-        var fieldTypes = ActivityFieldType.Values.GetAll()
-            .Where(ft => !ft.Equals(ActivityFieldType.Values.NotSet))
-            .ToArray();
-        foreach (var fieldType in fieldTypes)
-        {
-            await efActivityTemplate.AddTemplateField(template.ID, fieldType);
-        }
+        var efActivityTemplate = new EfActivityTemplate(db, template);
         return efActivityTemplate;
-    }
-
-    private async Task<EfTemplateString> AddTemplateString(bool canEdit, TemplateStringDataType dataType)
-    {
-        var templateString = new TemplateStringEntity
-        {
-            PortfolioID = portfolio.ID,
-            CanEdit = canEdit,
-            DataType = dataType
-        };
-        await db.TemplateStrings.Create(templateString);
-        return new EfTemplateString(db, templateString);
-    }
-
-    public async Task<EfTemplateString> TemplateString(int templateStringID)
-    {
-        var templateString = await db.TemplateStrings.Retrieve()
-            .Where(ts => ts.ID == templateStringID && ts.PortfolioID == portfolio.ID)
-            .FirstOrDefaultAsync();
-        return new EfTemplateString(db, templateString ?? throw new Exception($"Template String {templateStringID} was not found."));
     }
 
     public async Task<EfActivityTemplate[]> ActivityTemplates()
@@ -96,7 +68,7 @@ public sealed class EfPortfolio
         var activityTemplates = await db.ActivityTemplates.Retrieve()
             .Where(at => at.PortfolioID == portfolio.ID)
             .ToArrayAsync();
-        return activityTemplates.Select(at => new EfActivityTemplate(db, this, at)).ToArray();
+        return activityTemplates.Select(at => new EfActivityTemplate(db, at)).ToArray();
     }
 
     public async Task<EfActivityTemplate> ActivityTemplate(int activityTemplateID)
@@ -107,7 +79,6 @@ public sealed class EfPortfolio
         return new EfActivityTemplate
         (
             db,
-            this,
             activityTemplate ?? throw new Exception($"Activity Template {activityTemplateID} was not found.")
         );
     }
@@ -126,6 +97,25 @@ public sealed class EfPortfolio
 
     public Task<EfCounterparty> CounterpartyByDisplayText(string displayText) =>
         new EfCounterparties(db).CounterpartyByDisplayText(portfolio, displayText);
+
+    public Task<EfCounterparty> BlankCounterparty() =>
+        CounterpartyByDisplayText("");
+
+    public async Task<EfActivity> CreateActivity(EfActivityTemplate efTemplate, DateTimeOffset timeCreated)
+    {
+        var efCounterparty = await BlankCounterparty();
+        var efActivity = await new EfActivities(db).Create
+        (
+            portfolio,
+            efTemplate,
+            efCounterparty,
+            timeCreated
+        );
+        return efActivity;
+    }
+
+    public Task<EfActivity[]> Activities(int max) =>
+        new EfActivities(db).GetActivities(portfolio, max);
 
     public PortfolioModel ToModel() =>
         new PortfolioModel

@@ -32,11 +32,15 @@ namespace XTICopiaDB.SqlServer.Migrations
 
                     b.Property<string>("AccountName")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasDefaultValue("");
 
                     b.Property<int>("AccountType")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<int>("PortfolioID")
                         .HasColumnType("int");
@@ -48,6 +52,57 @@ namespace XTICopiaDB.SqlServer.Migrations
                     b.ToTable("Accounts", (string)null);
                 });
 
+            modelBuilder.Entity("XTI_CopiaDB.ActivityEntity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTimeOffset>("ActivityDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValue(new DateTimeOffset(new DateTime(9999, 12, 31, 23, 59, 59, 999, DateTimeKind.Unspecified).AddTicks(9999), new TimeSpan(0, 0, 0, 0, 0)));
+
+                    b.Property<string>("ActivityName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasDefaultValue("");
+
+                    b.Property<int>("ActivityTemplateID")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Amount")
+                        .ValueGeneratedOnAdd()
+                        .HasPrecision(20, 2)
+                        .HasColumnType("decimal(20,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<int>("CounterpartyID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PortfolioID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTimeOffset>("TimeCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("getdate()");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ActivityTemplateID");
+
+                    b.HasIndex("CounterpartyID");
+
+                    b.HasIndex("PortfolioID");
+
+                    b.ToTable("Activities", (string)null);
+                });
+
             modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateEntity", b =>
                 {
                     b.Property<int>("ID")
@@ -56,51 +111,28 @@ namespace XTICopiaDB.SqlServer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("ActivityNameTemplateStringID")
-                        .HasColumnType("int");
+                    b.Property<string>("ActivityName")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasDefaultValue("");
 
                     b.Property<int>("PortfolioID")
                         .HasColumnType("int");
 
                     b.Property<string>("TemplateName")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("");
 
                     b.HasKey("ID");
 
                     b.HasIndex("PortfolioID");
 
                     b.ToTable("ActivityTemplates", (string)null);
-                });
-
-            modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateFieldEntity", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("Accessibility")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FieldCaption")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("FieldType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TemplateID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("TemplateID");
-
-                    b.ToTable("ActivityTemplateFields", (string)null);
                 });
 
             modelBuilder.Entity("XTI_CopiaDB.CounterpartyEntity", b =>
@@ -113,8 +145,10 @@ namespace XTICopiaDB.SqlServer.Migrations
 
                     b.Property<string>("DisplayText")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasDefaultValue("");
 
                     b.Property<int>("PortfolioID")
                         .HasColumnType("int");
@@ -126,8 +160,10 @@ namespace XTICopiaDB.SqlServer.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasDefaultValue("");
 
                     b.HasKey("ID");
 
@@ -146,78 +182,19 @@ namespace XTICopiaDB.SqlServer.Migrations
 
                     b.Property<string>("PortfolioName")
                         .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasDefaultValue("");
 
                     b.Property<DateTimeOffset>("TimeAdded")
-                        .HasColumnType("datetimeoffset");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetimeoffset")
+                        .HasDefaultValueSql("getdate()");
 
                     b.HasKey("ID");
 
                     b.ToTable("Portfolios", (string)null);
-                });
-
-            modelBuilder.Entity("XTI_CopiaDB.TemplateStringEntity", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<bool>("CanEdit")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("DataType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PortfolioID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PortfolioID");
-
-                    b.ToTable("TemplateStrings", (string)null);
-                });
-
-            modelBuilder.Entity("XTI_CopiaDB.TemplateStringPartEntity", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("ArrayIndex")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArrayType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("FieldType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FixedText")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("PartType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Sequence")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TemplateStringID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("TemplateStringID", "Sequence")
-                        .IsUnique();
-
-                    b.ToTable("TemplateStringParts", (string)null);
                 });
 
             modelBuilder.Entity("XTI_CopiaDB.AccountEntity", b =>
@@ -229,21 +206,33 @@ namespace XTICopiaDB.SqlServer.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("XTI_CopiaDB.ActivityEntity", b =>
+                {
+                    b.HasOne("XTI_CopiaDB.ActivityTemplateEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ActivityTemplateID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("XTI_CopiaDB.CounterpartyEntity", null)
+                        .WithMany()
+                        .HasForeignKey("CounterpartyID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("XTI_CopiaDB.PortfolioEntity", null)
+                        .WithMany()
+                        .HasForeignKey("PortfolioID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateEntity", b =>
                 {
                     b.HasOne("XTI_CopiaDB.PortfolioEntity", null)
                         .WithMany()
                         .HasForeignKey("PortfolioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("XTI_CopiaDB.ActivityTemplateFieldEntity", b =>
-                {
-                    b.HasOne("XTI_CopiaDB.ActivityTemplateEntity", null)
-                        .WithMany()
-                        .HasForeignKey("TemplateID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -253,24 +242,6 @@ namespace XTICopiaDB.SqlServer.Migrations
                         .WithMany()
                         .HasForeignKey("PortfolioID")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("XTI_CopiaDB.TemplateStringEntity", b =>
-                {
-                    b.HasOne("XTI_CopiaDB.PortfolioEntity", null)
-                        .WithMany()
-                        .HasForeignKey("PortfolioID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("XTI_CopiaDB.TemplateStringPartEntity", b =>
-                {
-                    b.HasOne("XTI_CopiaDB.TemplateStringEntity", null)
-                        .WithMany()
-                        .HasForeignKey("TemplateStringID")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

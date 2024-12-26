@@ -17,7 +17,7 @@ public sealed class ActivityTemplatesGroup : AppApiGroupWrapper
         Index = source.AddAction(nameof(Index), () => sp.GetRequiredService<IndexAction>());
     }
 
-    public AppApiAction<AddActivityTemplateRequest, ActivityTemplateDetailModel> AddActivityTemplate { get; }
+    public AppApiAction<AddActivityTemplateRequest, ActivityTemplateModel> AddActivityTemplate { get; }
     public AppApiAction<EmptyRequest, ActivityTemplateModel[]> GetActivityTemplates { get; }
     public AppApiAction<EmptyRequest, WebViewResult> Index { get; }
 }

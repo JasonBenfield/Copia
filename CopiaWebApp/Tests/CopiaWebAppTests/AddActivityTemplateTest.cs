@@ -68,47 +68,11 @@ internal sealed class AddActivityTemplateTest
         var tester = await Setup();
         tester.Login();
         var portfolio = await AddPortfolio(tester);
-        var activityTemplateDetail = await tester.Execute(new AddActivityTemplateRequest("Withdrawal"), portfolio.PublicKey);
-        Assert.That(activityTemplateDetail.Template.TemplateName, Is.EqualTo("Withdrawal"), "Should return new activity template");
+        var activityTemplate = await tester.Execute(new AddActivityTemplateRequest("Withdrawal"), portfolio.PublicKey);
+        Assert.That(activityTemplate.TemplateName, Is.EqualTo("Withdrawal"), "Should return new activity template");
     }
 
-    [Test]
-    public async Task ShouldAddFieldsForEachFieldType()
-    {
-        var tester = await Setup();
-        tester.Login();
-        var portfolio = await AddPortfolio(tester);
-        var activityTemplateDetail = await tester.Execute(new AddActivityTemplateRequest("Withdrawal"), portfolio.PublicKey);
-        Assert.That
-        (
-            activityTemplateDetail.TemplateFields.Select(tf => tf.FieldType).ToArray(),
-            Is.EquivalentTo
-            (
-                new[]
-                {
-                    ActivityFieldType.Values.Amount,
-                    ActivityFieldType.Values.Counterparty,
-                    ActivityFieldType.Values.TimeOccurred
-                }
-            ),
-            "Should add template fields"
-        );
-    }
-
-    [Test]
-    public async Task ShouldAddActivityNameTemplateString()
-    {
-        var tester = await Setup();
-        tester.Login();
-        var portfolio = await AddPortfolio(tester);
-        var activityTemplateDetail = await tester.Execute(new AddActivityTemplateRequest("Withdrawal"), portfolio.PublicKey);
-        Assert.That(activityTemplateDetail.ActivityName.ID, Is.GreaterThan(0), "Should add activity name template string");
-        Assert.That(activityTemplateDetail.ActivityName.DataType, Is.EqualTo(TemplateStringDataType.Values.String), "Should add activity name template string");
-        Assert.That(activityTemplateDetail.ActivityName.CanEdit, Is.True, "Should add activity name template string");
-        Assert.That(activityTemplateDetail.ActivityName.Parts.Length, Is.EqualTo(0), "Should add activity name template string");
-    }
-
-    private async Task<CopiaActionTester<AddActivityTemplateRequest, ActivityTemplateDetailModel>> Setup()
+    private async Task<CopiaActionTester<AddActivityTemplateRequest, ActivityTemplateModel>> Setup()
     {
         var host = new CopiaTestHost();
         var services = await host.Setup();

@@ -10,14 +10,8 @@ public sealed partial class ActivityTemplateController : Controller
     }
 
     [HttpPost]
-    public Task<ResultContainer<TemplateStringModel>> EditTemplateString([FromBody] EditTemplateStringRequest model, CancellationToken ct)
+    public Task<ResultContainer<ActivityTemplateModel>> GetActivityTemplate([FromBody] GetActivityTemplateRequest model, CancellationToken ct)
     {
-        return api.Group("ActivityTemplate").Action<EditTemplateStringRequest, TemplateStringModel>("EditTemplateString").Execute(model, ct);
-    }
-
-    [HttpPost]
-    public Task<ResultContainer<ActivityTemplateDetailModel>> GetActivityTemplateDetail([FromBody] GetActivityTemplateRequest model, CancellationToken ct)
-    {
-        return api.Group("ActivityTemplate").Action<GetActivityTemplateRequest, ActivityTemplateDetailModel>("GetActivityTemplateDetail").Execute(model, ct);
+        return api.Group("ActivityTemplate").Action<GetActivityTemplateRequest, ActivityTemplateModel>("GetActivityTemplate").Execute(model, ct);
     }
 }
