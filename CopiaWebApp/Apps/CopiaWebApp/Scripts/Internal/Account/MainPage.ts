@@ -12,22 +12,21 @@ class MainPage extends CopiaPage {
 
     constructor(protected readonly view: MainPageView) {
         super(view);
-        const accountIDText = Url.current().getQueryValue('AccountID');
-        const accountID = accountIDText ? Number(accountIDText) : 0;
+        const accountID = Url.current().query.getNumberValue("AccountID");
         if (accountID) {
             this.panels = new SingleActivePanel();
             this.accountPanel = this.panels.add(
-                new AccountPanel(this.defaultApi, view.accountPanelView)
+                new AccountPanel(this.copiaClient, view.accountPanelView)
             );
             this.menuPanel = this.panels.add(
-                new PortfolioMenuPanel(this.defaultApi, view.menuPanelView)
+                new PortfolioMenuPanel(this.copiaClient, view.menuPanelView)
             );
             this.accountPanel.setAccountID(accountID);
             this.accountPanel.refresh();
             this.activateAccountPanel();
         }
         else {
-            this.defaultApi.Portfolio.Index.open({});
+            this.copiaClient.Portfolio.Index.open({});
         }
     }
 

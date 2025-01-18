@@ -1,6 +1,7 @@
 ﻿using XTI_App.Abstractions;
 using XTI_App.Fakes;
 using XTI_CopiaWebAppApi;
+using XTI_CopiaWebAppApiActions;
 
 namespace CopiaWebAppTests;
 
@@ -20,7 +21,6 @@ internal sealed class FakeHubService : IHubService
         var app = appContext.GetCurrentApp();
         appContext.AddModifier
         (
-            app,
             CopiaInfo.ModCategories.Portfolio,
             modKey,
             targetKey

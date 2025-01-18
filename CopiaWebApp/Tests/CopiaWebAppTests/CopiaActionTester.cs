@@ -78,15 +78,13 @@ internal sealed class CopiaActionTester<TModel, TResult> : ICopiaActionTester
         var appApiFactory = Services.GetRequiredService<AppApiFactory>();
         var copiaApiForSuperUser = (CopiaAppApi)appApiFactory.CreateForSuperUser();
         var actionForSuperUser = getAction(copiaApiForSuperUser);
-        var modKeyPath = modKey.Equals(ModifierKey.Default) ? "" : $"/{modKey.Value}";
         var appKey = Services.GetRequiredService<AppKey>();
         var userContext = Services.GetRequiredService<ISourceUserContext>();
-        var pathAccessor = Services.GetRequiredService<FakeXtiPathAccessor>();
-        var path = actionForSuperUser.Path.WithModifier(modKey ?? ModifierKey.Default);
-        pathAccessor.SetPath(path);
+        var modKeyAccessor = Services.GetRequiredService<FakeModifierKeyAccessor>();
+        modKeyAccessor.SetValue(modKey);
         var currentUserName = Services.GetRequiredService<ICurrentUserName>();
         var currentUserAccess = new CurrentUserAccess(userContext, appContext, currentUserName);
-        var apiUser = new AppApiUser(currentUserAccess, pathAccessor);
+        var apiUser = new AppApiUser(currentUserAccess, modKeyAccessor);
         var copiaApi = (CopiaAppApi)appApiFactory.Create(apiUser);
         var action = getAction(copiaApi);
         var result = await action.Invoke(model);

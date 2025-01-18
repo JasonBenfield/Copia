@@ -3,7 +3,7 @@ import { AsyncCommand, Command } from "@jasonbenfield/sharedwebapp/Components/Co
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
 import { DelayedAction } from "@jasonbenfield/sharedwebapp/DelayedAction";
 import { TextInputFormGroup } from "@jasonbenfield/sharedwebapp/Forms/TextInputFormGroup";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { AddPortfolioPanelView } from "./AddPortfolioPanelView";
 
 interface IResults {
@@ -31,7 +31,7 @@ export class AddPortfolioPanel implements IPanel {
     private readonly alert: MessageAlert;
     private readonly saveCommand: AsyncCommand;
 
-    constructor(private readonly copiaApi: CopiaAppApi, private readonly view: AddPortfolioPanelView) {
+    constructor(private readonly copiaApi: CopiaAppClient, private readonly view: AddPortfolioPanelView) {
         this.portfolioName = new TextInputFormGroup('', '', view.portfolioName);
         this.alert = new MessageAlert(view.alert);
         view.handleFormSubmit(this.onFormSubmit.bind(this));
@@ -40,7 +40,7 @@ export class AddPortfolioPanel implements IPanel {
         this.saveCommand.add(view.saveButton);
     }
 
-    private onFormSubmit(el: HTMLElement, evt: JQueryEventObject) {
+    private onFormSubmit(el: HTMLElement, evt: JQuery.Event) {
         evt.preventDefault();
         this.saveCommand.execute();
     }

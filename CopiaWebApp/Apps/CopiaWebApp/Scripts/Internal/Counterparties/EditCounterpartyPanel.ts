@@ -2,8 +2,8 @@ import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
 import { AsyncCommand, Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
 import { DelayedAction } from "@jasonbenfield/sharedwebapp/DelayedAction";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
-import { EditCounterpartyForm } from "../../Lib/Api/EditCounterpartyForm";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
+import { EditCounterpartyForm } from "../../Lib/Http/EditCounterpartyForm";
 import { EditCounterpartyPanelView } from "./EditCounterpartyPanelView";
 
 interface IResults {
@@ -30,7 +30,7 @@ export class EditCounterpartyPanel implements IPanel {
     private readonly alert: MessageAlert;
     private readonly saveCommand: AsyncCommand;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: EditCounterpartyPanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: EditCounterpartyPanelView) {
         this.editForm = new EditCounterpartyForm(view.editFormView);
         this.alert = new MessageAlert(view.alertView);
         view.handleFormSubmit(this.onFormSubmit.bind(this));

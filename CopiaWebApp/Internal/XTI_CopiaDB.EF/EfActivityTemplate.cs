@@ -1,16 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using XTI_Copia.Abstractions;
+﻿using XTI_Copia.Abstractions;
 
 namespace XTI_CopiaDB.EF;
 
 public sealed class EfActivityTemplate
 {
-    private readonly CopiaDbContext db;
     private readonly ActivityTemplateEntity template;
 
-    internal EfActivityTemplate(CopiaDbContext db, ActivityTemplateEntity template)
+    internal EfActivityTemplate(ActivityTemplateEntity template)
     {
-        this.db = db;
         this.template = template;
     }
 

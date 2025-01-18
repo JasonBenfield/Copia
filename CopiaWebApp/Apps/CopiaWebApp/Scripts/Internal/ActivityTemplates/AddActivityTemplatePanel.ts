@@ -4,17 +4,17 @@ import { InputControl } from "@jasonbenfield/sharedwebapp/Components/InputContro
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
 import { DelayedAction } from "@jasonbenfield/sharedwebapp/DelayedAction";
 import { TextToTextViewValue } from "@jasonbenfield/sharedwebapp/Forms/TextToTextViewValue";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { AddActivityTemplatePanelView } from "./AddActivityTemplatePanelView";
 
 interface IResults {
-    readonly added?: { activityTemplateDetail: IActivityTemplateDetailModel };
+    readonly added?: { activityTemplate: IActivityTemplateModel };
     readonly cancelled?: boolean;
 }
 
 class Result {
-    static added(activityTemplateDetail: IActivityTemplateDetailModel) {
-        return new Result({ added: { activityTemplateDetail: activityTemplateDetail } });
+    static added(activityTemplate: IActivityTemplateModel) {
+        return new Result({ added: { activityTemplate: activityTemplate } });
     }
 
     static cancelled() { return new Result({ cancelled: true }); }
@@ -32,7 +32,7 @@ export class AddActivityTemplatePanel implements IPanel {
     private readonly templateNameInput: InputControl<string>;
     private readonly saveCommand: AsyncCommand;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: AddActivityTemplatePanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: AddActivityTemplatePanelView) {
         this.alert = new MessageAlert(view.alert);
         this.templateNameInput = new InputControl(view.templateNameInputView, new TextToTextViewValue());
         this.saveCommand = new AsyncCommand(this.save.bind(this));

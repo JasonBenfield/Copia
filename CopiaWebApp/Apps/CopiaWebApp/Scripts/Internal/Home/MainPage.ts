@@ -13,10 +13,10 @@ class MainPage extends CopiaPage {
         super(view);
         this.panels = new SingleActivePanel();
         this.addPortfolioPanel = this.panels.add(
-            new AddPortfolioPanel(this.defaultApi, view.addPortfolioPanel)
+            new AddPortfolioPanel(this.copiaClient, view.addPortfolioPanel)
         );
         this.portfolioListPanel = this.panels.add(
-            new PortfolioListPanel(this.defaultApi, view.portfolioListPanel, true)
+            new PortfolioListPanel(this.copiaClient, view.portfolioListPanel, true)
         );
         this.portfolioListPanel.refresh();
         this.activatePortfolioListPanel();

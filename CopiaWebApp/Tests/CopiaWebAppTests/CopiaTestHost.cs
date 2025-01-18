@@ -4,8 +4,10 @@ using XTI_App.Abstractions;
 using XTI_App.Extensions;
 using XTI_App.Fakes;
 using XTI_CopiaDB;
+using XTI_CopiaDB.EF;
 using XTI_CopiaDB.Extensions;
 using XTI_CopiaWebAppApi;
+using XTI_CopiaWebAppApiActions;
 using XTI_Core;
 using XTI_Core.Extensions;
 using XTI_Core.Fakes;
@@ -35,6 +37,7 @@ internal sealed class CopiaTestHost
         builder.Services.AddScoped(sp => sp.GetRequiredService<AppApiFactory>().CreateForSuperUser());
         builder.Services.AddScoped(sp => (CopiaAppApi)sp.GetRequiredService<IAppApi>());
         builder.Services.AddCopiaDbContextForSqlServer();
+        builder.Services.AddScoped<EfCopiaDB>();
         builder.Services.AddScoped<DbAdmin<CopiaDbContext>>();
         builder.Services.AddScoped<FakeHubService>();
         builder.Services.AddScoped<IHubService>(sp => sp.GetRequiredService<FakeHubService>());
@@ -46,7 +49,7 @@ internal sealed class CopiaTestHost
         var appContext = sp.GetRequiredService<FakeAppContext>();
         var apiFactory = sp.GetRequiredService<CopiaAppApiFactory>();
         var template = apiFactory.CreateTemplate();
-        var copiaApp = appContext.AddApp(template.ToModel());
+        var copiaApp = appContext.RegisterApp(template.ToModel());
         appContext.SetCurrentApp(copiaApp);
         var dbAdmin = sp.GetRequiredService<DbAdmin<CopiaDbContext>>();
         if (xtiEnv.IsTest())

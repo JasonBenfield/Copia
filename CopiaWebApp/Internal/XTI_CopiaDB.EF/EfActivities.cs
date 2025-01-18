@@ -4,9 +4,9 @@ namespace XTI_CopiaDB.EF;
 
 public sealed class EfActivities
 {
-    private readonly CopiaDbContext db;
+    private readonly EfCopiaDB db;
 
-    public EfActivities(CopiaDbContext db)
+    internal EfActivities(EfCopiaDB db)
     {
         this.db = db;
     }
@@ -21,17 +21,17 @@ public sealed class EfActivities
             TimeCreated = timeCreated,
             ActivityDate = timeCreated.Date
         };
-        await db.Activities.Create(activity);
-        return new EfActivity(db, activity);
+        await db.Context.Activities.Create(activity);
+        return new EfActivity(activity);
     }
 
     internal async Task<EfActivity[]> GetActivities(PortfolioEntity portfolio, int max)
     {
-        var activities = await db.Activities.Retrieve()
+        var activities = await db.Context.Activities.Retrieve()
             .Where(a => a.PortfolioID == portfolio.ID)
             .OrderByDescending(a => a.ActivityDate)
             .Take(max)
             .ToArrayAsync();
-        return activities.Select(a => new EfActivity(db, a)).ToArray();
+        return activities.Select(a => new EfActivity(a)).ToArray();
     }
 }

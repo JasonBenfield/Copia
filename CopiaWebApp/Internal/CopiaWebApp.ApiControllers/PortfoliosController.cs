@@ -10,20 +10,20 @@ public sealed partial class PortfoliosController : Controller
     }
 
     [HttpPost]
-    public Task<ResultContainer<PortfolioModel>> AddPortfolio([FromBody] AddPortfolioRequest model, CancellationToken ct)
+    public Task<ResultContainer<PortfolioModel>> AddPortfolio([FromBody] AddPortfolioRequest requestData, CancellationToken ct)
     {
-        return api.Group("Portfolios").Action<AddPortfolioRequest, PortfolioModel>("AddPortfolio").Execute(model, ct);
+        return api.Portfolios.AddPortfolio.Execute(requestData, ct);
     }
 
     [HttpPost]
     public Task<ResultContainer<PortfolioModel[]>> GetPortfolios(CancellationToken ct)
     {
-        return api.Group("Portfolios").Action<EmptyRequest, PortfolioModel[]>("GetPortfolios").Execute(new EmptyRequest(), ct);
+        return api.Portfolios.GetPortfolios.Execute(new EmptyRequest(), ct);
     }
 
     public async Task<IActionResult> Index(CancellationToken ct)
     {
-        var result = await api.Group("Portfolios").Action<EmptyRequest, WebViewResult>("Index").Execute(new EmptyRequest(), ct);
+        var result = await api.Portfolios.Index.Execute(new EmptyRequest(), ct);
         return View(result.Data!.ViewName);
     }
 }

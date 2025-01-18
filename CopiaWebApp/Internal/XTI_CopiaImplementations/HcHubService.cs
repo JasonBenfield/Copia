@@ -1,7 +1,5 @@
 ﻿using XTI_App.Abstractions;
-using XTI_App.Api;
-using XTI_Copia.Abstractions;
-using XTI_CopiaWebAppApi;
+using XTI_CopiaWebAppApiActions;
 using XTI_Hub.Abstractions;
 using XTI_HubAppClient;
 

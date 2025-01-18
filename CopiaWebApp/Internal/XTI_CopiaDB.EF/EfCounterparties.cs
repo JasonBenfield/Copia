@@ -4,9 +4,9 @@ namespace XTI_CopiaDB.EF;
 
 public sealed class EfCounterparties
 {
-    private readonly CopiaDbContext db;
+    private readonly EfCopiaDB db;
 
-    public EfCounterparties(CopiaDbContext db)
+    public EfCounterparties(EfCopiaDB db)
     {
         this.db = db;
     }
@@ -19,7 +19,7 @@ public sealed class EfCounterparties
             DisplayText = displayText,
             Url = url
         };
-        await db.Counterparties.Create(counterparty);
+        await db.Context.Counterparties.Create(counterparty);
         return new EfCounterparty(db, counterparty);
     }
 
@@ -39,7 +39,7 @@ public sealed class EfCounterparties
     private IQueryable<CounterpartyEntity> SearchQuery(PortfolioEntity portfolio, string searchText)
     {
         searchText = searchText.ToLower().Trim();
-        return db.Counterparties.Retrieve()
+        return db.Context.Counterparties.Retrieve()
             .Where
             (
                 c =>
@@ -52,7 +52,7 @@ public sealed class EfCounterparties
 
     internal async Task<EfCounterparty> Counterparty(PortfolioEntity portfolio, int id)
     {
-        var counterparty = await db.Counterparties.Retrieve()
+        var counterparty = await db.Context.Counterparties.Retrieve()
             .Where(c => c.PortfolioID == portfolio.ID && c.ID == id)
             .FirstOrDefaultAsync();
         return new EfCounterparty(db, counterparty ?? throw new Exception($"Counterparty {id} not found for portfolio {portfolio.ID}"));
@@ -61,7 +61,7 @@ public sealed class EfCounterparties
     internal async Task<EfCounterparty> CounterpartyByDisplayText(PortfolioEntity portfolio, string displayText)
     {
         displayText = displayText.Trim().ToLower();
-        var counterparty = await db.Counterparties.Retrieve()
+        var counterparty = await db.Context.Counterparties.Retrieve()
             .Where(c => c.PortfolioID == portfolio.ID && c.DisplayText.ToLower() == displayText)
             .FirstOrDefaultAsync();
         return new EfCounterparty(db, counterparty ?? new CounterpartyEntity());

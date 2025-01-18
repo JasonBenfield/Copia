@@ -3,7 +3,7 @@ import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { ListGroup } from "@jasonbenfield/sharedwebapp/Components/ListGroup";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
 import { TextLinkListGroupItemView } from "@jasonbenfield/sharedwebapp/Views/ListGroup";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { PortfolioListItem } from "./PortfolioListItem";
 import { PortfolioListPanelView } from "./PortfolioListPanelView";
 
@@ -25,7 +25,7 @@ export class PortfolioListPanel implements IPanel {
     private readonly portfolioListGroup: ListGroup<PortfolioListItem, TextLinkListGroupItemView>;
 
     constructor(
-        private readonly copiaApi: CopiaAppApi,
+        private readonly copiaClient: CopiaAppClient,
         private readonly view: PortfolioListPanelView,
         private readonly autoOpenSinglePortfolio: boolean
     ) {
@@ -41,14 +41,14 @@ export class PortfolioListPanel implements IPanel {
     async refresh() {
         const portfolios = await this.alert.infoAction(
             'Loading...',
-            () => this.copiaApi.Portfolios.GetPortfolios()
+            () => this.copiaClient.Portfolios.GetPortfolios()
         );
         this.portfolioListGroup.setItems(
             portfolios,
-            (p, v) => new PortfolioListItem(this.copiaApi, p, v)
+            (p, v) => new PortfolioListItem(this.copiaClient, p, v)
         );
         if (this.autoOpenSinglePortfolio && portfolios.length === 1) {
-            this.copiaApi.Portfolio.Index.open({}, portfolios[0].PublicKey.Value);
+            this.copiaClient.Portfolio.Index.open({}, portfolios[0].PublicKey.Value);
         }
     }
 

@@ -10,14 +10,14 @@ public sealed partial class AccountController : Controller
     }
 
     [HttpPost]
-    public Task<ResultContainer<AccountModel>> GetAccount([FromBody] GetAccountRequest model, CancellationToken ct)
+    public Task<ResultContainer<AccountModel>> GetAccount([FromBody] GetAccountRequest requestData, CancellationToken ct)
     {
-        return api.Group("Account").Action<GetAccountRequest, AccountModel>("GetAccount").Execute(model, ct);
+        return api.Account.GetAccount.Execute(requestData, ct);
     }
 
-    public async Task<IActionResult> Index(GetAccountRequest model, CancellationToken ct)
+    public async Task<IActionResult> Index(GetAccountRequest requestData, CancellationToken ct)
     {
-        var result = await api.Group("Account").Action<GetAccountRequest, WebViewResult>("Index").Execute(model, ct);
+        var result = await api.Account.Index.Execute(requestData, ct);
         return View(result.Data!.ViewName);
     }
 }

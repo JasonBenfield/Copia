@@ -2,7 +2,7 @@ import { DelayedAction } from "@jasonbenfield/sharedwebapp/DelayedAction";
 import { BasicComponentView } from "@jasonbenfield/sharedwebapp/Views/BasicComponentView";
 import { ButtonCommandView } from "@jasonbenfield/sharedwebapp/Views/Command";
 import { MessageAlertView } from "@jasonbenfield/sharedwebapp/Views/MessageAlertView";
-import { AddAccountFormView } from "../../Lib/Api/AddAccountFormView";
+import { AddAccountFormView } from "../../Lib/Http/AddAccountFormView";
 import { CopiaTheme } from "../CopiaTheme";
 import { PanelView } from "../PanelView";
 
@@ -28,7 +28,7 @@ export class AddAccountPanelView extends PanelView {
 
     setFocus() {
         new DelayedAction(() => {
-            this.addForm.AccountName.input.setFocus();
+            this.addForm.AccountName.inputView.setFocus();
         }, 100).execute();
     }
 }

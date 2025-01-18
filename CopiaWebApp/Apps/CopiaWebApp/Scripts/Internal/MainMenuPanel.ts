@@ -1,9 +1,8 @@
-﻿import { XtiUrl } from "@jasonbenfield/sharedwebapp/Api/XtiUrl";
-import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
+﻿import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
 import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { MenuComponent } from "@jasonbenfield/sharedwebapp/Components/MenuComponent";
-import { Url } from "@jasonbenfield/sharedwebapp/Url";
-import { CopiaAppApi } from "../Lib/Api/CopiaAppApi";
+import { XtiUrl } from "@jasonbenfield/sharedwebapp/Http/XtiUrl";
+import { CopiaAppClient } from "../Lib/Http/CopiaAppClient";
 import { MainMenuPanelView } from "./MainMenuPanelView";
 import { PortfolioMenuComponent } from "./PortfolioMenuComponent";
 
@@ -22,8 +21,8 @@ class Result {
 export class MainMenuPanel implements IPanel {
     private readonly awaitable = new Awaitable<Result>();
     private readonly portfolioMenuComponent: PortfolioMenuComponent;
-            
-    constructor(copiaClient: CopiaAppApi, private readonly view: MainMenuPanelView) {
+
+    constructor(copiaClient: CopiaAppClient, private readonly view: MainMenuPanelView) {
         const menu = new MenuComponent(copiaClient, 'main', view.menu);
         menu.refresh();
         this.portfolioMenuComponent = new PortfolioMenuComponent(copiaClient, view.portfolioMenu);

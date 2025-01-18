@@ -1,6 +1,6 @@
 ﻿import { BasicComponent } from "@jasonbenfield/sharedwebapp/Components/BasicComponent";
 import { LinkComponent } from "@jasonbenfield/sharedwebapp/Components/LinkComponent";
-import { CopiaAppApi } from "../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../Lib/Http/CopiaAppClient";
 import { PortfolioMenuComponentView } from "./PortfolioMenuComponentView";
 
 export class PortfolioMenuComponent extends BasicComponent {
@@ -8,7 +8,7 @@ export class PortfolioMenuComponent extends BasicComponent {
     private readonly activityTemplatesLink: LinkComponent;
     private readonly counterpartiesLink: LinkComponent;
 
-    constructor(private readonly copiaClient: CopiaAppApi, view: PortfolioMenuComponentView) {
+    constructor(private readonly copiaClient: CopiaAppClient, view: PortfolioMenuComponentView) {
         super(view);
         this.portfolioLink = new LinkComponent(view.portfolioLinkView);
         this.activityTemplatesLink = new LinkComponent(view.activityTemplatesLinkView);

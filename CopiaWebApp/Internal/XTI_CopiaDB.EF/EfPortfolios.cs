@@ -4,9 +4,9 @@ namespace XTI_CopiaDB.EF;
 
 public sealed class EfPortfolios
 {
-    private readonly CopiaDbContext db;
+    private readonly EfCopiaDB db;
 
-    public EfPortfolios(CopiaDbContext db)
+    internal EfPortfolios(EfCopiaDB db)
     {
         this.db = db;
     }
@@ -18,12 +18,12 @@ public sealed class EfPortfolios
             PortfolioName = portfolioName.Trim(),
             TimeAdded = timeAdded
         };
-        await db.Portfolios.Create(portfolio);
+        await db.Context.Portfolios.Create(portfolio);
         return new EfPortfolio(db, portfolio);
     }
 
     public Task<EfPortfolio[]> Portfolios() =>
-        db.Portfolios.Retrieve()
+        db.Context.Portfolios.Retrieve()
             .Select(p => new EfPortfolio(db, p))
             .ToArrayAsync();
 
@@ -38,7 +38,7 @@ public sealed class EfPortfolios
 
     public async Task<EfPortfolio> Portfolio(int portfolioID)
     {
-        var entity = await db.Portfolios.Retrieve()
+        var entity = await db.Context.Portfolios.Retrieve()
             .Where(p => p.ID == portfolioID)
             .FirstOrDefaultAsync();
         return new EfPortfolio(db, entity ?? throw new ArgumentException(string.Format(CopiaDBErrors.PortfolioIDNotFound, portfolioID)));

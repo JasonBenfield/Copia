@@ -4,10 +4,10 @@ namespace XTI_CopiaDB.EF;
 
 public sealed class EfCounterparty
 {
-    private readonly CopiaDbContext db;
+    private readonly EfCopiaDB db;
     private readonly CounterpartyEntity counterparty;
 
-    internal EfCounterparty(CopiaDbContext db, CounterpartyEntity counterparty)
+    internal EfCounterparty(EfCopiaDB db, CounterpartyEntity counterparty)
     {
         this.db = db;
         this.counterparty = counterparty;
@@ -23,7 +23,7 @@ public sealed class EfCounterparty
     {
         var displayText = editForm.DisplayText.Value()?.Trim() ?? "";
         var url = editForm.Url.Value()?.Trim() ?? "";
-        return db.Counterparties.Update
+        return db.Context.Counterparties.Update
         (
             counterparty,
             c =>
@@ -35,7 +35,7 @@ public sealed class EfCounterparty
     }
 
     public Task Delete(DateTimeOffset timeDeleted) =>
-        db.Counterparties.Update
+        db.Context.Counterparties.Update
         (
             counterparty,
             c => c.TimeDeleted = timeDeleted

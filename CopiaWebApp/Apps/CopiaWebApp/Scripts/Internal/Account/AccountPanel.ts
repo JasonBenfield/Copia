@@ -2,7 +2,7 @@ import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
 import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
 import { TextComponent } from "@jasonbenfield/sharedwebapp/Components/TextComponent";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { AccountPanelView } from "./AccountPanelView";
 
 interface IResults {
@@ -24,7 +24,7 @@ export class AccountPanel implements IPanel {
     private readonly accountTypeText: TextComponent;
     private accountID: number;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: AccountPanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: AccountPanelView) {
         this.alert = new MessageAlert(view.alert);
         this.accountNameText = new TextComponent(view.accountNameTextView);
         this.accountTypeText = new TextComponent(view.accountTypeTextView);

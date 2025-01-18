@@ -15,7 +15,7 @@ export class PortfolioMenuPanelView extends GridView {
         super(container);
         this.setViewName(PortfolioMenuPanelView.name);
         this.height100();
-        this.layout();
+        this.styleAsLayout();
         this.setTemplateRows(CssLengthUnit.flex(1), CssLengthUnit.auto());
         const mainContent = CopiaTheme.instance.mainContent(this.addCell());
         this.portfolioMenuView = mainContent.addView(PortfolioMenuComponentView);

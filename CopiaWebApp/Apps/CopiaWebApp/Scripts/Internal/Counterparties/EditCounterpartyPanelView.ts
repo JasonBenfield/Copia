@@ -2,7 +2,7 @@ import { MarginCss } from "@jasonbenfield/sharedwebapp/MarginCss";
 import { BasicComponentView } from "@jasonbenfield/sharedwebapp/Views/BasicComponentView";
 import { ButtonCommandView } from "@jasonbenfield/sharedwebapp/Views/Command";
 import { MessageAlertView } from "@jasonbenfield/sharedwebapp/Views/MessageAlertView";
-import { EditCounterpartyFormView } from "../../Lib/Api/EditCounterpartyFormView";
+import { EditCounterpartyFormView } from "../../Lib/Http/EditCounterpartyFormView";
 import { CopiaTheme } from "../CopiaTheme";
 import { PanelView } from "../PanelView";
 

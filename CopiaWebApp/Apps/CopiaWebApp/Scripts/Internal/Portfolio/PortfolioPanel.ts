@@ -2,7 +2,7 @@ import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
 import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
 import { TextComponent } from "@jasonbenfield/sharedwebapp/Components/TextComponent";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { AccountListCard } from "./AccountListCard";
 import { PortfolioPanelView } from "./PortfolioPanelView";
 
@@ -36,7 +36,7 @@ export class PortfolioPanel implements IPanel {
     private readonly portfolioNameText: TextComponent;
     private readonly accountListCard: AccountListCard;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: PortfolioPanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: PortfolioPanelView) {
         this.alert = new MessageAlert(view.alert);
         this.portfolioNameText = new TextComponent(view.portfolioNameTextView);
         this.accountListCard = new AccountListCard(copiaClient, view.accountListCardView);

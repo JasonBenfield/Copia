@@ -1,7 +1,7 @@
 import { Awaitable } from "@jasonbenfield/sharedwebapp/Awaitable";
 import { Command } from "@jasonbenfield/sharedwebapp/Components/Command";
 import { MessageAlert } from "@jasonbenfield/sharedwebapp/Components/MessageAlert";
-import { CopiaAppApi } from "../../Lib/Api/CopiaAppApi";
+import { CopiaAppClient } from "../../Lib/Http/CopiaAppClient";
 import { ActivityListPanelView } from "./ActivityListPanelView";
 
 interface IResults {
@@ -25,7 +25,7 @@ export class ActivityListPanel implements IPanel {
     private readonly awaitable = new Awaitable<Result>();
     private readonly alert: MessageAlert;
 
-    constructor(private readonly copiaClient: CopiaAppApi, private readonly view: ActivityListPanelView) {
+    constructor(private readonly copiaClient: CopiaAppClient, private readonly view: ActivityListPanelView) {
         this.alert = new MessageAlert(view.alertView);
         new Command(this.menu.bind(this)).add(view.menuButton);
     }
