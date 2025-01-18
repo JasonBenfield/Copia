@@ -9,12 +9,6 @@ public sealed partial class CounterpartiesController : Controller
         this.api = api;
     }
 
-    public async Task<IActionResult> Index(CancellationToken ct)
-    {
-        var result = await api.Counterparties.Index.Execute(new EmptyRequest(), ct);
-        return View(result.Data!.ViewName);
-    }
-
     [HttpPost]
     public Task<ResultContainer<CounterpartyModel>> AddCounterparty([FromBody] AddCounterpartyForm requestData, CancellationToken ct)
     {
@@ -37,5 +31,11 @@ public sealed partial class CounterpartiesController : Controller
     public Task<ResultContainer<CounterpartyModel>> EditCounterparty([FromBody] EditCounterpartyForm requestData, CancellationToken ct)
     {
         return api.Counterparties.EditCounterparty.Execute(requestData, ct);
+    }
+
+    public async Task<IActionResult> Index(CancellationToken ct)
+    {
+        var result = await api.Counterparties.Index.Execute(new EmptyRequest(), ct);
+        return View(result.Data!.ViewName);
     }
 }

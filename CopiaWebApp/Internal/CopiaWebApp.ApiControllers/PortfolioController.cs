@@ -9,12 +9,6 @@ public sealed partial class PortfolioController : Controller
         this.api = api;
     }
 
-    public async Task<IActionResult> Index(CancellationToken ct)
-    {
-        var result = await api.Portfolio.Index.Execute(new EmptyRequest(), ct);
-        return View(result.Data!.ViewName);
-    }
-
     [HttpPost]
     public Task<ResultContainer<AccountModel>> AddAccount([FromBody] AddAccountForm requestData, CancellationToken ct)
     {
@@ -31,5 +25,11 @@ public sealed partial class PortfolioController : Controller
     public Task<ResultContainer<PortfolioModel>> GetPortfolio(CancellationToken ct)
     {
         return api.Portfolio.GetPortfolio.Execute(new EmptyRequest(), ct);
+    }
+
+    public async Task<IActionResult> Index(CancellationToken ct)
+    {
+        var result = await api.Portfolio.Index.Execute(new EmptyRequest(), ct);
+        return View(result.Data!.ViewName);
     }
 }

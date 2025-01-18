@@ -12,18 +12,18 @@ import { EditCounterpartyForm } from "./EditCounterpartyForm";
 export class CounterpartiesGroup extends AppClientGroup {
 	constructor(events: AppClientEvents, resourceUrl: AppResourceUrl) {
 		super(events, resourceUrl, 'Counterparties');
-		this.Index = this.createView<IEmptyRequest>('Index');
 		this.AddCounterpartyAction = this.createAction<AddCounterpartyForm,ICounterpartyModel>('AddCounterparty', 'Add Counterparty');
 		this.CounterpartySearchAction = this.createAction<string,ICounterpartySearchResult>('CounterpartySearch', 'Counterparty Search');
 		this.DeleteCounterpartyAction = this.createAction<number,IEmptyActionResult>('DeleteCounterparty', 'Delete Counterparty');
 		this.EditCounterpartyAction = this.createAction<EditCounterpartyForm,ICounterpartyModel>('EditCounterparty', 'Edit Counterparty');
+		this.Index = this.createView<IEmptyRequest>('Index');
 	}
 	
-	readonly Index: AppClientView<IEmptyRequest>;
 	readonly AddCounterpartyAction: AppClientAction<AddCounterpartyForm,ICounterpartyModel>;
 	readonly CounterpartySearchAction: AppClientAction<string,ICounterpartySearchResult>;
 	readonly DeleteCounterpartyAction: AppClientAction<number,IEmptyActionResult>;
 	readonly EditCounterpartyAction: AppClientAction<EditCounterpartyForm,ICounterpartyModel>;
+	readonly Index: AppClientView<IEmptyRequest>;
 	
 	AddCounterparty(requestData: AddCounterpartyForm, errorOptions?: IActionErrorOptions) {
 		return this.AddCounterpartyAction.execute(requestData, errorOptions || {});

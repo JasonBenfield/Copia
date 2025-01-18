@@ -1,11 +1,5 @@
 // Generated code
 
-interface ILinkModel {
-	LinkName: string;
-	DisplayText: string;
-	Url: string;
-	IsAuthenticationRequired: boolean;
-}
 interface IGetAccountRequest {
 	AccountID: number;
 }
@@ -56,6 +50,12 @@ interface IModifierKey {
 }
 interface IAddPortfolioRequest {
 	PortfolioName: string;
+}
+interface ILinkModel {
+	LinkName: string;
+	DisplayText: string;
+	Url: string;
+	IsAuthenticationRequired: boolean;
 }
 interface IAccountType {
 	Value: number;

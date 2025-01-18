@@ -5,8 +5,10 @@ public sealed partial class PortfoliosGroup : AppClientGroup
     public PortfoliosGroup(IHttpClientFactory httpClientFactory, XtiTokenAccessor xtiTokenAccessor, AppClientUrl clientUrl, AppClientOptions options) : base(httpClientFactory, xtiTokenAccessor, clientUrl, options, "Portfolios")
     {
         Actions = new PortfoliosGroupActions(AddPortfolio: CreatePostAction<AddPortfolioRequest, PortfolioModel>("AddPortfolio"), GetPortfolios: CreatePostAction<EmptyRequest, PortfolioModel[]>("GetPortfolios"), Index: CreateGetAction<EmptyRequest>("Index"));
+        Configure();
     }
 
+    partial void Configure();
     public PortfoliosGroupActions Actions { get; }
 
     public Task<PortfolioModel> AddPortfolio(AddPortfolioRequest requestData, CancellationToken ct = default) => Actions.AddPortfolio.Post("", requestData, ct);

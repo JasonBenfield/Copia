@@ -4,12 +4,10 @@ namespace XTI_CopiaDB.EF;
 
 public sealed class EfActivity
 {
-    private readonly CopiaDbContext db;
     private readonly ActivityEntity activity;
 
-    internal EfActivity(CopiaDbContext db, ActivityEntity activity)
+    internal EfActivity(ActivityEntity activity)
     {
-        this.db = db;
         this.activity = activity;
     }
 

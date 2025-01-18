@@ -5,8 +5,10 @@ public sealed partial class ActivityTemplatesGroup : AppClientGroup
     public ActivityTemplatesGroup(IHttpClientFactory httpClientFactory, XtiTokenAccessor xtiTokenAccessor, AppClientUrl clientUrl, AppClientOptions options) : base(httpClientFactory, xtiTokenAccessor, clientUrl, options, "ActivityTemplates")
     {
         Actions = new ActivityTemplatesGroupActions(AddActivityTemplate: CreatePostAction<AddActivityTemplateRequest, ActivityTemplateModel>("AddActivityTemplate"), GetActivityTemplates: CreatePostAction<EmptyRequest, ActivityTemplateModel[]>("GetActivityTemplates"), Index: CreateGetAction<EmptyRequest>("Index"));
+        Configure();
     }
 
+    partial void Configure();
     public ActivityTemplatesGroupActions Actions { get; }
 
     public Task<ActivityTemplateModel> AddActivityTemplate(string modifier, AddActivityTemplateRequest requestData, CancellationToken ct = default) => Actions.AddActivityTemplate.Post(modifier, requestData, ct);

@@ -12,7 +12,7 @@ public sealed partial class CopiaAppClientVersion
         string value;
         if (hostEnv.IsProduction())
         {
-            value = "Current";
+            value = "V2";
         }
         else
         {

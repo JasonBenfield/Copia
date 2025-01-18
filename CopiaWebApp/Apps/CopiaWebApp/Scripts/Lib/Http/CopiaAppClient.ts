@@ -18,7 +18,7 @@ export class CopiaAppClient extends AppClient {
 		super(
 			events, 
 			'Copia', 
-			pageContext.EnvironmentName === 'Production' || pageContext.EnvironmentName === 'Staging' ? 'Current' : 'Current'
+			pageContext.EnvironmentName === 'Production' || pageContext.EnvironmentName === 'Staging' ? 'V2' : 'Current'
 		);
 		this.Account = this.addGroup((evts, resourceUrl) => new AccountGroup(evts, resourceUrl));
 		this.Activities = this.addGroup((evts, resourceUrl) => new ActivitiesGroup(evts, resourceUrl));

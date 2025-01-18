@@ -2,5 +2,15 @@
 
 public sealed class AddPortfolioRequest
 {
-    public string PortfolioName { get; set; } = "";
+    public AddPortfolioRequest()
+        : this("")
+    {
+    }
+
+    public AddPortfolioRequest(string portfolioName)
+    {
+        PortfolioName = portfolioName;
+    }
+
+    public string PortfolioName { get; set; }
 }

@@ -1,6 +1,7 @@
 ﻿using XTI_App.Abstractions;
 using XTI_App.Fakes;
 using XTI_CopiaWebAppApi;
+using XTI_CopiaWebAppApiActions;
 
 namespace CopiaWebAppTests;
 

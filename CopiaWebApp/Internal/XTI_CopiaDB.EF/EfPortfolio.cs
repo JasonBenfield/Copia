@@ -6,13 +6,13 @@ namespace XTI_CopiaDB.EF;
 
 public sealed class EfPortfolio
 {
-    private readonly CopiaDbContext db;
+    private readonly EfCopiaDB db;
     private readonly PortfolioEntity portfolio;
 
-    internal EfPortfolio(CopiaDbContext db, PortfolioEntity entity)
+    internal EfPortfolio(EfCopiaDB db, PortfolioEntity portfolio)
     {
         this.db = db;
-        this.portfolio = entity;
+        this.portfolio = portfolio;
     }
 
     public async Task<EfAccount> AddAccount(string accountName, AccountType accountType)
@@ -23,13 +23,13 @@ public sealed class EfPortfolio
             AccountType = accountType,
             PortfolioID = portfolio.ID
         };
-        await db.Accounts.Create(account);
+        await db.Context.Accounts.Create(account);
         return new EfAccount(account);
     }
 
     public async Task<EfAccount[]> Accounts()
     {
-        var accounts = await db.Accounts.Retrieve()
+        var accounts = await db.Context.Accounts.Retrieve()
             .Where(a => a.PortfolioID == portfolio.ID)
             .ToArrayAsync();
         return accounts.Select(a => new EfAccount(a)).ToArray();
@@ -37,7 +37,7 @@ public sealed class EfPortfolio
 
     public async Task<EfAccount> Account(int accountID)
     {
-        var account = await db.Accounts.Retrieve()
+        var account = await db.Context.Accounts.Retrieve()
             .Where(a => a.ID == accountID)
             .FirstOrDefaultAsync();
         if (account == null)
@@ -58,45 +58,44 @@ public sealed class EfPortfolio
             TemplateName = templateName,
             PortfolioID = portfolio.ID
         };
-        await db.ActivityTemplates.Create(template);
-        var efActivityTemplate = new EfActivityTemplate(db, template);
+        await db.Context.ActivityTemplates.Create(template);
+        var efActivityTemplate = new EfActivityTemplate( template);
         return efActivityTemplate;
     }
 
     public async Task<EfActivityTemplate[]> ActivityTemplates()
     {
-        var activityTemplates = await db.ActivityTemplates.Retrieve()
+        var activityTemplates = await db.Context.ActivityTemplates.Retrieve()
             .Where(at => at.PortfolioID == portfolio.ID)
             .ToArrayAsync();
-        return activityTemplates.Select(at => new EfActivityTemplate(db, at)).ToArray();
+        return activityTemplates.Select(at => new EfActivityTemplate( at)).ToArray();
     }
 
     public async Task<EfActivityTemplate> ActivityTemplate(int activityTemplateID)
     {
-        var activityTemplate = await db.ActivityTemplates.Retrieve()
+        var activityTemplate = await db.Context.ActivityTemplates.Retrieve()
             .Where(at => at.ID == activityTemplateID && at.PortfolioID == portfolio.ID)
             .FirstOrDefaultAsync();
         return new EfActivityTemplate
         (
-            db,
             activityTemplate ?? throw new Exception($"Activity Template {activityTemplateID} was not found.")
         );
     }
 
     public Task<EfCounterparty> AddCounterparty(string displayText, string url) =>
-        new EfCounterparties(db).Add(portfolio, displayText, url);
+        db.Counterparties.Add(portfolio, displayText, url);
 
     public Task<EfCounterparty[]> CounterpartySearch(string searchText, int max) =>
-        new EfCounterparties(db).Search(portfolio, searchText, max);
+        db.Counterparties.Search(portfolio, searchText, max);
 
     public Task<int> CounterpartySearchTotal(string searchText) =>
-        new EfCounterparties(db).SearchTotal(portfolio, searchText);
+        db.Counterparties.SearchTotal(portfolio, searchText);
 
     public Task<EfCounterparty> Counterparty(int id) =>
-        new EfCounterparties(db).Counterparty(portfolio, id);
+        db.Counterparties.Counterparty(portfolio, id);
 
     public Task<EfCounterparty> CounterpartyByDisplayText(string displayText) =>
-        new EfCounterparties(db).CounterpartyByDisplayText(portfolio, displayText);
+        db.Counterparties.CounterpartyByDisplayText(portfolio, displayText);
 
     public Task<EfCounterparty> BlankCounterparty() =>
         CounterpartyByDisplayText("");
@@ -104,7 +103,7 @@ public sealed class EfPortfolio
     public async Task<EfActivity> CreateActivity(EfActivityTemplate efTemplate, DateTimeOffset timeCreated)
     {
         var efCounterparty = await BlankCounterparty();
-        var efActivity = await new EfActivities(db).Create
+        var efActivity = await db.Activities.Create
         (
             portfolio,
             efTemplate,
@@ -115,7 +114,7 @@ public sealed class EfPortfolio
     }
 
     public Task<EfActivity[]> Activities(int max) =>
-        new EfActivities(db).GetActivities(portfolio, max);
+        db.Activities.GetActivities(portfolio, max);
 
     public PortfolioModel ToModel() =>
         new PortfolioModel

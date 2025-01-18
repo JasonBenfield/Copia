@@ -1,13 +1,12 @@
-﻿namespace XTI_CopiaWebAppApi;
+﻿using XTI_CopiaWebAppApiActions;
+
+namespace XTI_CopiaWebAppApi;
 
 public static class CopiaInfo
 {
-    public static readonly AppKey AppKey = AppKey.WebApp("Copia");
+    public static readonly AppKey AppKey = CopiaAppKey.Value;
 
     public static readonly CopiaRoles Roles = CopiaRoles.Instance;
 
-    public static class ModCategories
-    {
-        public static readonly ModifierCategoryName Portfolio = new(nameof(Portfolio));
-    }
+    public static readonly CopiaModCategories ModCategories = CopiaModCategories.Instance;
 }

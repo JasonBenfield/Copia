@@ -11,16 +11,16 @@ import { AddAccountForm } from "./AddAccountForm";
 export class PortfolioGroup extends AppClientGroup {
 	constructor(events: AppClientEvents, resourceUrl: AppResourceUrl) {
 		super(events, resourceUrl, 'Portfolio');
-		this.Index = this.createView<IEmptyRequest>('Index');
 		this.AddAccountAction = this.createAction<AddAccountForm,IAccountModel>('AddAccount', 'Add Account');
 		this.GetAccountsAction = this.createAction<IEmptyRequest,IAccountModel[]>('GetAccounts', 'Get Accounts');
 		this.GetPortfolioAction = this.createAction<IEmptyRequest,IPortfolioModel>('GetPortfolio', 'Get Portfolio');
+		this.Index = this.createView<IEmptyRequest>('Index');
 	}
 	
-	readonly Index: AppClientView<IEmptyRequest>;
 	readonly AddAccountAction: AppClientAction<AddAccountForm,IAccountModel>;
 	readonly GetAccountsAction: AppClientAction<IEmptyRequest,IAccountModel[]>;
 	readonly GetPortfolioAction: AppClientAction<IEmptyRequest,IPortfolioModel>;
+	readonly Index: AppClientView<IEmptyRequest>;
 	
 	AddAccount(requestData: AddAccountForm, errorOptions?: IActionErrorOptions) {
 		return this.AddAccountAction.execute(requestData, errorOptions || {});

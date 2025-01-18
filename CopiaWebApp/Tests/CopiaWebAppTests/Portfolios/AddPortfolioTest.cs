@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using XTI_App.Abstractions;
 using XTI_Copia.Abstractions;
 using XTI_CopiaDB;
-using XTI_CopiaWebAppApi;
+using XTI_CopiaWebAppApiActions;
 
 namespace CopiaWebAppTests.Portfolios;
 
@@ -14,7 +14,7 @@ internal sealed class AddPortfolioTest
     {
         var tester = await Setup();
         tester.Login();
-        var addRequest = new AddPortfolioRequest { PortfolioName = "" };
+        var addRequest = new AddPortfolioRequest(portfolioName: "");
         var ex = Assert.ThrowsAsync<ValidationFailedException>(() => tester.Execute(addRequest));
         Assert.That
         (
@@ -28,14 +28,14 @@ internal sealed class AddPortfolioTest
     {
         var tester = await Setup();
         tester.Login();
-        var addRequest = new AddPortfolioRequest { PortfolioName = "My Portfolio" };
+        var addRequest = new AddPortfolioRequest(portfolioName: "My Portfolio");
         await tester.Execute(addRequest);
         var db = tester.Services.GetRequiredService<CopiaDbContext>();
         var portfolios = await db.Portfolios.Retrieve().ToArrayAsync();
         Assert.That
         (
             portfolios.Select(p => p.PortfolioName).ToArray(),
-            Is.EquivalentTo(new[] { addRequest.PortfolioName }),
+            Is.EquivalentTo([addRequest.PortfolioName]),
             "Should add portfolio"
         );
     }
@@ -45,7 +45,7 @@ internal sealed class AddPortfolioTest
     {
         var tester = await Setup();
         tester.Login();
-        var addRequest = new AddPortfolioRequest { PortfolioName = "My Portfolio" };
+        var addRequest = new AddPortfolioRequest(portfolioName: "My Portfolio");
         var portfolio = await tester.Execute(addRequest);
         Assert.That
         (
@@ -60,7 +60,7 @@ internal sealed class AddPortfolioTest
     {
         var tester = await Setup();
         tester.Login();
-        var addRequest = new AddPortfolioRequest { PortfolioName = "My Portfolio" };
+        var addRequest = new AddPortfolioRequest(portfolioName: "My Portfolio");
         var portfolio = await tester.Execute(addRequest);
         var db = tester.Services.GetRequiredService<CopiaDbContext>();
         var defaultCounterparty = await db.Counterparties.Retrieve()

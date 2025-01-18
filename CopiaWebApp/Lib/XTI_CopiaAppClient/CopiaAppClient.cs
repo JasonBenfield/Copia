@@ -2,7 +2,7 @@
 namespace XTI_CopiaAppClient;
 public sealed partial class CopiaAppClient : AppClient
 {
-    public CopiaAppClient(IHttpClientFactory httpClientFactory, XtiTokenAccessorFactory xtiTokenAccessorFactory, AppClientUrl clientUrl, AppClientOptions options, CopiaAppClientVersion version) : base(httpClientFactory, xtiTokenAccessorFactory, clientUrl, options, "Copia", version.Value)
+    public CopiaAppClient(IHttpClientFactory httpClientFactory, XtiTokenAccessorFactory xtiTokenAccessorFactory, AppClientUrl clientUrl, IAppClientSessionKey sessionKey, IAppClientRequestKey requestKey, CopiaAppClientVersion version) : base(httpClientFactory, xtiTokenAccessorFactory, clientUrl, sessionKey, requestKey, "Copia", version.Value)
     {
         Account = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new AccountGroup(_clientFactory, _tokenAccessor, _url, _options));
         Activities = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new ActivitiesGroup(_clientFactory, _tokenAccessor, _url, _options));
@@ -12,8 +12,10 @@ public sealed partial class CopiaAppClient : AppClient
         Home = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new HomeGroup(_clientFactory, _tokenAccessor, _url, _options));
         Portfolio = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new PortfolioGroup(_clientFactory, _tokenAccessor, _url, _options));
         Portfolios = CreateGroup((_clientFactory, _tokenAccessor, _url, _options) => new PortfoliosGroup(_clientFactory, _tokenAccessor, _url, _options));
+        Configure();
     }
 
+    partial void Configure();
     public CopiaRoleNames RoleNames { get; } = CopiaRoleNames.Instance;
     public string AppName { get; } = "Copia";
     public AccountGroup Account { get; }
