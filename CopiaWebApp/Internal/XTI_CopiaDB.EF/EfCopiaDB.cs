@@ -15,6 +15,10 @@ public sealed class EfCopiaDB
 
     public EfPortfolios Portfolios { get => portfolios ??= new(this); }
 
+    private EfAccounts? accounts;
+
+    internal EfAccounts Accounts { get => accounts ??= new(this); }
+
     private EfActivities? activities;
 
     public EfActivities Activities { get => activities ??= new(this); }

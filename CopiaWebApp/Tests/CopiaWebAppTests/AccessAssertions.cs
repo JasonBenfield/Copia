@@ -6,7 +6,14 @@ namespace CopiaWebAppTests;
 
 internal static class AccessAssertions
 {
-    public static void ShouldRequireAccess<TModel, TResult>(this CopiaActionTester<TModel, TResult> tester, Func<TModel> createModel, ModifierCategoryName modCategoryName, ModifierKey modKey, params AppRoleName[] allowedRoleNames)
+    public static void ShouldRequireAccess<TModel, TResult>
+    (
+        this CopiaActionTester<TModel, TResult> tester, 
+        Func<TModel> createModel, 
+        ModifierCategoryName modCategoryName, 
+        ModifierKey modKey, 
+        params AppRoleName[] allowedRoleNames
+    )
     {
         foreach (var allowedRoleName in allowedRoleNames)
         {

@@ -13,6 +13,6 @@ public sealed partial class ActivitiesGroup : AppApiGroupWrapper
     }
 
     partial void Configure();
-    public AppApiAction<CreateActivityRequest, ActivityDetailModel> CreateActivity { get; }
+    public AppApiAction<CreateActivityRequest, ActivityModel> CreateActivity { get; }
     public AppApiAction<EmptyRequest, WebViewResult> Index { get; }
 }

@@ -49,25 +49,17 @@ internal sealed class CopiaActionTester<TModel, TResult> : ICopiaActionTester
         currentUserName.SetUserName(AppUserName.Anon);
     }
 
-    public void LoginAsAdmin()
-    {
-        var currentUserName = Services.GetRequiredService<FakeCurrentUserName>();
-        currentUserName.SetUserName(new AppUserName("admin.user"));
-    }
+    public void LoginAsAdmin() => TestActions.LoginAsAdmin(Services);
 
-    public void Login(params AppRoleName[]? roleNames) => Login(new AppUserName("loggedInUser"), roleNames);
+    public void Login(params AppRoleName[]? roleNames) => TestActions.Login(Services, roleNames);
 
-    public void Login(AppUserName userName, params AppRoleName[]? roleNames) => Login(userName, ModifierCategoryName.Default, ModifierKey.Default, roleNames);
+    public void Login(AppUserName userName, params AppRoleName[]? roleNames) => TestActions.Login(Services, userName, roleNames);
 
-    public void Login(ModifierCategoryName categoryName, ModifierKey modifier, params AppRoleName[]? roleNames) => Login(new AppUserName("loggedInUser"), categoryName, modifier, roleNames);
+    public void Login(ModifierCategoryName categoryName, ModifierKey modifier, params AppRoleName[]? roleNames) => 
+        TestActions.Login(Services, categoryName, modifier, roleNames);
 
-    public void Login(AppUserName userName, ModifierCategoryName categoryName, ModifierKey modifier, params AppRoleName[]? roleNames)
-    {
-        var userContext = Services.GetRequiredService<FakeUserContext>();
-        userContext.AddUser(userName);
-        userContext.SetCurrentUser(userName);
-        userContext.SetUserRoles(categoryName, modifier, roleNames ?? new AppRoleName[0]);
-    }
+    public void Login(AppUserName userName, ModifierCategoryName categoryName, ModifierKey modifier, params AppRoleName[]? roleNames) =>
+        TestActions.Login(Services, userName, categoryName, modifier, roleNames);
 
     public Task<TResult> Execute(TModel model) =>
         Execute(model, ModifierKey.Default);

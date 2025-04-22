@@ -10,11 +10,11 @@ import { AppResourceUrl } from "@jasonbenfield/sharedwebapp/Http/AppResourceUrl"
 export class ActivitiesGroup extends AppClientGroup {
 	constructor(events: AppClientEvents, resourceUrl: AppResourceUrl) {
 		super(events, resourceUrl, 'Activities');
-		this.CreateActivityAction = this.createAction<ICreateActivityRequest,IActivityDetailModel>('CreateActivity', 'Create Activity');
+		this.CreateActivityAction = this.createAction<ICreateActivityRequest,IActivityModel>('CreateActivity', 'Create Activity');
 		this.Index = this.createView<IEmptyRequest>('Index');
 	}
 	
-	readonly CreateActivityAction: AppClientAction<ICreateActivityRequest,IActivityDetailModel>;
+	readonly CreateActivityAction: AppClientAction<ICreateActivityRequest,IActivityModel>;
 	readonly Index: AppClientView<IEmptyRequest>;
 	
 	CreateActivity(requestData: ICreateActivityRequest, errorOptions?: IActionErrorOptions) {

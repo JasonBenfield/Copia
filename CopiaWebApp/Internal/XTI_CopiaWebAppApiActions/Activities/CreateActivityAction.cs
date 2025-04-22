@@ -3,7 +3,7 @@ using XTI_Core;
 
 namespace XTI_CopiaWebAppApiActions.Activities;
 
-public sealed class CreateActivityAction : AppAction<CreateActivityRequest, ActivityDetailModel>
+public sealed class CreateActivityAction : AppAction<CreateActivityRequest, ActivityModel>
 {
     private readonly PortfolioFromModifier portfolioFromModifier;
     private readonly IClock clock;
@@ -14,11 +14,10 @@ public sealed class CreateActivityAction : AppAction<CreateActivityRequest, Acti
         this.clock = clock;
     }
 
-    public async Task<ActivityDetailModel> Execute(CreateActivityRequest createRequest, CancellationToken stoppingToken)
+    public async Task<ActivityModel> Execute(CreateActivityRequest createRequest, CancellationToken stoppingToken)
     {
         var efPortfolio = await portfolioFromModifier.Value();
-        var efTemplate = await efPortfolio.ActivityTemplate(createRequest.ActivityTemplateID);
-        var efActivity = await efPortfolio.CreateActivity(efTemplate, clock.Now());
-        return new ActivityDetailModel();
+        var efActivity = await efPortfolio.CreateActivity(createRequest.ActivityName, clock.Now());
+        return efActivity.ToModel();
     }
 }

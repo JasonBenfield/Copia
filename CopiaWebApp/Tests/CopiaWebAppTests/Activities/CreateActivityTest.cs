@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using XTI_Copia.Abstractions;
-using XTI_CopiaDB;
+﻿using XTI_Copia.Abstractions;
 using XTI_CopiaWebAppApi;
 
 namespace CopiaWebAppTests.Activities;
@@ -11,13 +8,13 @@ internal sealed class CreateActivityTest
     [Test]
     public async Task ShouldRequireAccess()
     {
-        var tester = await Setup();
-        tester.Login();
-        var portfolio = await AddPortfolio(tester, "Portfolio 1");
-        var activityTemplate = await AddActivityTemplate(tester, portfolio, "Withdrawal");
+        var sp = await TestActions.Setup();
+        sp.Login();
+        var portfolio = await TestActions.AddPortfolio(sp, "Portfolio 1");
+        var tester = CopiaActionTester.Create(sp, api => api.Activities.CreateActivity);
         tester.ShouldRequireAccess
         (
-            () => new CreateActivityRequest(activityTemplateID: activityTemplate.ID),
+            () => new CreateActivityRequest(activityName: ""),
             CopiaInfo.ModCategories.Portfolio,
             portfolio.PublicKey,
             CopiaInfo.Roles.Admin,
@@ -28,60 +25,11 @@ internal sealed class CreateActivityTest
     [Test]
     public async Task ShouldCreateActivity()
     {
-        var tester = await Setup();
-        tester.Login();
-        var portfolio = await AddPortfolio(tester, "My Portfolio");
-        var activityTemplate = await AddActivityTemplate(tester, portfolio, "Withdrawal");
-        await tester.Execute
-        (
-            new CreateActivityRequest(activityTemplateID: activityTemplate.ID),
-            portfolio.PublicKey
-        );
-        var db = tester.Services.GetRequiredService<CopiaDbContext>();
-        var activityEntity = await db.Activities.Retrieve()
-            .FirstOrDefaultAsync(a => a.ActivityTemplateID == activityTemplate.ID);
-        Assert.That(activityEntity, Is.Not.Null, "Should create activity");
+        var sp = await TestActions.Setup();
+        sp.Login();
+        var portfolio = await TestActions.AddPortfolio(sp, "My Portfolio");
+        var activity = await TestActions.CreateActivity(sp, portfolio, "Withdrawal");
+        Assert.That(activity.ID, Is.GreaterThan(0), "Should create activity");
+        Assert.That(activity.ActivityName, Is.EqualTo("Withdrawal"), "Should create activity");
     }
-
-    [Test]
-    public async Task ShouldUpdateActivityNameFromTemplate()
-    {
-        var tester = await Setup();
-        tester.Login();
-        var portfolio = await AddPortfolio(tester, "My Portfolio");
-        var activityTemplate = await AddActivityTemplate(tester, portfolio, "Withdrawal");
-        await tester.Execute
-        (
-            new CreateActivityRequest(activityTemplateID: activityTemplate.ID),
-            portfolio.PublicKey
-        );
-        var db = tester.Services.GetRequiredService<CopiaDbContext>();
-        var activityEntity = await db.Activities.Retrieve()
-            .FirstOrDefaultAsync(a => a.ActivityTemplateID == activityTemplate.ID);
-        Assert.That(activityEntity, Is.Not.Null, "Should create activity");
-    }
-
-    private async Task<CopiaActionTester<CreateActivityRequest, ActivityDetailModel>> Setup()
-    {
-        var host = new CopiaTestHost();
-        var services = await host.Setup();
-        return CopiaActionTester.Create(services, api => api.Activities.CreateActivity);
-    }
-
-    private Task<PortfolioModel> AddPortfolio(ICopiaActionTester tester, string portfolioName)
-    {
-        var addTester = tester.Create(api => api.Portfolios.AddPortfolio);
-        return addTester.Execute(new AddPortfolioRequest { PortfolioName = portfolioName });
-    }
-
-    private Task<ActivityTemplateModel> AddActivityTemplate(ICopiaActionTester tester, PortfolioModel portfolio, string templateName)
-    {
-        var addTester = tester.Create(api => api.ActivityTemplates.AddActivityTemplate);
-        return addTester.Execute
-        (
-            new AddActivityTemplateRequest(templateName: templateName),
-            portfolio.PublicKey
-        );
-    }
-
 }

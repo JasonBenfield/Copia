@@ -11,12 +11,12 @@ public sealed class EfActivities
         this.db = db;
     }
 
-    internal async Task<EfActivity> Create(PortfolioEntity portfolio, EfActivityTemplate efTemplate, EfCounterparty efCounterparty, DateTimeOffset timeCreated)
+    internal async Task<EfActivity> Create(PortfolioEntity portfolio, string activityName, EfCounterparty efCounterparty, DateTimeOffset timeCreated)
     {
         var activity = new ActivityEntity
         {
             PortfolioID = portfolio.ID,
-            ActivityTemplateID = efTemplate.ID,
+            ActivityName = activityName,
             CounterpartyID = efCounterparty.ID,
             TimeCreated = timeCreated,
             ActivityDate = timeCreated.Date

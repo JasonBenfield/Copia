@@ -9,26 +9,12 @@ interface IAccountModel {
 	AccountType: IAccountType;
 }
 interface ICreateActivityRequest {
-	ActivityTemplateID: number;
-}
-interface IActivityDetailModel {
-	Activity: IActivityModel;
-	Template: IActivityTemplateModel;
+	ActivityName: string;
 }
 interface IActivityModel {
 	ID: number;
 	ActivityName: string;
 	ActivityDate: import('@jasonbenfield/sharedwebapp/Common').DateOnly;
-}
-interface IActivityTemplateModel {
-	ID: number;
-	TemplateName: string;
-}
-interface IGetActivityTemplateRequest {
-	TemplateID: number;
-}
-interface IAddActivityTemplateRequest {
-	TemplateName: string;
 }
 interface ICounterpartyModel {
 	ID: number;

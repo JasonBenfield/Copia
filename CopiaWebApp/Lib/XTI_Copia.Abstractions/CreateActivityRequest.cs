@@ -3,14 +3,14 @@
 public sealed class CreateActivityRequest
 {
     public CreateActivityRequest()
-        : this(0)
+        : this("")
     {
     }
 
-    public CreateActivityRequest(int activityTemplateID)
+    public CreateActivityRequest(string activityName)
     {
-        ActivityTemplateID = activityTemplateID;
+        ActivityName = activityName;
     }
 
-    public int ActivityTemplateID { get; set; }
+    public string ActivityName { get; set; }
 }

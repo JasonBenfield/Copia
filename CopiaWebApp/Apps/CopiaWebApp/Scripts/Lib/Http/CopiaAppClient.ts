@@ -5,8 +5,6 @@ import { AppClientEvents } from "@jasonbenfield/sharedwebapp/Http/AppClientEvent
 import { AppClientQuery } from "@jasonbenfield/sharedwebapp/Http/AppClientQuery";
 import { AccountGroup } from "./AccountGroup";
 import { ActivitiesGroup } from "./ActivitiesGroup";
-import { ActivityTemplateGroup } from "./ActivityTemplateGroup";
-import { ActivityTemplatesGroup } from "./ActivityTemplatesGroup";
 import { CounterpartiesGroup } from "./CounterpartiesGroup";
 import { HomeGroup } from "./HomeGroup";
 import { PortfolioGroup } from "./PortfolioGroup";
@@ -22,8 +20,6 @@ export class CopiaAppClient extends AppClient {
 		);
 		this.Account = this.addGroup((evts, resourceUrl) => new AccountGroup(evts, resourceUrl));
 		this.Activities = this.addGroup((evts, resourceUrl) => new ActivitiesGroup(evts, resourceUrl));
-		this.ActivityTemplate = this.addGroup((evts, resourceUrl) => new ActivityTemplateGroup(evts, resourceUrl));
-		this.ActivityTemplates = this.addGroup((evts, resourceUrl) => new ActivityTemplatesGroup(evts, resourceUrl));
 		this.Counterparties = this.addGroup((evts, resourceUrl) => new CounterpartiesGroup(evts, resourceUrl));
 		this.Home = this.addGroup((evts, resourceUrl) => new HomeGroup(evts, resourceUrl));
 		this.Portfolio = this.addGroup((evts, resourceUrl) => new PortfolioGroup(evts, resourceUrl));
@@ -32,8 +28,6 @@ export class CopiaAppClient extends AppClient {
 	
 	readonly Account: AccountGroup;
 	readonly Activities: ActivitiesGroup;
-	readonly ActivityTemplate: ActivityTemplateGroup;
-	readonly ActivityTemplates: ActivityTemplatesGroup;
 	readonly Counterparties: CounterpartiesGroup;
 	readonly Home: HomeGroup;
 	readonly Portfolio: PortfolioGroup;

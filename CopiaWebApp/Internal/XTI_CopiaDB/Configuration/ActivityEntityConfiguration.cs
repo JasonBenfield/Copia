@@ -13,10 +13,6 @@ internal sealed class ActivityEntityConfiguration : IEntityTypeConfiguration<Act
             .WithMany()
             .HasForeignKey(a => a.PortfolioID)
             .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne<ActivityTemplateEntity>()
-            .WithMany()
-            .HasForeignKey(a => a.ActivityTemplateID)
-            .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne<CounterpartyEntity>()
             .WithMany()
             .HasForeignKey(a => a.CounterpartyID)

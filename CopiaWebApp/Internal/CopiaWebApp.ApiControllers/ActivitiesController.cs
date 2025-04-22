@@ -10,7 +10,7 @@ public sealed partial class ActivitiesController : Controller
     }
 
     [HttpPost]
-    public Task<ResultContainer<ActivityDetailModel>> CreateActivity([FromBody] CreateActivityRequest requestData, CancellationToken ct)
+    public Task<ResultContainer<ActivityModel>> CreateActivity([FromBody] CreateActivityRequest requestData, CancellationToken ct)
     {
         return api.Activities.CreateActivity.Execute(requestData, ct);
     }

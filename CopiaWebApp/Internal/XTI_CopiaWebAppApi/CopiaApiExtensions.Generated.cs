@@ -6,8 +6,6 @@ public static partial class CopiaApiExtensions
     {
         services.AddAccountServices();
         services.AddActivitiesServices();
-        services.AddActivityTemplateServices();
-        services.AddActivityTemplatesServices();
         services.AddCounterpartiesServices();
         services.AddHomeServices();
         services.AddPortfolioServices();

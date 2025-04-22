@@ -13,7 +13,6 @@ public sealed class CopiaDbContext : DbContext
         unitOfWork = new UnitOfWork(this);
         Portfolios = new EfDataRepository<PortfolioEntity>(this);
         Accounts = new EfDataRepository<AccountEntity>(this);
-        ActivityTemplates = new EfDataRepository<ActivityTemplateEntity>(this);
         Counterparties = new EfDataRepository<CounterpartyEntity>(this);
         Activities = new EfDataRepository<ActivityEntity>(this);
     }
@@ -23,7 +22,6 @@ public sealed class CopiaDbContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new PortfolioEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new AccountEntityTypeConfiguration());
-        modelBuilder.ApplyConfiguration(new ActivityTemplateEntityConfiguration());
         modelBuilder.ApplyConfiguration(new CounterpartyEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new AccountEntityTypeConfiguration());
         modelBuilder.ApplyConfiguration(new ActivityEntityConfiguration());
@@ -32,8 +30,6 @@ public sealed class CopiaDbContext : DbContext
     public DataRepository<PortfolioEntity> Portfolios { get; }
 
     public DataRepository<AccountEntity> Accounts { get; }
-
-    public DataRepository<ActivityTemplateEntity> ActivityTemplates { get; }
 
     public DataRepository<CounterpartyEntity> Counterparties { get; }
 

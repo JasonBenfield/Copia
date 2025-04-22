@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using XTI_Copia.Abstractions;
-using XTI_Forms;
 
 namespace XTI_CopiaDB.EF;
 
@@ -15,41 +14,13 @@ public sealed class EfPortfolio
         this.portfolio = portfolio;
     }
 
-    public async Task<EfAccount> AddAccount(string accountName, AccountType accountType)
-    {
-        var account = new AccountEntity
-        {
-            AccountName = accountName,
-            AccountType = accountType,
-            PortfolioID = portfolio.ID
-        };
-        await db.Context.Accounts.Create(account);
-        return new EfAccount(account);
-    }
+    public Task<EfAccount> AddAccount(string accountName, AccountType accountType) =>
+        db.Accounts.AddAccount(portfolio, accountName, accountType);
 
-    public async Task<EfAccount[]> Accounts()
-    {
-        var accounts = await db.Context.Accounts.Retrieve()
-            .Where(a => a.PortfolioID == portfolio.ID)
-            .ToArrayAsync();
-        return accounts.Select(a => new EfAccount(a)).ToArray();
-    }
+    public Task<EfAccount[]> Accounts() =>
+        db.Accounts.Accounts(portfolio);
 
-    public async Task<EfAccount> Account(int accountID)
-    {
-        var account = await db.Context.Accounts.Retrieve()
-            .Where(a => a.ID == accountID)
-            .FirstOrDefaultAsync();
-        if (account == null)
-        {
-            throw new Exception(string.Format(CopiaDBErrors.AccountIDNotFound, accountID));
-        }
-        if (account.PortfolioID != portfolio.ID)
-        {
-            throw new Exception(string.Format(CopiaDBErrors.AccountDoesNotBelongToPortfolio, accountID, portfolio.ID));
-        }
-        return new EfAccount(account);
-    }
+    public Task<EfAccount> Account(int accountID) => db.Accounts.Account(portfolio, accountID);
 
     public async Task<EfActivityTemplate> AddActivityTemplate(string templateName)
     {
@@ -59,7 +30,7 @@ public sealed class EfPortfolio
             PortfolioID = portfolio.ID
         };
         await db.Context.ActivityTemplates.Create(template);
-        var efActivityTemplate = new EfActivityTemplate( template);
+        var efActivityTemplate = new EfActivityTemplate(template);
         return efActivityTemplate;
     }
 
@@ -68,7 +39,7 @@ public sealed class EfPortfolio
         var activityTemplates = await db.Context.ActivityTemplates.Retrieve()
             .Where(at => at.PortfolioID == portfolio.ID)
             .ToArrayAsync();
-        return activityTemplates.Select(at => new EfActivityTemplate( at)).ToArray();
+        return activityTemplates.Select(at => new EfActivityTemplate(at)).ToArray();
     }
 
     public async Task<EfActivityTemplate> ActivityTemplate(int activityTemplateID)
@@ -100,13 +71,13 @@ public sealed class EfPortfolio
     public Task<EfCounterparty> BlankCounterparty() =>
         CounterpartyByDisplayText("");
 
-    public async Task<EfActivity> CreateActivity(EfActivityTemplate efTemplate, DateTimeOffset timeCreated)
+    public async Task<EfActivity> CreateActivity(string activityName, DateTimeOffset timeCreated)
     {
         var efCounterparty = await BlankCounterparty();
         var efActivity = await db.Activities.Create
         (
             portfolio,
-            efTemplate,
+            activityName,
             efCounterparty,
             timeCreated
         );
